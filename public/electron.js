@@ -63,6 +63,25 @@ function createSectionsWindow() {
   }
 }
 
+function createConnectionsWindow() {
+  const sectionWindow = new BrowserWindow({
+    width: 635,
+    height: 400,
+    title: 'Connections',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    }
+  });
+  if (app.isPackaged) {
+    sectionWindow.loadFile('./.next/server/pages/connection.html');
+  } else {
+    sectionWindow.loadURL('http://localhost:3000/connection');
+  }
+}
+
 app.whenReady().then(() => {
   createWindow()
   app.on('activate', () => {
@@ -136,6 +155,22 @@ const template = [{
             label: 'Ceilig beams',
             click() {
               createSectionsWindow()
+            }
+          }
+        ]
+      },
+      {
+        label: 'Connections',
+        submenu: [{
+            label: 'Inter-modular connection',
+            click() {
+              createConnectionsWindow()
+            }
+          },
+          {
+            label: 'Intra-modular connection',
+            click() {
+              createConnectionsWindow()
             }
           }
         ]
