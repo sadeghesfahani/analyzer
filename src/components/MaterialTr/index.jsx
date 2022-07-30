@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 
-function MaterialTr({ name, E }) {
+function MaterialTr({ name, e }) {
   const [nameValue, setName] = React.useState("");
   const [EValue, setE] = React.useState("");
   useEffect(() => {
     setName(name);
-    setE(E);
+    setE(e);
   }, []);
   return (
     <tr>
