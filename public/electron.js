@@ -83,7 +83,7 @@ function createConnectionsWindow() {
 }
 
 function createSeismicResistingFramesTypeWindow() {
-  const sectionWindow = new BrowserWindow({
+  const seismicResistingFramesTypeWindow = new BrowserWindow({
     width: 380,
     height: 250,
     title: 'Seismic resisting frames type',
@@ -95,9 +95,28 @@ function createSeismicResistingFramesTypeWindow() {
     }
   });
   if (app.isPackaged) {
-    sectionWindow.loadFile('./.next/server/pages/seismicResistingFramesType.html');
+    seismicResistingFramesTypeWindow.loadFile('./.next/server/pages/seismicResistingFramesType.html');
   } else {
-    sectionWindow.loadURL('http://localhost:3000/seismicResistingFramesType');
+    seismicResistingFramesTypeWindow.loadURL('http://localhost:3000/seismicResistingFramesType');
+  }
+}
+
+function createStructuresPropertiesWindow() {
+  const structuresPropertiesWindow = new BrowserWindow({
+    width: 620,
+    height: 300,
+    title: "Structure's properties",
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    }
+  });
+  if (app.isPackaged) {
+    structuresPropertiesWindow.loadFile('./.next/server/pages/structuresProperties.html');
+  } else {
+    structuresPropertiesWindow.loadURL('http://localhost:3000/structuresProperties');
   }
 }
 
@@ -199,7 +218,13 @@ const template = [{
         click(){
           createSeismicResistingFramesTypeWindow()
         }
-      }
+      },
+      {
+        label:"Structure's properties",
+        click(){
+          createStructuresPropertiesWindow()
+        }
+      },
     ]
   }
 ]
