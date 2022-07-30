@@ -24,5 +24,28 @@ html, body, #__next {
 }
 
 body {
-  background-color: #7fffd4;
+  background: rgb(251,252,252);
+  background: linear-gradient(180deg, rgba(251,252,252,1) 0%, rgba(213,241,237,1) 92%);  
+}
+
+.section-title {
+  background: rgb(251,252,252);
+  background: linear-gradient(180deg, rgba(251,252,252,1) 0%, rgb(222, 251, 247) 100%);
+}
+
+th {
+  font-weight: 500;
+  padding-left: 40px;
+  padding-right: 40px;
+  text-align: left;
+}
+
+td{
+  padding-right: 10px;
+  padding-left: 10px;
+  text-align: left;
+}
+
+.section-tr td{
+  border: 1px solid #eaeaea;
 }
