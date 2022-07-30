@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../Button";
+import MaterialTable from "../MaterialTable";
 import MaterialTr from "../MaterialTr";
 import SectionTitle from "../SectionTitle";
 
@@ -26,17 +27,9 @@ function MaterialProperties() {
           <div className="absolute bottom-2 right-2">
             <Button title={"Delete Material"} />
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Material_Name</th>
-                <th>Modula of Elasticty E</th>
-              </tr>
-            </thead>
-            <tbody>
-              <MaterialTr name="test" E="200000000000" />
-            </tbody>
-          </table>
+          <MaterialTable>
+            <MaterialTr name="A36" e="200000" />
+          </MaterialTable>
         </div>
       </div>
     </div>
