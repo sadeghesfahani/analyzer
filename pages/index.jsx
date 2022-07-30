@@ -9,7 +9,7 @@ export default function Home() {
     console.log('drop')
     for (const f of e.dataTransfer.files) {
       console.log('File(s) you dragged here: ', f.path)
-      testipc.ipc.send('read-file',f.path)
+      electron.ipcRenderer.send('read-file',f.path)
     }
   }
   
