@@ -49,3 +49,16 @@ td{
 .section-tr td{
   border: 1px solid #eaeaea;
 }
+
+.connections-table th {
+  border: 1px solid #eaeaea;
+  padding: 2px;
+}
+
+.connections-table th:nth-child(even) {
+  padding-right: 30px;
+}
+
+.connections-table th:nth-child(odd) {
+  padding-right: 10px;
+}
