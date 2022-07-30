@@ -120,6 +120,25 @@ function createStructuresPropertiesWindow() {
   }
 }
 
+function createAnalyzeWindow() {
+  const analyzeWindow = new BrowserWindow({
+    width: 380,
+    height: 320,
+    title: "Analyze",
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    }
+  });
+  if (app.isPackaged) {
+    analyzeWindow.loadFile('./.next/server/pages/analyze.html');
+  } else {
+    analyzeWindow.loadURL('http://localhost:3000/analyze');
+  }
+}
+
 app.whenReady().then(() => {
   createWindow()
   app.on('activate', () => {
@@ -226,6 +245,12 @@ const template = [{
         }
       },
     ]
+  },
+  {
+    label:'Analyze',
+    click(){
+      createAnalyzeWindow()
+    }
   }
 ]
 
