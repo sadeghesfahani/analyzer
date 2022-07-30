@@ -82,6 +82,25 @@ function createConnectionsWindow() {
   }
 }
 
+function createSeismicResistingFramesTypeWindow() {
+  const sectionWindow = new BrowserWindow({
+    width: 380,
+    height: 250,
+    title: 'Seismic resisting frames type',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    }
+  });
+  if (app.isPackaged) {
+    sectionWindow.loadFile('./.next/server/pages/seismicResistingFramesType.html');
+  } else {
+    sectionWindow.loadURL('http://localhost:3000/seismicResistingFramesType');
+  }
+}
+
 app.whenReady().then(() => {
   createWindow()
   app.on('activate', () => {
@@ -175,6 +194,12 @@ const template = [{
           }
         ]
       },
+      {
+        label:'Seismic resisting frames type',
+        click(){
+          createSeismicResistingFramesTypeWindow()
+        }
+      }
     ]
   }
 ]
