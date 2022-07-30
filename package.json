@@ -2,6 +2,8 @@
   "name": "uni-pro",
   "version": "0.1.0",
   "private": true,
+  "main": "./public/electron.js",
+  "homepage": "./",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
