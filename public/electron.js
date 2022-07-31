@@ -174,25 +174,9 @@ const template = [{
     label: 'Define',
     submenu: [{
         label: 'Material Properties',
-        submenu: [{
-            label: 'Column',
-            click() {
-              createMaterialWindow()
-            }
-          },
-          {
-            label: 'Floor beams',
-            click() {
-              createMaterialWindow()
-            }
-          },
-          {
-            label: 'Ceilig beams',
-            click() {
-              createMaterialWindow()
-            }
-          }
-        ]
+        click(){
+          createMaterialWindow()
+        }
       },
       {
         label: 'Sections',
