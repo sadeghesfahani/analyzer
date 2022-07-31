@@ -2,7 +2,7 @@ import React from "react";
 
 function MaterialTable({children}) {
   return (
-    <table>
+    <table className="w-full">
       <thead>
         <tr>
           <th>Material_Name</th>
