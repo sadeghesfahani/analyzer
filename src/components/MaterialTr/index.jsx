@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-function MaterialTr({ name, e }) {
+function MaterialTr({ name, e, id, selectedMaterial, setSelectedMaterial }) {
   const [nameValue, setName] = React.useState("");
   const [EValue, setE] = React.useState("");
   useEffect(() => {
@@ -8,13 +8,14 @@ function MaterialTr({ name, e }) {
     setE(e);
   }, []);
   return (
-    <tr>
-      <td>
-        <input value={nameValue} onChange={(e) => setName(e.target.value)} />
-      </td>
-      <td>
-        <input value={EValue} onChange={(e) => setE(e.target.value)} />
-      </td>
+    <tr
+      onClick={() => setSelectedMaterial(id)}
+      className={`cursor-pointer ${
+        selectedMaterial === id ? "bg-blue-500 " : ""
+      }`}
+    >
+      <td>{name}</td>
+      <td>{e}</td>
     </tr>
   );
 }
