@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../src/components/Button";
 import SectionTitle from "../src/components/SectionTitle";
+import { useDispatch, useSelector } from "react-redux";
+import { setSeismicResistingFramesType } from "../redux/slices/seismicResistingFramesType";
 
 function SeismicResistingFramesType() {
+  const dispatch = useDispatch();
+  const { seismicResistingFramesType } = useSelector(
+    (state) => state.seismicResistingFramesType
+  );
+  const [selected, setSelected] = useState("");
+  useEffect(() => {
+    setSelected(seismicResistingFramesType);
+  }, []);
+  const setseismicResistingFramesType = () => {
+    dispatch(setSeismicResistingFramesType(selected));
+  };
   return (
     <div className="p-4 flex flex-col gap-4 h-full">
       <div className="border border-black px-2 py-8 relative">
@@ -14,6 +27,8 @@ function SeismicResistingFramesType() {
               id="braced-frame"
               name="seismic-resisting-frames-type"
               value={"Braced frame"}
+              checked={selected === "Braced frame"}
+              onChange={() => setSelected("Braced frame")}
             />
             <label htmlFor="braced-frame">Braced frame</label>
           </div>
@@ -23,13 +38,19 @@ function SeismicResistingFramesType() {
               id="moment-frame"
               name="seismic-resisting-frames-type"
               value={"Moment frame"}
+              checked={selected === "Moment frame"}
+              onChange={(e) => setSelected("Moment frame")}
             />
             <label htmlFor="moment-frame">Moment frame</label>
           </div>
         </div>
       </div>
       <div className="border border-black self-center py-3 px-4">
-        <Button title='OK' className={'border border-black w-[100px] py-0'}/>
+        <Button
+          title="OK"
+          className={"border border-black w-[100px] py-0"}
+          onClick={setseismicResistingFramesType}
+        />
       </div>
     </div>
   );
