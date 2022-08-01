@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import {VscNewFile, VscFiles} from "react-icons/vsc";
+import Header from "../src/components/Header";
 
 
 const itemsStyle = "flex flex-col opacity-90 border-dashed border-4 rounded-md border-slate-800 color-slate-800 gap-2 items-center justify-center w-80 h-80"
@@ -27,6 +28,7 @@ export default function Home() {
             </Head>
 
             <main className="h-full">
+                <Header/>
                 <div className="flex h-full gap-8 justify-center text-slate-800 items-center">
                     <div className={itemsStyle}>
                         <div className="flex flex-col items-end ">
