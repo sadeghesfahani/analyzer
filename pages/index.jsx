@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-import {VscNewFile, VscFiles} from "react-icons/vsc";
+import {VscFiles} from "react-icons/vsc";
 import Header from "../src/components/Header";
 
 
-const itemsStyle = "flex flex-col opacity-90 border-dashed border-4 rounded-md border-slate-800 color-slate-800 gap-2 items-center justify-center w-80 h-80"
+const itemsStyle = "sm:flex flex-col hidden opacity-90 border-dashed border-4 rounded-md border-slate-800 color-slate-800 gap-2 items-center justify-center w-80 h-80"
 
 export default function Home() {
     function dropping(e) {
