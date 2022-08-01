@@ -180,41 +180,15 @@ const template = [{
       },
       {
         label: 'Sections',
-        submenu: [{
-            label: 'Column',
-            click() {
-              createSectionsWindow()
-            }
-          },
-          {
-            label: 'Floor beams',
-            click() {
-              createSectionsWindow()
-            }
-          },
-          {
-            label: 'Ceilig beams',
-            click() {
-              createSectionsWindow()
-            }
-          }
-        ]
+        click(){
+          createSectionsWindow()
+        }
       },
       {
         label: 'Connections',
-        submenu: [{
-            label: 'Inter-modular connection',
-            click() {
-              createConnectionsWindow()
-            }
-          },
-          {
-            label: 'Intra-modular connection',
-            click() {
-              createConnectionsWindow()
-            }
-          }
-        ]
+        click(){
+          createConnectionsWindow()
+        }
       },
       {
         label:'Seismic resisting frames type',
