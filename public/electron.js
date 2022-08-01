@@ -1,3 +1,4 @@
+const data = require("../data")
 const {
   app,
   BrowserWindow,
@@ -199,7 +200,7 @@ const template = [{
               extensions: ["yyy"]
             }]
           }).then(result => {
-            fs.writeFile(result.filePath, "test", function (err) {
+            fs.writeFile(result.filePath, JSON.stringify(data), function (err) {
               if (err) {
                 console.log(err)
               } else {
