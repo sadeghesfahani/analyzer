@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import MaterialTable from "../MaterialTable";
 import MaterialTr from "../MaterialTr";
 import SectionsPropertiesTr from "../SectionsPropertiesTr";
 import SectionTitle from "../SectionTitle";
 import SectionTr from "../SectionTr";
+import { useSelector, useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import { addPropertyAndMaterial } from "../../../redux/slices/sections";
 
 function Sections() {
+  const dispatch = useDispatch();
+  const { properties } = useSelector((state) => state.properties);
+  const { materials } = useSelector((state) => state.material);
+  const { column, floorBeams, ceiligBeams } = useSelector(
+    (state) => state.sections
+  );
+  const [section, setSection] = React.useState("column");
+  const [selectedMaterial, setSelectedMaterial] = useState("");
+  const [selectedProperty, setSelectedProperty] = useState("");
+  const joinPropertyAndMaterial = () => {
+    const property = properties.find((p) => p.id === selectedProperty);
+    const material = materials.find((m) => m.id === selectedMaterial);
+    const propertyAndMaterial = { material, property, id: uuidv4() };
+    dispatch(addPropertyAndMaterial({ section, propertyAndMaterial }));
+    setSelectedMaterial("");
+    setSelectedProperty("");
+  };
   return (
     <div className="p-4 flex flex-col gap-4 h-full">
+      <select value={section} onChange={(e) => setSection(e.target.value)}>
+        <option value={"column"}>column</option>
+        <option value={"floor beams"}>Floor Beams</option>
+        <option value={"ceilig beams"}>Ceilig Beams</option>
+      </select>
       <div className="flex gap-1 h-[350px]">
         <div className="border border-black p-1 flex flex-col relative">
           <SectionTitle title={"Properties"} />
@@ -26,13 +51,20 @@ function Sections() {
                 </tr>
               </thead>
               <tbody>
-                <SectionTr
-                  edi_std={"L1.125X1.125X1/8"}
-                  b={"1.125"}
-                  tf={"0.125"}
-                  tw="0.125"
-                  i33="0.032"
-                />
+                {properties.map((property) => (
+                  <SectionTr
+                    key={property.id}
+                    id={property.id}
+                    edi_std={property.edi_std}
+                    ht={property.ht}
+                    b={property.b}
+                    tf={property.tf}
+                    tw={property.tw}
+                    i33={property.i33}
+                    selectedProperty={selectedProperty}
+                    setSelectedProperty={setSelectedProperty}
+                  />
+                ))}
               </tbody>
             </table>
           </div>
@@ -42,7 +74,16 @@ function Sections() {
           <h5 className="text-center mb-1">Select a material</h5>
           <div className="border border-black flex-1 bg-white">
             <MaterialTable>
-              <MaterialTr name="A36" e="200000" />
+              {materials.map((material) => (
+                <MaterialTr
+                  key={material.id}
+                  name={material.name}
+                  id={material.id}
+                  e={material.e}
+                  selectedMaterial={selectedMaterial}
+                  setSelectedMaterial={setSelectedMaterial}
+                />
+              ))}
             </MaterialTable>
           </div>
         </div>
@@ -52,6 +93,7 @@ function Sections() {
         <Button
           title="Join property and material"
           className="w-full border border-gray-500"
+          onClick={joinPropertyAndMaterial}
         />
       </div>
       <div className="border border-black flex-1 px-1 py-3 flex relative">
@@ -71,15 +113,37 @@ function Sections() {
               </tr>
             </thead>
             <tbody>
-              <SectionsPropertiesTr
-                material_name="A36"
-                e="200000"
-                edi_std={"L1.125X1.125X1/8"}
-                b={"1.125"}
-                tf={"0.125"}
-                tw="0.125"
-                i33="0.032"
-              />
+              {section === "column" ? (
+                <SectionsPropertiesTr
+                  material_name={column?.material?.name}
+                  e={column?.material?.e}
+                  edi_std={column?.property?.edi_std}
+                  b={column?.property?.b}
+                  tf={column?.property?.tf}
+                  tw={column?.property?.tw}
+                  i33={column?.property?.i33}
+                />
+              ) : section === "floor beams" ? (
+                <SectionsPropertiesTr
+                  material_name={floorBeams?.material?.name}
+                  e={floorBeams?.material?.e}
+                  edi_std={floorBeams?.property?.edi_std}
+                  b={floorBeams?.property?.b}
+                  tf={floorBeams?.property?.tf}
+                  tw={floorBeams?.property?.tw}
+                  i33={floorBeams?.property?.i33}
+                />
+              ) : (
+                <SectionsPropertiesTr
+                  material_name={ceiligBeams?.material?.name}
+                  e={ceiligBeams?.material?.e}
+                  edi_std={ceiligBeams?.property?.edi_std}
+                  b={ceiligBeams?.property?.b}
+                  tf={ceiligBeams?.property?.tf}
+                  tw={ceiligBeams?.property?.tw}
+                  i33={ceiligBeams?.property?.i33}
+                />
+              )}
             </tbody>
           </table>
         </div>
