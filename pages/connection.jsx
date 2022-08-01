@@ -3,7 +3,7 @@ import Connections from '../src/components/Connections'
 
 function Connection() {
   return (
-    <div>
+    <div className='h-full p-4'>
         <Connections/>
     </div>
   )
