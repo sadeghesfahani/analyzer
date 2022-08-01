@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const connectionsSlice = createSlice({
     name: 'connections',
     initialState: {
-        name:'connections',
+       connections:{
         interModularConnection:[
             {name:'U1', check:false, value:""},
             {name:'U2', check:false, value:""},
@@ -20,27 +20,25 @@ const connectionsSlice = createSlice({
             {name:'R2', check:false, value:""},
             {name:'R3', check:false, value:""},
         ]
+       }
     },
     reducers: {
-        setInterModularConnection: (state, action) => {
-            state.interModularConnection = action.payload;
-        },
-        setIntraModularConnection: (state, action) => {
-            state.intraModularConnection = action.payload;
+        setConnections: (state, action) => {
+            state.connections = action.payload;
         },
         editInterModularConnection: (state, action) => {
-            const index = state.interModularConnection.findIndex((item) => item.name === action.payload.name);
-            if(action.payload.check) state.interModularConnection[index].check = action.payload.check;
-            if(action.payload.value) state.interModularConnection[index].value = action.payload.value;
+            const index = state.connections.interModularConnection.findIndex((item) => item.name === action.payload.name);
+            if(action.payload.check !== undefined) state.connections.interModularConnection[index].check = action.payload.check;
+            if(action.payload.value !== undefined) state.connections.interModularConnection[index].value = action.payload.value;
         },
         editIntraModularConnection: (state, action) => {
-            const index = state.intraModularConnection.findIndex((item) => item.name === action.payload.name);
-            if(action.payload.check) state.intraModularConnection[index].check = action.payload.check;
-            if(action.payload.value) state.intraModularConnection[index].value = action.payload.value;
+            const index = state.connections.intraModularConnection.findIndex((item) => item.name === action.payload.name);
+            if(action.payload.check !== undefined) state.connections.intraModularConnection[index].check = action.payload.check;
+            if(action.payload.value !== undefined) state.connections.intraModularConnection[index].value = action.payload.value;
         }
     }
 })
 
-export const { setInterModularConnection, setIntraModularConnection, editInterModularConnection, editIntraModularConnection } = connectionsSlice.actions;
+export const { setConnections, editInterModularConnection, editIntraModularConnection } = connectionsSlice.actions;
 
 export default connectionsSlice.reducer;
