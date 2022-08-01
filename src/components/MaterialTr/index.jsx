@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 
 function MaterialTr({ name, e, id, selectedMaterial, setSelectedMaterial }) {
-  const [nameValue, setName] = React.useState("");
-  const [EValue, setE] = React.useState("");
-  useEffect(() => {
-    setName(name);
-    setE(e);
-  }, []);
   return (
     <tr
       onClick={() => setSelectedMaterial(id)}
