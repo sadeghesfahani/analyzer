@@ -17,7 +17,7 @@ export default function Home() {
 
     return (
         <div
-            className="h-full bg-gradient-to-tr from-red-50 to-slate-50"
+            className="h-full bg-gradient-to-tr from-red-50 to-slate-50 pt-14"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => dropping(e)}
         >
