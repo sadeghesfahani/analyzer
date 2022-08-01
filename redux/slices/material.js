@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const materialSlice = createSlice({
     name:'material',
     initialState: {
-        materials: []
+        materials: [
+            {name:'A36', e:'200000', id:"1"}
+        ]
     },
     reducers: {
         addMaterial: (state, action) => {
