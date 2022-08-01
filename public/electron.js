@@ -25,16 +25,17 @@ function createWindow() {
   }
 }
 
+let materialWindow;
+
 function createMaterialWindow() {
-  const materialWindow = new BrowserWindow({
+  materialWindow = new BrowserWindow({
     width: 600,
     height: 700,
     title: 'Materials',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
   if (app.isPackaged) {
@@ -44,6 +45,29 @@ function createMaterialWindow() {
   }
 }
 
+
+function createMaterialModalWindow() {
+  const materialModalWindow = new BrowserWindow({
+    width: 600,
+    height: 700,
+    title: 'Material',
+    parent: materialWindow,
+    webPreferences: {
+      preload: __dirname + '/preload.js',
+      nodeIntegration: true,
+    }
+  });
+  if (app.isPackaged) {
+    materialModalWindow.loadFile('./.next/server/pages/materialModal.html');
+  } else {
+    materialModalWindow.loadURL('http://localhost:3000/materialModal');
+  }
+}
+
+ipcMain.on('showMaterialModal',(event, arg) => {
+  createMaterialModalWindow();
+})
+
 function createSectionsWindow() {
   const sectionWindow = new BrowserWindow({
     width: 1160,
@@ -51,9 +75,8 @@ function createSectionsWindow() {
     title: 'Sections',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
   if (app.isPackaged) {
@@ -70,9 +93,8 @@ function createConnectionsWindow() {
     title: 'Connections',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
   if (app.isPackaged) {
@@ -89,9 +111,8 @@ function createSeismicResistingFramesTypeWindow() {
     title: 'Seismic resisting frames type',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
   if (app.isPackaged) {
@@ -108,9 +129,8 @@ function createStructuresPropertiesWindow() {
     title: "Structure's properties",
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
   if (app.isPackaged) {
@@ -127,9 +147,8 @@ function createAnalyzeWindow() {
     title: "Analyze",
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
     }
   });
   if (app.isPackaged) {
