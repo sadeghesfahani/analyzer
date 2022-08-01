@@ -12,6 +12,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
