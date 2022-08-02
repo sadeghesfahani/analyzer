@@ -4,7 +4,6 @@ const materialSlice = createSlice({
     name:'material',
     initialState: {
         materials: [
-            {name:'A36', e:'200000', id:"1"}
         ]
     },
     reducers: {
