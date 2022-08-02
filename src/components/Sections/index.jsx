@@ -37,7 +37,7 @@ function Sections() {
   const joinPropertyAndMaterial = () => {
     const property = properties.find((p) => p.id === selectedProperty);
     const material = materials.find((m) => m.id === selectedMaterial);
-    const propertyAndMaterial = { material, properties:property, id: uuidv4() };
+    const propertyAndMaterial = { materials: material, properties:property, id: uuidv4() };
     dispatch(addPropertyAndMaterial({ section, propertyAndMaterial }));
     switch (section) {
       case "column":
@@ -141,33 +141,33 @@ function Sections() {
             <tbody>
               {section === "column" ? (
                 <SectionsPropertiesTr
-                  material_name={sections?.column?.material?.name}
-                  e={sections?.column?.material?.e}
-                  edi_std={sections?.column?.property?.edi_std}
-                  b={sections?.column?.property?.b}
-                  tf={sections?.column?.property?.tf}
-                  tw={sections?.column?.property?.tw}
-                  i33={sections?.column?.property?.i33}
+                  material_name={sections?.column?.materials?.name}
+                  e={sections?.column?.materials?.e}
+                  edi_std={sections?.column?.properties?.edi_std}
+                  b={sections?.column?.properties?.b}
+                  tf={sections?.column?.properties?.tf}
+                  tw={sections?.column?.properties?.tw}
+                  i33={sections?.column?.properties?.i33}
                 />
               ) : section === "floor beams" ? (
                 <SectionsPropertiesTr
-                  material_name={sections?.floorBeams?.material?.name}
-                  e={sections?.floorBeams?.material?.e}
-                  edi_std={sections?.floorBeams?.property?.edi_std}
-                  b={sections?.floorBeams?.property?.b}
-                  tf={sections?.floorBeams?.property?.tf}
-                  tw={sections?.floorBeams?.property?.tw}
-                  i33={sections?.floorBeams?.property?.i33}
+                  material_name={sections?.floorBeams?.materials?.name}
+                  e={sections?.floorBeams?.materials?.e}
+                  edi_std={sections?.floorBeams?.properties?.edi_std}
+                  b={sections?.floorBeams?.properties?.b}
+                  tf={sections?.floorBeams?.properties?.tf}
+                  tw={sections?.floorBeams?.properties?.tw}
+                  i33={sections?.floorBeams?.properties?.i33}
                 />
               ) : (
                 <SectionsPropertiesTr
-                  material_name={sections?.ceiligBeams?.material?.name}
-                  e={sections?.ceiligBeams?.material?.e}
-                  edi_std={sections?.ceiligBeams?.property?.edi_std}
-                  b={sections?.ceiligBeams?.property?.b}
-                  tf={sections?.ceiligBeams?.property?.tf}
-                  tw={sections?.ceiligBeams?.property?.tw}
-                  i33={sections?.ceiligBeams?.property?.i33}
+                  material_name={sections?.ceiligBeams?.materials?.name}
+                  e={sections?.ceiligBeams?.materials?.e}
+                  edi_std={sections?.ceiligBeams?.properties?.edi_std}
+                  b={sections?.ceiligBeams?.properties?.b}
+                  tf={sections?.ceiligBeams?.properties?.tf}
+                  tw={sections?.ceiligBeams?.properties?.tw}
+                  i33={sections?.ceiligBeams?.properties?.i33}
                 />
               )}
             </tbody>
