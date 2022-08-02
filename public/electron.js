@@ -14,8 +14,9 @@ let filePath;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    minWidth: 800,
+    minHeight: 600,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -31,15 +32,17 @@ function createWindow() {
   }
 }
 
+let materialWindow;
+
 function createMaterialWindow() {
-  const materialWindow = new BrowserWindow({
+  materialWindow = new BrowserWindow({
     width: 600,
     height: 700,
     title: 'Materials',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -49,6 +52,29 @@ function createMaterialWindow() {
   }
 }
 
+
+function createMaterialModalWindow() {
+  const materialModalWindow = new BrowserWindow({
+    width: 600,
+    height: 700,
+    title: 'Material',
+    parent: materialWindow,
+    webPreferences: {
+      preload: __dirname + '/preload.js',
+      nodeIntegration: true,
+    }
+  });
+  if (app.isPackaged) {
+    materialModalWindow.loadFile('./.next/server/pages/materialModal.html');
+  } else {
+    materialModalWindow.loadURL('http://localhost:3000/materialModal');
+  }
+}
+
+ipcMain.on('showMaterialModal',(event, arg) => {
+  createMaterialModalWindow();
+})
+
 function createSectionsWindow() {
   const sectionWindow = new BrowserWindow({
     width: 1160,
@@ -56,8 +82,8 @@ function createSectionsWindow() {
     title: 'Sections',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -76,8 +102,8 @@ function createConnectionsWindow() {
     title: 'Connections',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -100,8 +126,8 @@ function createSeismicResistingFramesTypeWindow() {
     title: 'Seismic resisting frames type',
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -124,8 +150,8 @@ function createStructuresPropertiesWindow() {
     title: "Structure's properties",
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -148,8 +174,8 @@ function createAnalyzeWindow() {
     title: "Analyze",
     parent: win,
     webPreferences: {
+      preload: __dirname + '/preload.js',
       nodeIntegration: true,
-      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {

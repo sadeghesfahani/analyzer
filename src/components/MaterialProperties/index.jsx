@@ -75,7 +75,7 @@ function MaterialProperties() {
     <div className="p-4 flex flex-col gap-4 h-full">
       <div className="p-4 flex flex-col items-center gap-4 border border-black relative">
         <SectionTitle title="New" />
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <span>Material Name :</span>
           <input value={name} onChange={(e) => setName(e.target.value)} />
         </div>
@@ -83,9 +83,10 @@ function MaterialProperties() {
           <span>Modula of Elasticty E :</span>
           <input value={e} onChange={(e) => setE(e.target.value)} />
           <span>MPa</span>
-        </div>
+        </div> */}
         <Button
-          onClick={isEditing ? editMaterial : addMaterialHandler}
+          // onClick={isEditing ? editMaterial : addMaterialHandler}
+          onClick={()=>electron.ipcRenderer.send('showMaterialModal')}
           title={isEditing ? "Update" : "Add new Material"}
         />
       </div>
