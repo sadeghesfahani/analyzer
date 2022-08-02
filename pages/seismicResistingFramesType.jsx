@@ -10,12 +10,19 @@ function SeismicResistingFramesType() {
     (state) => state.seismicResistingFramesType
   );
   const [selected, setSelected] = useState("");
+  const [fileData, setFileData] = useState()
   useEffect(() => {
-    setSelected(seismicResistingFramesType);
-  }, []);
-  const setseismicResistingFramesType = () => {
-    dispatch(setSeismicResistingFramesType(selected));
-  };
+   if(window){
+    electron.ipcRenderer.invoke("get-file-data").then(res=>{
+      setFileData(res)
+      setSelected(res.seismicResistingFramesType)
+    }).catch(e=>console.log(e))
+   }
+  },[])
+  const saveHandler = () => {
+    electron.ipcRenderer.send('save-file', {...fileData, seismicResistingFramesType: selected})
+    electron.ipcRenderer.send('close-seismicResistingFramesType-window')
+  }
   return (
     <div className="p-4 flex flex-col gap-4 h-full">
       <div className="border border-black px-2 py-8 relative">
@@ -49,7 +56,7 @@ function SeismicResistingFramesType() {
         <Button
           title="OK"
           className={"border border-black w-[100px] py-0"}
-          onClick={setseismicResistingFramesType}
+          onClick={saveHandler}
         />
       </div>
     </div>

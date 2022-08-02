@@ -8,6 +8,9 @@ const materialSlice = createSlice({
         ]
     },
     reducers: {
+        setMaterials:(state,action)=>{
+            state.materials = action.payload
+        },
         addMaterial: (state, action) => {
             state.materials.push(action.payload);
         },
@@ -20,6 +23,6 @@ const materialSlice = createSlice({
     }
 })
 
-export const { addMaterial, removeMaterial, updateMaterial } = materialSlice.actions;
+export const { setMaterials, addMaterial, removeMaterial, updateMaterial } = materialSlice.actions;
 
 export default materialSlice.reducer;

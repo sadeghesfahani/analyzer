@@ -3,19 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 const structuresPropertySlice = createSlice({
     name: "structuresProperty",
     initialState: {
-        heightOfStorey: "",
-        lengthOfSpan: ""
+        structuresProperty:{
+            heightOfStorey: "",
+            lengthOfSpan: ""    
+        }
     },
     reducers:{
+        setStructuresProperty: (state, action) => {
+            state.structuresProperty = action.payload;
+        },
         setHeightOfStorey: (state, action) => {
-            state.heightOfStorey = action.payload;
+            state.structuresProperty.heightOfStorey = action.payload;
         },
         setLengthOfSpan: (state, action) => {
-            state.lengthOfSpan = action.payload;
+            state.structuresProperty.lengthOfSpan = action.payload;
         }
     }
 })
 
-export const { setHeightOfStorey, setLengthOfSpan } = structuresPropertySlice.actions;
+export const { setStructuresProperty, setHeightOfStorey, setLengthOfSpan } = structuresPropertySlice.actions;
 
 export default structuresPropertySlice.reducer;

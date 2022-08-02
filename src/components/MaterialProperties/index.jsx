@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import MaterialTable from "../MaterialTable";
 import MaterialTr from "../MaterialTr";
@@ -9,6 +9,7 @@ import {
   addMaterial,
   removeMaterial,
   updateMaterial,
+  setMaterials
 } from "../../../redux/slices/material";
 
 function MaterialProperties() {
@@ -18,6 +19,17 @@ function MaterialProperties() {
   const dispatch = useDispatch();
   const [selectedMaterial, setSelectedMaterial] = React.useState("");
   const [isEditing, setIsEditing] = React.useState(false);
+  const [fileData, setFileData] = useState()
+  useEffect(() => {
+   if(window){
+    electron.ipcRenderer.invoke("get-file-data").then(res=>{
+      setFileData(res)
+      dispatch(setMaterials(res.materials))
+    }).catch(e=>console.log(e))
+   }
+  },[])
+
+
   const addMaterialHandler = () => {
     const newMaterial = {
       id: uuidv4(),
@@ -25,12 +37,14 @@ function MaterialProperties() {
       e,
     };
     dispatch(addMaterial(newMaterial));
+    electron.ipcRenderer.send('save-file', {...fileData, materials: [...materials, newMaterial]})
     setName("");
     setE("");
   };
 
   const deleteMaterialHandler = () => {
     dispatch(removeMaterial(selectedMaterial));
+    electron.ipcRenderer.send('save-file', {...fileData, materials: materials.filter(m => m.id !== selectedMaterial)})
     setSelectedMaterial("");
   };
 
@@ -50,6 +64,7 @@ function MaterialProperties() {
       e,
     };
     dispatch(updateMaterial(material));
+    electron.ipcRenderer.send('save-file', {...fileData, materials: materials.map(m => m.id === material.id ? material : m)})
     setIsEditing(false);
     setName("");
     setE("");
@@ -92,7 +107,7 @@ function MaterialProperties() {
           </div>
           <MaterialTable>
             {/* <MaterialTr name="A36" e="200000" /> */}
-            {materials.map((m) => (
+            {materials?.map((m) => (
               <MaterialTr
                 key={m.id}
                 id={m.id}
