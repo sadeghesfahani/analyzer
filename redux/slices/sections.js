@@ -2,7 +2,7 @@ import {
     createSlice
 } from "@reduxjs/toolkit";
 
-const sectionsSlice = createSlice({
+export const sectionsSlice = createSlice({
     name: "sections",
     initialState: {
         sections:{

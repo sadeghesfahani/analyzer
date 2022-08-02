@@ -1,10 +1,67 @@
+// import { sectionsSlice } from "../../redux/slices/sections"
+
+
 const readXlsxFile = require('read-excel-file/node')
 
+
 class Calculator {
-    constructor() {
+    constructor(sections, structuresProperty, intra, inter) {
+        this.intra = intra
+        this.inter = inter
+        this.structuresProperty = structuresProperty
+        this.sections = sections
         this.xDirection = []
         this.yDirection = []
         this.rows = []
+
+    }
+
+
+
+
+    async getResult(){
+        const Gpi = this.G(this.sections.floorBeams.materials.e,this.sections.floorBeams.properties.i33)
+        const Gpe = this.G(this.sections.ceiligBeams.materials.e,this.sections.ceiligBeams.properties.i33)
+
+        const rho = this.Rho()
+        if(rho <=0.01){
+            await this.loadFile('../../../data/Boundary_Condition_Rigid.xlsx')
+        }else if(rho >0.01 && rho <=0.05) {
+            await this.loadFile('../../../data/Boundary Condition_Rho_0_01.xlsx')
+        }else if(rho >0.05 && rho <=0.1) {
+            await this.loadFile('../../../data/Boundary Condition_Rho_0_05.xlsx')
+        }else if(rho >0.1) {
+            await this.loadFile('../../../data/Boundary Condition_0_1.xlsx')
+        }
+        const result = this.getData(Gpi,Gpe)
+        const SRev = this.SRev()
+        let report = ""
+        if(SRev >=result){
+            report = "rigid"
+        }else{
+            report = "semi-rigid"
+        }
+        return [result,report]
+    }
+
+    G(e, i33) {
+        const alpha = this.calculateAlpha(e,i33)
+        return (alpha) * ((e * i33 / this.structuresProperty.lengthOfSpan) / ((this.sections.column.materials.e * this.sections.column.properties.i33 / this.structuresProperty.heightOfStorey)))
+
+    }
+
+    SRev(){
+        return this.intra / (this.sections.column.materials.e * this.sections.column.properties.i33 / this.structuresProperty.heightOfStorey)
+    }
+
+    Rho(){
+        return (this.sections.floorBeams.materials.e,this.sections.floorBeams.properties.i33)/ (this.structuresProperty.lengthOfSpan * this.intra)
+    }
+
+    calculateAlpha(e, i33) {
+        const rStar = (1 + 4 * (e * i33) / (this.structuresProperty.lengthOfSpan * this.intra)) * (1 + 4 * (e * i33) / (this.structuresProperty.lengthOfSpan * this.inter)) - ((1 + 4 * (e * i33) / (this.structuresProperty.lengthOfSpan)) * (4 / (this.intra * this.inter)))
+        const alpha = (1 + (2 * e * i33) / (this.structuresProperty.lengthOfSpan * this.intra)) / rStar
+        return alpha
 
     }
 
@@ -50,7 +107,7 @@ class Calculator {
 
         const value1 = this.rows[upperYIndex][upperXIndex]
         const value2 = this.rows[upperYIndex + 1][upperXIndex + 1]
-        return (value1 + value2)/2
+        return (value1 + value2) / 2
     }
 
 }
