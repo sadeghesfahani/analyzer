@@ -17,45 +17,43 @@ class Calculator {
     }
 
 
-
-
-    async getResult(){
-        const Gpi = this.G(this.sections.floorBeams.materials.e,this.sections.floorBeams.properties.i33)
-        const Gpe = this.G(this.sections.ceiligBeams.materials.e,this.sections.ceiligBeams.properties.i33)
+    async getResult() {
+        const Gpi = this.G(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.i33)
+        const Gpe = this.G(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.i33)
 
         const rho = this.Rho()
-        if(rho <=0.01){
+        if (rho <= 0.01) {
             await this.loadFile('../../../data/Boundary_Condition_Rigid.xlsx')
-        }else if(rho >0.01 && rho <=0.05) {
+        } else if (rho > 0.01 && rho <= 0.05) {
             await this.loadFile('../../../data/Boundary Condition_Rho_0_01.xlsx')
-        }else if(rho >0.05 && rho <=0.1) {
+        } else if (rho > 0.05 && rho <= 0.1) {
             await this.loadFile('../../../data/Boundary Condition_Rho_0_05.xlsx')
-        }else if(rho >0.1) {
+        } else if (rho > 0.1) {
             await this.loadFile('../../../data/Boundary Condition_0_1.xlsx')
         }
-        const result = this.getData(Gpi,Gpe)
+        const result = this.getData(Gpi, Gpe)
         const SRev = this.SRev()
         let report = ""
-        if(SRev >=result){
+        if (SRev >= result) {
             report = "rigid"
-        }else{
+        } else {
             report = "semi-rigid"
         }
-        return [result,report]
+        return [result, report, Gpi, Gpe]
     }
 
     G(e, i33) {
-        const alpha = this.calculateAlpha(e,i33)
+        const alpha = this.calculateAlpha(e, i33)
         return (alpha) * ((e * i33 / this.structuresProperty.lengthOfSpan) / ((this.sections.column.materials.e * this.sections.column.properties.i33 / this.structuresProperty.heightOfStorey)))
 
     }
 
-    SRev(){
+    SRev() {
         return this.intra / (this.sections.column.materials.e * this.sections.column.properties.i33 / this.structuresProperty.heightOfStorey)
     }
 
-    Rho(){
-        return (this.sections.floorBeams.materials.e,this.sections.floorBeams.properties.i33)/ (this.structuresProperty.lengthOfSpan * this.intra)
+    Rho() {
+        return (this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.i33) / (this.structuresProperty.lengthOfSpan * this.intra)
     }
 
     calculateAlpha(e, i33) {
