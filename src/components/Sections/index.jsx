@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import MaterialTable from "../MaterialTable";
 import MaterialTr from "../MaterialTr";
@@ -7,23 +7,49 @@ import SectionTitle from "../SectionTitle";
 import SectionTr from "../SectionTr";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addPropertyAndMaterial } from "../../../redux/slices/sections";
+import {
+  addPropertyAndMaterial,
+  setSections,
+} from "../../../redux/slices/sections";
+import { setMaterials } from "../../../redux/slices/material"
 
 function Sections() {
   const dispatch = useDispatch();
   const { properties } = useSelector((state) => state.properties);
   const { materials } = useSelector((state) => state.material);
-  const { column, floorBeams, ceiligBeams } = useSelector(
-    (state) => state.sections
-  );
+  const { sections } = useSelector((state) => state.sections);
   const [section, setSection] = React.useState("column");
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [selectedProperty, setSelectedProperty] = useState("");
+  const [fileData, setFileData] = useState();
+  useEffect(() => {
+    if (window) {
+      electron.ipcRenderer
+        .invoke("get-file-data")
+        .then((res) => {
+          setFileData(res);
+          dispatch(setSections(res.sections));
+          dispatch(setMaterials(res.materials))
+        })
+        .catch((e) => console.log(e));
+    }
+  }, []);
   const joinPropertyAndMaterial = () => {
     const property = properties.find((p) => p.id === selectedProperty);
     const material = materials.find((m) => m.id === selectedMaterial);
-    const propertyAndMaterial = { material, property, id: uuidv4() };
+    const propertyAndMaterial = { material, properties:property, id: uuidv4() };
     dispatch(addPropertyAndMaterial({ section, propertyAndMaterial }));
+    switch (section) {
+      case "column":
+        electron.ipcRenderer.send('save-file', {...fileData, sections: {...sections, column: propertyAndMaterial}})
+        break;
+      case "floor beams":
+        electron.ipcRenderer.send('save-file', {...fileData, sections: {...sections, floorBeams: propertyAndMaterial}})
+        break;
+      case "ceilig beams":
+        electron.ipcRenderer.send('save-file', {...fileData, sections: {...sections, ceiligBeams: propertyAndMaterial}})
+        break;
+    }
     setSelectedMaterial("");
     setSelectedProperty("");
   };
@@ -115,33 +141,33 @@ function Sections() {
             <tbody>
               {section === "column" ? (
                 <SectionsPropertiesTr
-                  material_name={column?.material?.name}
-                  e={column?.material?.e}
-                  edi_std={column?.property?.edi_std}
-                  b={column?.property?.b}
-                  tf={column?.property?.tf}
-                  tw={column?.property?.tw}
-                  i33={column?.property?.i33}
+                  material_name={sections?.column?.material?.name}
+                  e={sections?.column?.material?.e}
+                  edi_std={sections?.column?.property?.edi_std}
+                  b={sections?.column?.property?.b}
+                  tf={sections?.column?.property?.tf}
+                  tw={sections?.column?.property?.tw}
+                  i33={sections?.column?.property?.i33}
                 />
               ) : section === "floor beams" ? (
                 <SectionsPropertiesTr
-                  material_name={floorBeams?.material?.name}
-                  e={floorBeams?.material?.e}
-                  edi_std={floorBeams?.property?.edi_std}
-                  b={floorBeams?.property?.b}
-                  tf={floorBeams?.property?.tf}
-                  tw={floorBeams?.property?.tw}
-                  i33={floorBeams?.property?.i33}
+                  material_name={sections?.floorBeams?.material?.name}
+                  e={sections?.floorBeams?.material?.e}
+                  edi_std={sections?.floorBeams?.property?.edi_std}
+                  b={sections?.floorBeams?.property?.b}
+                  tf={sections?.floorBeams?.property?.tf}
+                  tw={sections?.floorBeams?.property?.tw}
+                  i33={sections?.floorBeams?.property?.i33}
                 />
               ) : (
                 <SectionsPropertiesTr
-                  material_name={ceiligBeams?.material?.name}
-                  e={ceiligBeams?.material?.e}
-                  edi_std={ceiligBeams?.property?.edi_std}
-                  b={ceiligBeams?.property?.b}
-                  tf={ceiligBeams?.property?.tf}
-                  tw={ceiligBeams?.property?.tw}
-                  i33={ceiligBeams?.property?.i33}
+                  material_name={sections?.ceiligBeams?.material?.name}
+                  e={sections?.ceiligBeams?.material?.e}
+                  edi_std={sections?.ceiligBeams?.property?.edi_std}
+                  b={sections?.ceiligBeams?.property?.b}
+                  tf={sections?.ceiligBeams?.property?.tf}
+                  tw={sections?.ceiligBeams?.property?.tw}
+                  i33={sections?.ceiligBeams?.property?.i33}
                 />
               )}
             </tbody>

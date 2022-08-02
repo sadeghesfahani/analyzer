@@ -1,12 +1,16 @@
+const data = require("../data")
 const {
   app,
   BrowserWindow,
   ipcMain,
-  Menu
+  Menu,
+  dialog
 } = require('electron');
 const fs = require('fs')
 app.disableHardwareAcceleration()
 let win;
+
+let filePath;
 
 function createWindow() {
   win = new BrowserWindow({
@@ -17,11 +21,13 @@ function createWindow() {
       preload: __dirname + '/preload.js'
     }
   });
-
   if (app.isPackaged) {
     win.loadFile('./.next/server/pages/index.html');
   } else {
     win.loadURL('http://localhost:3000');
+    win.webContents.on('did-finish-load', () => {
+      win.webContents.send('ping', 'whoooooooh!')
+    })
   }
 }
 
@@ -33,8 +39,7 @@ function createMaterialWindow() {
     parent: win,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -52,8 +57,7 @@ function createSectionsWindow() {
     parent: win,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -63,35 +67,41 @@ function createSectionsWindow() {
   }
 }
 
+let connectionWindow;
+
 function createConnectionsWindow() {
-  const sectionWindow = new BrowserWindow({
+  connectionWindow = new BrowserWindow({
     width: 635,
     height: 400,
     title: 'Connections',
     parent: win,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
-    sectionWindow.loadFile('./.next/server/pages/connection.html');
+    connectionWindow.loadFile('./.next/server/pages/connection.html');
   } else {
-    sectionWindow.loadURL('http://localhost:3000/connection');
+    connectionWindow.loadURL('http://localhost:3000/connection');
   }
 }
 
+ipcMain.on('close-connections-window', (event, arg) => {
+  connectionWindow.close()
+})
+
+let seismicResistingFramesTypeWindow;
+
 function createSeismicResistingFramesTypeWindow() {
-  const seismicResistingFramesTypeWindow = new BrowserWindow({
+  seismicResistingFramesTypeWindow = new BrowserWindow({
     width: 380,
     height: 250,
     title: 'Seismic resisting frames type',
     parent: win,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -101,16 +111,21 @@ function createSeismicResistingFramesTypeWindow() {
   }
 }
 
+ipcMain.on('close-seismicResistingFramesType-window', (event, arg) => {
+  seismicResistingFramesTypeWindow.close()
+})
+
+let structuresPropertiesWindow;
+
 function createStructuresPropertiesWindow() {
-  const structuresPropertiesWindow = new BrowserWindow({
+  structuresPropertiesWindow = new BrowserWindow({
     width: 620,
     height: 300,
     title: "Structure's properties",
     parent: win,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -120,16 +135,21 @@ function createStructuresPropertiesWindow() {
   }
 }
 
+ipcMain.on('close-structuresProperties-window', (event, data) => {
+  structuresPropertiesWindow.close()
+})
+
+let analyzeWindow;
+
 function createAnalyzeWindow() {
-  const analyzeWindow = new BrowserWindow({
+  analyzeWindow = new BrowserWindow({
     width: 380,
     height: 320,
     title: "Analyze",
     parent: win,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
+      preload: __dirname + '/preload.js'
     }
   });
   if (app.isPackaged) {
@@ -138,6 +158,10 @@ function createAnalyzeWindow() {
     analyzeWindow.loadURL('http://localhost:3000/analyze');
   }
 }
+
+ipcMain.on('close-analyze-window', (event, arg) => {
+  analyzeWindow.close()
+})
 
 app.whenReady().then(() => {
   createWindow()
@@ -164,53 +188,111 @@ ipcMain.on('read-file', (event, path) => {
   })
 })
 
+
 const template = [{
     label: 'File',
     submenu: [{
-      role: 'quit'
-    }]
+        label: "new",
+        click() {
+          dialog.showSaveDialog({
+            filters: [{
+              name: ".yyy",
+              extensions: ["yyy"]
+            }]
+          }).then(result => {
+            fs.writeFile(result.filePath, JSON.stringify(data), function (err) {
+              if (err) {
+                console.log(err)
+              } else {
+                filePath = result.filePath
+              }
+
+            })
+
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      },
+      {
+        label: 'load',
+
+        click() {
+          dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: [{
+              name: ".yyy",
+              extensions: ["yyy"]
+            }]
+          }).then(result => {
+            filePath = result.filePaths[0]
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      },
+      {
+        role: 'quit'
+      },
+      {
+        role: 'toggleDevTools'
+      }
+    ]
   },
   {
     label: 'Define',
     submenu: [{
         label: 'Material Properties',
-        click(){
+        click() {
           createMaterialWindow()
         }
       },
       {
         label: 'Sections',
-        click(){
+        click() {
           createSectionsWindow()
         }
       },
       {
         label: 'Connections',
-        click(){
+        click() {
           createConnectionsWindow()
         }
       },
       {
-        label:'Seismic resisting frames type',
-        click(){
+        label: 'Seismic resisting frames type',
+        click() {
           createSeismicResistingFramesTypeWindow()
         }
       },
       {
-        label:"Structure's properties",
-        click(){
+        label: "Structure's properties",
+        click() {
           createStructuresPropertiesWindow()
         }
       },
     ]
   },
   {
-    label:'Analyze',
-    click(){
+    label: 'Analyze',
+    click() {
       createAnalyzeWindow()
     }
   }
 ]
+
+ipcMain.handle('get-file-data', async (event, data) => {
+  const fileData = await fs.readFileSync(filePath, 'utf8')
+  return JSON.parse(fileData)
+})
+
+ipcMain.on('save-file', (event, data) => {
+  fs.writeFile(filePath, JSON.stringify(data), function (err) {
+    if (err) {
+      console.log(err)
+    }
+  })
+})
 
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
