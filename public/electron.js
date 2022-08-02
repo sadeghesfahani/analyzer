@@ -7,6 +7,8 @@ const {
   dialog
 } = require('electron');
 const fs = require('fs')
+const Calculator = require('../src/utils/calculator')
+
 app.disableHardwareAcceleration()
 let win;
 
@@ -282,7 +284,7 @@ const template = [{
 ]
 
 ipcMain.handle('get-file-data', async (event, data) => {
-  const fileData = await fs.readFileSync(filePath, 'utf8')
+  const fileData = fs.readFileSync(filePath, 'utf8')
   return JSON.parse(fileData)
 })
 
@@ -292,6 +294,14 @@ ipcMain.on('save-file', (event, data) => {
       console.log(err)
     }
   })
+})
+
+ipcMain.handle('get-result', async (event, arg) => {
+  const fileData = fs.readFileSync(filePath, 'utf8')
+  const data = JSON.parse(fileData)
+  const calculator = new Calculator(data.sections, data.structuresProperty, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value)
+  const result = calculator.getResult()
+  return result
 })
 
 const menu = Menu.buildFromTemplate(template)
