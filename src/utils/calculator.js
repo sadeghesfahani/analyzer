@@ -23,13 +23,13 @@ class Calculator {
 
         const rho = this.Rho()
         if (rho <= 0.01) {
-            await this.loadFile('../../../data/Boundary_Condition_Rigid.xlsx')
+            await this.loadFile('./data/Boundary_Condition_Rigid.xlsx')
         } else if (rho > 0.01 && rho <= 0.05) {
-            await this.loadFile('../../../data/Boundary Condition_Rho_0_01.xlsx')
+            await this.loadFile('./data/Boundary Condition_Rho_0_01.xlsx')
         } else if (rho > 0.05 && rho <= 0.1) {
-            await this.loadFile('../../../data/Boundary Condition_Rho_0_05.xlsx')
+            await this.loadFile('./data/Boundary Condition_Rho_0_05.xlsx')
         } else if (rho > 0.1) {
-            await this.loadFile('../../../data/Boundary Condition_0_1.xlsx')
+            await this.loadFile('./data/Boundary Condition_0_1.xlsx')
         }
         const result = this.getData(Gpi, Gpe)
         const SRev = this.SRev()
@@ -111,4 +111,4 @@ class Calculator {
 }
 
 
-export default Calculator;
+module.exports = Calculator;

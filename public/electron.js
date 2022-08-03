@@ -7,6 +7,8 @@ const {
   dialog
 } = require('electron');
 const fs = require('fs')
+const Calculator = require('../src/utils/calculator')
+
 app.disableHardwareAcceleration()
 let win;
 
@@ -221,6 +223,63 @@ app.whenReady().then(() => {
   })
 })
 
+function createStabilityResultWindow() {
+  const stabilityWindow = new BrowserWindow({
+    width: 1350,
+    height:700,
+    title: 'Stability result',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  stabilityWindow.removeMenu()
+  if (app.isPackaged) {
+    stabilityWindow.loadFile('./.next/server/pages/stabilityResult.html');
+  } else {
+    stabilityWindow.loadURL('http://localhost:3000/stabilityResult');
+  }
+}
+
+function createDesignForServiceabilityResult() {
+  const designForServiceabilityResult = new BrowserWindow({
+    width: 1350,
+    height:700,
+    title: 'Design for serviceability result',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  designForServiceabilityResult.removeMenu()
+  if (app.isPackaged) {
+    designForServiceabilityResult.loadFile('./.next/server/pages/designForServiceability.html');
+  } else {
+    designForServiceabilityResult.loadURL('http://localhost:3000/designForServiceability');
+  }
+}
+
+function createSeismicPerformanceFactors() {
+  const seismicPerformanceFactors = new BrowserWindow({
+    width: 900,
+    height:480,
+    title: 'Seismic performance factors',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  seismicPerformanceFactors.removeMenu()
+  if (app.isPackaged) {
+    seismicPerformanceFactors.loadFile('./.next/server/pages/seismicPerformanceFactors.html');
+  } else {
+    seismicPerformanceFactors.loadURL('http://localhost:3000/seismicPerformanceFactors');
+  }
+}
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -327,11 +386,19 @@ const template = [{
     click() {
       createAnalyzeWindow()
     }
+  },
+  {
+    label:'Result',
+    submenu:[
+      {label:'Stability result',click(){createStabilityResultWindow()}},
+      {label:'Design for serviceability result', click(){createDesignForServiceabilityResult()}},
+      {label:'Seismic performance factors', click(){createSeismicPerformanceFactors()}}
+    ]
   }
 ]
 
 ipcMain.handle('get-file-data', async (event, data) => {
-  const fileData = await fs.readFileSync(filePath, 'utf8')
+  const fileData = fs.readFileSync(filePath, 'utf8')
   return JSON.parse(fileData)
 })
 
@@ -341,6 +408,14 @@ ipcMain.on('save-file', (event, data) => {
       console.log(err)
     }
   })
+})
+
+ipcMain.handle('get-result', async (event, arg) => {
+  const fileData = fs.readFileSync(filePath, 'utf8')
+  const data = JSON.parse(fileData)
+  const calculator = new Calculator(data.sections, data.structuresProperty, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value)
+  const result = calculator.getResult()
+  return result
 })
 
 const menu = Menu.buildFromTemplate(template)

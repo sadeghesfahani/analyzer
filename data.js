@@ -8,63 +8,51 @@ const data = {
     connections: {
         interModularConnection: [{
                 name: 'U1',
-                check: false,
                 value: ""
             },
             {
                 name: 'U2',
-                check: false,
                 value: ""
             },
             {
                 name: 'U3',
-                check: false,
                 value: ""
             },
             {
                 name: 'R1',
-                check: false,
                 value: ""
             },
             {
                 name: 'R2',
-                check: false,
                 value: ""
             },
             {
                 name: 'R3',
-                check: false,
                 value: ""
             },
         ],
         intraModularConnection: [{
                 name: 'U1',
-                check: false,
                 value: ""
             },
             {
                 name: 'U2',
-                check: false,
                 value: ""
             },
             {
                 name: 'U3',
-                check: false,
                 value: ""
             },
             {
                 name: 'R1',
-                check: false,
                 value: ""
             },
             {
                 name: 'R2',
-                check: false,
                 value: ""
             },
             {
                 name: 'R3',
-                check: false,
                 value: ""
             },
         ],

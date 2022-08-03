@@ -5,20 +5,20 @@ const connectionsSlice = createSlice({
     initialState: {
        connections:{
         interModularConnection:[
-            {name:'U1', check:false, value:""},
-            {name:'U2', check:false, value:""},
-            {name:'U3', check:false, value:""},
-            {name:'R1', check:false, value:""},
-            {name:'R2', check:false, value:""},
-            {name:'R3', check:false, value:""},
+            {name:'U1', value:""},
+            {name:'U2', value:""},
+            {name:'U3', value:""},
+            {name:'R1', value:""},
+            {name:'R2', value:""},
+            {name:'R3', value:""},
         ],
         intraModularConnection:[
-            {name:'U1', check:false, value:""},
-            {name:'U2', check:false, value:""},
-            {name:'U3', check:false, value:""},
-            {name:'R1', check:false, value:""},
-            {name:'R2', check:false, value:""},
-            {name:'R3', check:false, value:""},
+            {name:'U1', value:""},
+            {name:'U2', value:""},
+            {name:'U3', value:""},
+            {name:'R1', value:""},
+            {name:'R2', value:""},
+            {name:'R3', value:""},
         ]
        }
     },
@@ -28,13 +28,11 @@ const connectionsSlice = createSlice({
         },
         editInterModularConnection: (state, action) => {
             const index = state.connections.interModularConnection.findIndex((item) => item.name === action.payload.name);
-            if(action.payload.check !== undefined) state.connections.interModularConnection[index].check = action.payload.check;
-            if(action.payload.value !== undefined) state.connections.interModularConnection[index].value = action.payload.value;
+            state.connections.interModularConnection[index].value = action.payload.value;
         },
         editIntraModularConnection: (state, action) => {
             const index = state.connections.intraModularConnection.findIndex((item) => item.name === action.payload.name);
-            if(action.payload.check !== undefined) state.connections.intraModularConnection[index].check = action.payload.check;
-            if(action.payload.value !== undefined) state.connections.intraModularConnection[index].value = action.payload.value;
+            state.connections.intraModularConnection[index].value = action.payload.value;
         }
     }
 })
