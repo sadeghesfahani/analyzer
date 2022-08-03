@@ -174,6 +174,63 @@ app.whenReady().then(() => {
   })
 })
 
+function createStabilityResultWindow() {
+  const stabilityWindow = new BrowserWindow({
+    width: 1350,
+    height:700,
+    title: 'Stability result',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  stabilityWindow.removeMenu()
+  if (app.isPackaged) {
+    stabilityWindow.loadFile('./.next/server/pages/stabilityResult.html');
+  } else {
+    stabilityWindow.loadURL('http://localhost:3000/stabilityResult');
+  }
+}
+
+function createDesignForServiceabilityResult() {
+  const designForServiceabilityResult = new BrowserWindow({
+    width: 1350,
+    height:700,
+    title: 'Design for serviceability result',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  designForServiceabilityResult.removeMenu()
+  if (app.isPackaged) {
+    designForServiceabilityResult.loadFile('./.next/server/pages/designForServiceability.html');
+  } else {
+    designForServiceabilityResult.loadURL('http://localhost:3000/designForServiceability');
+  }
+}
+
+function createSeismicPerformanceFactors() {
+  const seismicPerformanceFactors = new BrowserWindow({
+    width: 900,
+    height:480,
+    title: 'Seismic performance factors',
+    parent: win,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  seismicPerformanceFactors.removeMenu()
+  if (app.isPackaged) {
+    seismicPerformanceFactors.loadFile('./.next/server/pages/seismicPerformanceFactors.html');
+  } else {
+    seismicPerformanceFactors.loadURL('http://localhost:3000/seismicPerformanceFactors');
+  }
+}
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -280,6 +337,14 @@ const template = [{
     click() {
       createAnalyzeWindow()
     }
+  },
+  {
+    label:'Result',
+    submenu:[
+      {label:'Stability result',click(){createStabilityResultWindow()}},
+      {label:'Design for serviceability result', click(){createDesignForServiceabilityResult()}},
+      {label:'Seismic performance factors', click(){createSeismicPerformanceFactors()}}
+    ]
   }
 ]
 
