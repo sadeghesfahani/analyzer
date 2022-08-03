@@ -38,7 +38,7 @@ function MaterialProperties() {
         <SectionTitle title="New" />
         <Button
           onClick={()=>electron.ipcRenderer.send('showMaterialModal')}
-          title={isEditing ? "Update" : "Add new Material"}
+          title={"Add new Material"}
         />
       </div>
       <div className="border border-black px-1 flex flex-col flex-1 relative">
