@@ -10,9 +10,12 @@ export default function Home() {
     function dropping(e) {
         console.log("drop");
         for (const f of e.dataTransfer.files) {
-            console.log("File(s) you dragged here: ", f.path);
+            if(f.path.endsWith(".yyy")) {
             electron.ipcRenderer.send("read-file", f.path);
+        }else{
+            alert("File not supported");
         }
+    }
     }
 
     return (
@@ -38,7 +41,7 @@ export default function Home() {
                         <div className="flex flex-col gap-3 justify-start items-center">
                             <h3 className="font-semibold text-l ">Drag and drop to load</h3>
                             <h4 className='font-semibold'>or</h4>
-                            <button className="bg-blue-500 w-full cursor-pointer hover:bg-blue-600 text-white font-semibold rounded-md px-4 py-2">Browse</button>
+                            <button onClick={()=>electron.ipcRenderer.send('load-file')} className="bg-blue-500 w-full cursor-pointer hover:bg-blue-600 text-white font-semibold rounded-md px-4 py-2">Browse</button>
                         </div>
                     </div>
                 </div>
