@@ -62,3 +62,10 @@ input {
 body{
     background: linear-gradient(to top right, rgb(254, 246, 250), rgb(248 250 252));
 }
+.border {
+    border: 2px solid rgb(113 113 122);
+    border-radius: 4px;
+}
+.add-border{
+  border: 1px solid ;
+}
