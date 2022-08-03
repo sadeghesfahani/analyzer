@@ -284,6 +284,24 @@ function createSeismicPerformanceFactors() {
   }
 }
 
+function createPdfWindow(name){
+  const pdfWindow = new BrowserWindow({
+    title: 'PDF',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  pdfWindow.removeMenu()
+    pdfWindow.loadFile(`./public/${name}`);
+}
+
+ipcMain.on('show-pdf',(event,name)=>{
+  createPdfWindow(name)
+})
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
