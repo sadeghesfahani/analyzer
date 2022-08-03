@@ -53,8 +53,9 @@ function createMaterialWindow() {
 }
 
 
+let materialModalWindow;
 function createMaterialModalWindow() {
-  const materialModalWindow = new BrowserWindow({
+  materialModalWindow = new BrowserWindow({
     width: 600,
     height: 700,
     title: 'Material',
@@ -73,6 +74,10 @@ function createMaterialModalWindow() {
     materialModalWindow.loadURL('http://localhost:3000/materialModal');
   }
 }
+
+ipcMain.on("closeMaterialModal",(event,arg)=>{
+  materialModalWindow.close()
+})
 
 ipcMain.on('showMaterialModal',(event, arg) => {
   createMaterialModalWindow();
