@@ -35,7 +35,7 @@ function MaterialProperties() {
   return (
     <div className="p-4 flex flex-col gap-4 h-full">
       <div className="p-4 flex flex-col items-center gap-4 border border-black relative">
-        <SectionTitle title="New" />
+        <SectionTitle className="text-slate-800 " title="New" />
         <Button
           onClick={()=>electron.ipcRenderer.send('showMaterialModal')}
           title={"Add new Material"}

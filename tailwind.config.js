@@ -6,7 +6,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+        colors: {
+          primary: {
+            300: "#535456",
+            400: "#3e3f42",
+            500: "#292A2D",
+            600: "#1F1F1F",
+            700: "#0F0F0F",
 
+          }
+
+        }
     },
   },
   plugins: [],

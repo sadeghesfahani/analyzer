@@ -69,6 +69,6 @@ input {
 }
 
 .material-window {
-  background: rgb(251,252,252);
-  background: linear-gradient(180deg, rgba(251,252,252,1) 0%, rgba(213,241,237,1) 92%); 
+  background: rgb(251, 246, 246);
+  background: linear-gradient(180deg, rgb(231, 231, 231) 0%, rgb(242, 188, 188) 92%);
 }
