@@ -26,9 +26,6 @@ function createWindow() {
     win.loadFile('./.next/server/pages/index.html');
   } else {
     win.loadURL('http://localhost:3000');
-    win.webContents.on('did-finish-load', () => {
-      win.webContents.send('ping', 'whoooooooh!')
-    })
   }
 }
 
@@ -40,11 +37,14 @@ function createMaterialWindow() {
     height: 700,
     title: 'Materials',
     parent: win,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  materialWindow.removeMenu()
   if (app.isPackaged) {
     materialWindow.loadFile('./.next/server/pages/material.html');
   } else {
@@ -53,23 +53,31 @@ function createMaterialWindow() {
 }
 
 
+let materialModalWindow;
 function createMaterialModalWindow() {
-  const materialModalWindow = new BrowserWindow({
+  materialModalWindow = new BrowserWindow({
     width: 600,
     height: 700,
     title: 'Material',
     parent: materialWindow,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  materialModalWindow.removeMenu()
   if (app.isPackaged) {
     materialModalWindow.loadFile('./.next/server/pages/materialModal.html');
   } else {
     materialModalWindow.loadURL('http://localhost:3000/materialModal');
   }
 }
+
+ipcMain.on("closeMaterialModal",(event,arg)=>{
+  materialModalWindow.close()
+})
 
 ipcMain.on('showMaterialModal',(event, arg) => {
   createMaterialModalWindow();
@@ -81,11 +89,14 @@ function createSectionsWindow() {
     height: 750,
     title: 'Sections',
     parent: win,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  sectionWindow.removeMenu()
   if (app.isPackaged) {
     sectionWindow.loadFile('./.next/server/pages/section.html');
   } else {
@@ -101,11 +112,14 @@ function createConnectionsWindow() {
     height: 400,
     title: 'Connections',
     parent: win,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  connectionWindow.removeMenu()
   if (app.isPackaged) {
     connectionWindow.loadFile('./.next/server/pages/connection.html');
   } else {
@@ -125,11 +139,14 @@ function createSeismicResistingFramesTypeWindow() {
     height: 250,
     title: 'Seismic resisting frames type',
     parent: win,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  seismicResistingFramesTypeWindow.removeMenu()
   if (app.isPackaged) {
     seismicResistingFramesTypeWindow.loadFile('./.next/server/pages/seismicResistingFramesType.html');
   } else {
@@ -149,11 +166,14 @@ function createStructuresPropertiesWindow() {
     height: 300,
     title: "Structure's properties",
     parent: win,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  structuresPropertiesWindow.removeMenu()
   if (app.isPackaged) {
     structuresPropertiesWindow.loadFile('./.next/server/pages/structuresProperties.html');
   } else {
@@ -173,11 +193,14 @@ function createAnalyzeWindow() {
     height: 320,
     title: "Analyze",
     parent: win,
+    modal:true,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  analyzeWindow.removeMenu()
   if (app.isPackaged) {
     analyzeWindow.loadFile('./.next/server/pages/analyze.html');
   } else {
