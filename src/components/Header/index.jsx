@@ -14,7 +14,7 @@ export default function Header() {
                 </button>
             </div >
             <div className="flex h-full">
-                <button className={btnStyle + " bg-blue-600  hover:bg-blue-700 flex gap-1 items-center justify-center"}>
+                <button onClick={()=>electron.ipcRenderer.send('show-pdf','result3.pdf')} className={btnStyle + " bg-blue-600  hover:bg-blue-700 flex gap-1 items-center justify-center"}>
                     articles
                     <MdOutlineArticle className="relative top-0.5 text-[18px]"/>
                 </button>
