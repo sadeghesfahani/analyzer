@@ -229,6 +229,7 @@ function createStabilityResultWindow() {
     height:700,
     title: 'Stability result',
     parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -248,6 +249,7 @@ function createDesignForServiceabilityResult() {
     height:700,
     title: 'Design for serviceability result',
     parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -267,6 +269,7 @@ function createSeismicPerformanceFactors() {
     height:480,
     title: 'Seismic performance factors',
     parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
