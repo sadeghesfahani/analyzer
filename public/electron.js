@@ -39,7 +39,7 @@ function createMaterialWindow() {
     height: 700,
     title: 'Materials',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -56,13 +56,14 @@ function createMaterialWindow() {
 
 
 let materialModalWindow;
+
 function createMaterialModalWindow() {
   materialModalWindow = new BrowserWindow({
     width: 600,
     height: 700,
     title: 'Material',
     parent: materialWindow,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -77,11 +78,11 @@ function createMaterialModalWindow() {
   }
 }
 
-ipcMain.on("closeMaterialModal",(event,arg)=>{
+ipcMain.on("closeMaterialModal", (event, arg) => {
   materialModalWindow.close()
 })
 
-ipcMain.on('showMaterialModal',(event, arg) => {
+ipcMain.on('showMaterialModal', (event, arg) => {
   createMaterialModalWindow();
 })
 
@@ -91,7 +92,7 @@ function createSectionsWindow() {
     height: 750,
     title: 'Sections',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -114,7 +115,7 @@ function createConnectionsWindow() {
     height: 400,
     title: 'Connections',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -141,7 +142,7 @@ function createSeismicResistingFramesTypeWindow() {
     height: 250,
     title: 'Seismic resisting frames type',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -168,7 +169,7 @@ function createStructuresPropertiesWindow() {
     height: 300,
     title: "Structure's properties",
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -195,7 +196,7 @@ function createAnalyzeWindow() {
     height: 320,
     title: "Analyze",
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -226,7 +227,7 @@ app.whenReady().then(() => {
 function createStabilityResultWindow() {
   const stabilityWindow = new BrowserWindow({
     width: 1350,
-    height:700,
+    height: 700,
     title: 'Stability result',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -246,7 +247,7 @@ function createStabilityResultWindow() {
 function createDesignForServiceabilityResult() {
   const designForServiceabilityResult = new BrowserWindow({
     width: 1350,
-    height:700,
+    height: 700,
     title: 'Design for serviceability result',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -266,7 +267,7 @@ function createDesignForServiceabilityResult() {
 function createSeismicPerformanceFactors() {
   const seismicPerformanceFactors = new BrowserWindow({
     width: 900,
-    height:480,
+    height: 480,
     title: 'Seismic performance factors',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -291,12 +292,7 @@ app.on('window-all-closed', () => {
 
 
 ipcMain.on('read-file', (event, path) => {
-  fs.readFile(path, (err, data) => {
-    if (err) {
-      console.log(err)
-    }
-    console.log(data.toString())
-  })
+    filePath = path
 })
 
 
@@ -391,11 +387,25 @@ const template = [{
     }
   },
   {
-    label:'Result',
-    submenu:[
-      {label:'Stability result',click(){createStabilityResultWindow()}},
-      {label:'Design for serviceability result', click(){createDesignForServiceabilityResult()}},
-      {label:'Seismic performance factors', click(){createSeismicPerformanceFactors()}}
+    label: 'Result',
+    submenu: [{
+        label: 'Stability result',
+        click() {
+          createStabilityResultWindow()
+        }
+      },
+      {
+        label: 'Design for serviceability result',
+        click() {
+          createDesignForServiceabilityResult()
+        }
+      },
+      {
+        label: 'Seismic performance factors',
+        click() {
+          createSeismicPerformanceFactors()
+        }
+      }
     ]
   }
 ]
@@ -410,6 +420,20 @@ ipcMain.on('save-file', (event, data) => {
     if (err) {
       console.log(err)
     }
+  })
+})
+
+ipcMain.on("load-file", (event, arg) => {
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [{
+      name: ".yyy",
+      extensions: ["yyy"]
+    }]
+  }).then(result => {
+    filePath = result.filePaths[0]
+  }).catch(err => {
+    console.log(err)
   })
 })
 
