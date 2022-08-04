@@ -27,6 +27,7 @@ function createWindow() {
       preload: __dirname + '/preload.js'
     }
   });
+  
   if (app.isPackaged) {
     win.loadFile('./.next/server/pages/index.html');
   } else {
@@ -104,7 +105,7 @@ function createSectionsWindow() {
       nodeIntegration: true,
     }
   });
-  // sectionWindow.removeMenu()
+  sectionWindow.removeMenu()
   if (app.isPackaged) {
     sectionWindow.loadFile('./.next/server/pages/section.html');
   } else {
@@ -320,10 +321,9 @@ ipcMain.on('read-file', (event, path) => {
 
 ipcMain.handle('get-properties', () => {
   const fileData = fs.readFileSync(__dirname + '/Ali.xml', 'utf8')
-  // const properties = parser.parse(fileData)
   let data;
   parser.parseString(fileData, function (err, result) {
-    data = JSON.parse(JSON.stringify(result.PROPERTY_FILE.STEEL_BOX))
+    data = [...result.PROPERTY_FILE.STEEL_BOX, ...result.PROPERTY_FILE.STEEL_CHANNEL, ...result.PROPERTY_FILE.STEEL_I_SECTION]
   });
 
   return data
@@ -336,6 +336,7 @@ const template = [{
         label: "new",
         click() {
           dialog.showSaveDialog({
+            defaultPath:'new-file',
             filters: [{
               name: ".yyy",
               extensions: ["yyy"]
@@ -474,7 +475,10 @@ ipcMain.on("load-file", (event, arg) => {
 ipcMain.handle('get-result', async (event, arg) => {
   const fileData = fs.readFileSync(filePath, 'utf8')
   const data = JSON.parse(fileData)
-  const calculator = new Calculator(data.sections, data.structuresProperty, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value)
+  const calculator = new Calculator(data.sections, {
+    heightOfStorey: data.structuresProperty.heightOfStorey * 1000,
+    lengthOfSpan: data.structuresProperty.lengthOfSpan * 1000
+  }, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value)
   const result = calculator.getResult()
   return result
 })

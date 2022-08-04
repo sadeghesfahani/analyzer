@@ -3,7 +3,13 @@ import React, { useEffect } from "react";
 function MaterialTr({ name, e, id, selectedMaterial, setSelectedMaterial }) {
   return (
     <tr
-      onClick={() => setSelectedMaterial(id)}
+      onClick={() => {
+        if(selectedMaterial === id){
+          setSelectedMaterial("")
+        }else{
+          setSelectedMaterial(id);
+        }
+      }}
       className={`cursor-pointer ${
         selectedMaterial === id ? "bg-blue-500 " : ""
       }`}
