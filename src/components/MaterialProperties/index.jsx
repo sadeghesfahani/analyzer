@@ -46,10 +46,12 @@ function MaterialProperties() {
         <h5 className="text-center py-1">Select a Material</h5>
         <div className="border border-black px-1 bg-white h-[400px] relative ">
           <div className="absolute bottom-2 right-2">
-            <Button
-              title={"Delete Material"}
-              onClick={deleteMaterialHandler}
-            />
+           {selectedMaterial && (
+             <Button
+             title={"Delete Material"}
+             onClick={deleteMaterialHandler}
+           />
+           )}
            
           </div>
           <MaterialTable>
