@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../Button";
 import MaterialTable from "../MaterialTable";
 import MaterialTr from "../MaterialTr";
 import SectionsPropertiesTr from "../SectionsPropertiesTr";
 import SectionTitle from "../SectionTitle";
 import SectionTr from "../SectionTr";
-import { useSelector, useDispatch } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-import { setProperties } from "../../../redux/slices/properties";
+import {useSelector, useDispatch} from "react-redux";
+import {v4 as uuidv4} from "uuid";
+import {setProperties} from "../../../redux/slices/properties";
 import {
-  addPropertyAndMaterial,
-  setSections,
+    addPropertyAndMaterial,
+    setSections,
 } from "../../../redux/slices/sections";
-import { setMaterials } from "../../../redux/slices/material"
+import {setMaterials} from "../../../redux/slices/material"
 
 function Sections() {
   const dispatch = useDispatch();
@@ -58,16 +58,16 @@ function Sections() {
     setSelectedProperty("");
   };
   return (
-    <div className="p-4 flex flex-col gap-4 h-full">
-      <select value={section} onChange={(e) => setSection(e.target.value)}>
-        <option value={"column"}>column</option>
+    <div className="px-6 py-4 flex flex-col gap-4 h-full max-w-6xl">
+      <select className="cursor-pointer bg-primary-500 hover:bg-primary-600 text-white rounded py-2 px-4" value={section} onChange={(e) => setSection(e.target.value)}>
+        <option value={"column"}>Columns</option>
         <option value={"floor beams"}>Floor Beams</option>
         <option value={"ceilig beams"}>Ceilig Beams</option>
       </select>
       <div className="flex gap-1 h-[350px]">
-        <div className="border border-black p-1 flex flex-col relative">
+        <div className="border border-black p-3 flex flex-col relative">
           <SectionTitle title={"Properties"} />
-          <h5 className="text-center mb-1">Select a property</h5>
+          <h5 className="text-center mb-4 font-semibold ">-Select a property-</h5>
           <div className="border border-black flex-1 bg-white overflow-y-auto">
             <table className="">
               <thead>
@@ -98,9 +98,9 @@ function Sections() {
             </table>
           </div>
         </div>
-        <div className="border border-black flex-1 p-1 flex flex-col relative">
+        <div className="border border-black flex-1 p-3 flex flex-col relative">
           <SectionTitle title="Material" />
-          <h5 className="text-center mb-1">Select a material</h5>
+          <h5 className="text-center mb-4 font-semibold ">-Select a material-</h5>
           <div className="border border-black flex-1 bg-white overflow-y-auto">
             <MaterialTable>
               {materials.map((material) => (
@@ -117,15 +117,14 @@ function Sections() {
           </div>
         </div>
       </div>
-      <div className="border border-black px-1 py-3 flex relative">
-        <SectionTitle title="Click to" />
+
         <Button
           title="Join property and material"
-          className="w-full border border-gray-500"
+          className="w-full"
           onClick={joinPropertyAndMaterial}
         />
-      </div>
-      <div className="border border-black flex-1 px-1 py-3 flex relative">
+
+      <div className="border border-black flex-1 p-3 pt-6 flex relative">
         <SectionTitle title="Properties" />
         <div className="border border-black flex-1 bg-white">
           <table>
