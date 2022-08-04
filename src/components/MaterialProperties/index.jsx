@@ -47,12 +47,15 @@ function MaterialProperties() {
         <h5 className="text-center py-6 font-semibold text-md"> -Select a Material- </h5>
         <div className="border-2 border-gray-500 px-1 bg-gray-50 rounded  h-[400px] relative ">
           <div className="absolute bottom-2 right-2">
+
+            {selectedMaterial && (
               <button
                   className="bg-red-700 border-2 border-red-600 flex items-center justify-center w-10 h-10 relative text-sm rounded-full text-white hover:bg-red-800"
                   onClick={deleteMaterialHandler}
               >
                   <MdDelete className="text-white text-2xl" />
               </button>
+               )}
            
           </div>
           <MaterialTable>
