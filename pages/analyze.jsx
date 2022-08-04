@@ -27,8 +27,8 @@ function Analyze() {
   };
   return (
     <div className='h-full p-1'>
-        <div className='border border-black gap-4 p-3 flex flex-col'>
-            <div className='border border-black relative p-4'>
+        <div className='h-full gap-14 p-3 flex flex-col items-center '>
+            <div className='border border-gray-500 rounded relative p-4 w-full'>
                 <SectionTitle title='Analyze' className='text-sm'/>
                 <div className='flex flex-col gap-4'>
                     {analyze.map((item) => (
@@ -36,9 +36,7 @@ function Analyze() {
                     ))}
                 </div>
             </div>
-            <div className='border border-black py-4 flex justify-center items-center'>
-                <Button title={'OK'} className="border border-black py-0 px-12" onClick={saveHandler}/>
-            </div>
+                <Button title={'Save'} className="w-40" onClick={saveHandler}/>
         </div>
     </div>
   )
