@@ -31,13 +31,15 @@ function StructuresProperties() {
     electron.ipcRenderer.send("close-structuresProperties-window");
   };
   return (
-    <div className="p-4 flex gap-4 h-full">
+    <div className="p-4 flex gap-4 h-full w-full items-center justify-center">
       <div className="flex flex-col gap-4 flex-[0.6]">
-        <div className="border border-black pl-8 py-8 flex flex-col gap-4 relative text-sm">
+        <div className="border border-black px-4 py-6 flex flex-col gap-4 relative text-sm">
           <SectionTitle title="Structure's property" />
-          <div className="flex gap-4">
-            <h6>Height of storey :</h6>
+          <div className="flex flex-col gap-2">
+            <label htmlFor={"heightOfStorey"} className="font-semibold ">Height of storey :</label>
             <input
+                id={"heightOfStorey"}
+                className="border"
               value={structuresProperty.heightOfStorey}
               type="text"
               onChange={(e) => {
@@ -45,22 +47,24 @@ function StructuresProperties() {
               }}
             />
           </div>
-          <div className="flex gap-4">
-            <h6>Length of span :</h6>
+          <div className="flex flex-col gap-2">
+            <label
+                htmlFor={"lengthOfSpan"}
+                className="font-semibold ">Length of span :</label>
             <input
+                id={"lengthOfSpan"}
+                className="border"
               type="text"
               value={structuresProperty.lengthOfSpan}
               onChange={(e) => dispatch(setLengthOfSpan(e.target.value))}
             />
           </div>
         </div>
-        <div className="border border-black py-4 flex justify-center items-center">
           <Button
-            title={"OK"}
-            className="border border-black py-0 px-12"
+            title={"Save"}
+            className="border border-black py-1"
             onClick={saveHandler}
           />
-        </div>
       </div>
     </div>
   );

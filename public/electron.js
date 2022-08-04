@@ -174,8 +174,12 @@ let structuresPropertiesWindow;
 
 function createStructuresPropertiesWindow() {
   structuresPropertiesWindow = new BrowserWindow({
-    width: 620,
-    height: 300,
+    width: 420,
+    height: 400,
+    minWidth: 420,
+    minHeight: 400,
+    maxWidth: 420,
+    maxHeight: 400,
     title: "Structure's properties",
     parent: win,
     modal: true,
