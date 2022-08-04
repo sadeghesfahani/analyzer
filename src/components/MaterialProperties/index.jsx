@@ -41,7 +41,7 @@ function MaterialProperties() {
           title={"Add new Material"}
         />
       </div>
-      <div className="border border-black px-1 flex flex-col flex-1 relative">
+      <div className="border border-black px-1 flex flex-col flex-1 relative overflow-y-auto">
         <SectionTitle title="Materials" />
         <h5 className="text-center py-1">Select a Material</h5>
         <div className="border border-black px-1 bg-white h-[400px] relative ">
