@@ -27,7 +27,7 @@ function createWindow() {
       preload: __dirname + '/preload.js'
     }
   });
-  
+  win.removeMenu()
   if (app.isPackaged) {
     win.loadFile('./.next/server/pages/index.html');
   } else {
@@ -57,6 +57,10 @@ function createMaterialWindow() {
     materialWindow.loadURL('http://localhost:3000/material');
   }
 }
+
+ipcMain.on('show-material-window', () => {
+  createMaterialWindow()
+})
 
 
 let materialModalWindow;
@@ -113,6 +117,10 @@ function createSectionsWindow() {
   }
 }
 
+ipcMain.on('show-section-window', () => {
+  createSectionsWindow()
+})
+
 let connectionWindow;
 
 function createConnectionsWindow() {
@@ -135,6 +143,10 @@ function createConnectionsWindow() {
     connectionWindow.loadURL('http://localhost:3000/connection');
   }
 }
+
+ipcMain.on('show-connections-window', () => {
+  createConnectionsWindow()
+})
 
 ipcMain.on('close-connections-window', (event, arg) => {
   connectionWindow.close()
@@ -167,6 +179,10 @@ function createSeismicResistingFramesTypeWindow() {
   }
 }
 
+ipcMain.on('show-seismicResistingFramesType-window', () => {
+  createSeismicResistingFramesTypeWindow()
+})
+
 ipcMain.on('close-seismicResistingFramesType-window', (event, arg) => {
   seismicResistingFramesTypeWindow.close()
 })
@@ -198,6 +214,10 @@ function createStructuresPropertiesWindow() {
   }
 }
 
+ipcMain.on('show-structuresProperties-window', () => {
+  createStructuresPropertiesWindow()
+})
+
 ipcMain.on('close-structuresProperties-window', (event, data) => {
   structuresPropertiesWindow.close()
 })
@@ -225,6 +245,10 @@ function createAnalyzeWindow() {
   }
 }
 
+ipcMain.on('show-analyze-window', () => {
+  createAnalyzeWindow()
+})
+
 ipcMain.on('close-analyze-window', (event, arg) => {
   analyzeWindow.close()
 })
@@ -232,6 +256,7 @@ ipcMain.on('close-analyze-window', (event, arg) => {
 app.whenReady().then(() => {
   createWindow()
   app.on('activate', () => {
+
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()
     }
@@ -242,6 +267,7 @@ function createStabilityResultWindow() {
   const stabilityWindow = new BrowserWindow({
     width: 1350,
     height: 700,
+    resizable: false,
     title: 'Stability result',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -258,10 +284,15 @@ function createStabilityResultWindow() {
   }
 }
 
+ipcMain.on('show-stability-result', () => {
+  createStabilityResultWindow()
+})
+
 function createDesignForServiceabilityResult() {
   const designForServiceabilityResult = new BrowserWindow({
     width: 1350,
     height: 700,
+    resizable: false,
     title: 'Design for serviceability result',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -278,10 +309,15 @@ function createDesignForServiceabilityResult() {
   }
 }
 
+ipcMain.on('show-designForServiceability-window', () => {
+  createDesignForServiceabilityResult()
+})
+
 function createSeismicPerformanceFactors() {
   const seismicPerformanceFactors = new BrowserWindow({
     width: 900,
     height: 480,
+    resizable: false,
     title: 'Seismic performance factors',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -297,6 +333,10 @@ function createSeismicPerformanceFactors() {
     seismicPerformanceFactors.loadURL('http://localhost:3000/seismicPerformanceFactors');
   }
 }
+
+ipcMain.on('show-seismicPerformanceFactors-window', () => {
+  createSeismicPerformanceFactors()
+})
 
 function createPdfWindow(name) {
   const pdfWindow = new BrowserWindow({
@@ -338,120 +378,6 @@ ipcMain.handle('get-properties', () => {
 })
 
 
-const template = [{
-    label: 'File',
-    submenu: [{
-        label: "new",
-        click() {
-          dialog.showSaveDialog({
-            defaultPath:'new-file',
-            filters: [{
-              name: ".yyy",
-              extensions: ["yyy"]
-            }]
-          }).then(result => {
-            fs.writeFile(result.filePath, JSON.stringify(data), function (err) {
-              if (err) {
-                console.log(err)
-              } else {
-                filePath = result.filePath
-              }
-
-            })
-
-          }).catch(err => {
-            console.log(err)
-          })
-        }
-      },
-      {
-        label: 'load',
-
-        click() {
-          dialog.showOpenDialog({
-            properties: ['openFile'],
-            filters: [{
-              name: ".yyy",
-              extensions: ["yyy"]
-            }]
-          }).then(result => {
-            filePath = result.filePaths[0]
-          }).catch(err => {
-            console.log(err)
-          })
-        }
-      },
-      {
-        role: 'quit'
-      },
-      {
-        role: 'toggleDevTools'
-      }
-    ]
-  },
-  {
-    label: 'Define',
-    submenu: [{
-        label: 'Material Properties',
-        click() {
-          createMaterialWindow()
-        }
-      },
-      {
-        label: 'Sections',
-        click() {
-          createSectionsWindow()
-        }
-      },
-      {
-        label: 'Connections',
-        click() {
-          createConnectionsWindow()
-        }
-      },
-      {
-        label: 'Seismic resisting frames type',
-        click() {
-          createSeismicResistingFramesTypeWindow()
-        }
-      },
-      {
-        label: "Structure's properties",
-        click() {
-          createStructuresPropertiesWindow()
-        }
-      },
-    ]
-  },
-  {
-    label: 'Analyze',
-    click() {
-      createAnalyzeWindow()
-    }
-  },
-  {
-    label: 'Result',
-    submenu: [{
-        label: 'Stability result',
-        click() {
-          createStabilityResultWindow()
-        }
-      },
-      {
-        label: 'Design for serviceability result',
-        click() {
-          createDesignForServiceabilityResult()
-        }
-      },
-      {
-        label: 'Seismic performance factors',
-        click() {
-          createSeismicPerformanceFactors()
-        }
-      }
-    ]
-  }
-]
 
 ipcMain.handle('get-file-data', async (event, data) => {
   const fileData = fs.readFileSync(filePath, 'utf8')
@@ -466,6 +392,29 @@ ipcMain.on('save-file', (event, data) => {
   })
 })
 
+ipcMain.on('create-new-file', (event) => {
+  dialog.showSaveDialog({
+    defaultPath: 'new-file',
+    filters: [{
+      name: ".yyy",
+      extensions: ["yyy"]
+    }]
+  }).then(result => {
+    fs.writeFile(result.filePath, JSON.stringify(data), function (err) {
+      if (err) {
+        console.log(err)
+      } else {
+        filePath = result.filePath
+        event.reply('open-file-handler', result.filePath)
+      }
+
+    })
+
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
 ipcMain.on("load-file", (event, arg) => {
   dialog.showOpenDialog({
     properties: ['openFile'],
@@ -475,9 +424,17 @@ ipcMain.on("load-file", (event, arg) => {
     }]
   }).then(result => {
     filePath = result.filePaths[0]
+    if (filePath) {
+      event.reply('open-file-handler', result.filePath)
+    }
   }).catch(err => {
     console.log(err)
   })
+})
+
+ipcMain.on('close-file', (event) => {
+  filePath = null
+  event.reply('close-file-handler')
 })
 
 ipcMain.handle('get-result', async (event, arg) => {
@@ -486,10 +443,7 @@ ipcMain.handle('get-result', async (event, arg) => {
   const calculator = new Calculator(data.sections, {
     heightOfStorey: data.structuresProperty.heightOfStorey * 1000,
     lengthOfSpan: data.structuresProperty.lengthOfSpan * 1000
-  }, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value)
+  }, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value, data.seismicResistingFramesType)
   const result = calculator.getResult()
   return result
 })
-
-const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
