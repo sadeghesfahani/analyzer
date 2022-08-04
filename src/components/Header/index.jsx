@@ -1,10 +1,10 @@
 import React from "react";
 import {MdOutlineArticle} from "react-icons/md";
 const btnStyle = "h-full text-white min-w-[5rem] px-4 font-semibold text-sm  rounded-sm hover:transition-all duration-800 ease-in-out ";
-const redBtn = " bg-[#3e3f42]  hover:bg-[#535456]";
+const redBtn = " bg-primary-400  hover:bg-primary-300";
 export default function Header() {
     return (
-        <header className="flex w-full h-14 z-1 justify-between items-center absolute top-0 left-0 right-0 bg-[#292A2D] px-4 py-2.5">
+        <header className="flex w-full h-14 z-1 justify-between items-center absolute top-0 left-0 right-0 bg-primary-500 px-4 py-2.5">
             <div className="flex h-full  gap-2">
                 <button className={btnStyle + redBtn}>
                     test

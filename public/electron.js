@@ -92,6 +92,8 @@ ipcMain.on('showMaterialModal', (event, arg) => {
 
 function createSectionsWindow() {
   const sectionWindow = new BrowserWindow({
+    minWidth: 1160,
+    minHeight: 750,
     width: 1160,
     height: 750,
     title: 'Sections',
