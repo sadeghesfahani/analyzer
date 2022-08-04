@@ -24,11 +24,11 @@ function SeismicResistingFramesType() {
     electron.ipcRenderer.send('close-seismicResistingFramesType-window')
   }
   return (
-    <div className="p-4 flex flex-col gap-4 h-full">
+    <div className="p-4 py-6 flex flex-col gap-4 max-w-md items-center  justify-center w-full h-full">
       <div className="border border-black px-2 py-8 relative">
         <SectionTitle title={"Seismic resisting frames type"} />
         <div className="flex justify-center gap-8 text-sm">
-          <div className="flex items-center">
+          <div className="flex flex-row items-center gap-1 ">
             <input
               type="radio"
               id="braced-frame"
@@ -39,7 +39,7 @@ function SeismicResistingFramesType() {
             />
             <label htmlFor="braced-frame">Braced frame</label>
           </div>
-          <div>
+          <div className="flex flex-row items-center gap-1 ">
             <input
               type="radio"
               id="moment-frame"
@@ -52,10 +52,10 @@ function SeismicResistingFramesType() {
           </div>
         </div>
       </div>
-      <div className="border border-black self-center py-3 px-4">
+      <div className="self-center py-3 px-4">
         <Button
-          title="OK"
-          className={"border border-black w-[100px] py-0"}
+          title="Save"
+          className={" w-[100px] "}
           onClick={saveHandler}
         />
       </div>

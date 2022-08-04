@@ -145,6 +145,10 @@ function createSeismicResistingFramesTypeWindow() {
   seismicResistingFramesTypeWindow = new BrowserWindow({
     width: 380,
     height: 250,
+    minWidth: 380,
+    minHeight: 250,
+    maxWidth: 380,
+    maxHeight: 250,
     title: 'Seismic resisting frames type',
     parent: win,
     modal: true,
