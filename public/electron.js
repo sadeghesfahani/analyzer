@@ -116,7 +116,7 @@ let connectionWindow;
 
 function createConnectionsWindow() {
   connectionWindow = new BrowserWindow({
-    width: 635,
+    width: 500,
     height: 400,
     title: 'Connections',
     parent: win,

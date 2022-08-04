@@ -36,9 +36,10 @@ function Connections() {
         electron.ipcRenderer.send('close-connections-window')
   }
   return (
-    <div className="m-1 border border-black p-4 flex flex-col gap-4 h-full">
-      <div>
+    <div className="m-1 border p-4 flex flex-col gap-7 ">
+
         <select
+            className="w-full py-2 px-4 bg-primary-600 hover:bg-primary-500 cursor-pointer rounded  text-white"
           value={selectValue}
           onChange={(e) => setSelectValue(e.target.value)}
         >
@@ -49,11 +50,11 @@ function Connections() {
             Intra modular connection
           </option>
         </select>
-      </div>
-      <div className="flex justify-between">
-        <div className="border border-black relative w-[150px]">
+
+      <div className="flex gap-4 justify-between">
+        <div className="border border-black relative">
           <SectionTitle title="Direction" className="text-sm" />
-          <div className="px-2 py-3 flex flex-col gap-2">
+          <div className="px-2 py-6 flex flex-col gap-2">
             {selectValue === "Inter modular connection"
               ? connections?.interModularConnection
                   .filter((c) => c.name[0] === "U")
@@ -77,9 +78,9 @@ function Connections() {
                   ))}
           </div>
         </div>
-        <div className="border border-black relative w-[150px]">
+        <div className="border border-black relative">
           <SectionTitle title="Direction" className="text-sm" />
-          <div className="px-2 py-3 flex flex-col gap-2">
+          <div className="px-2 py-6 flex flex-col gap-2">
           {selectValue === "Inter modular connection"
               ? connections?.interModularConnection
                   .filter((c) => c.name[0] === "R")
@@ -104,13 +105,11 @@ function Connections() {
           </div>
         </div>
       </div>
-      <div className="border border-black relative p-2 px-6 self-center">
         <Button
           title="Save and Close"
-          className="border border-black text-sm px-4"
+          className="text-sm px-4"
           onClick={saveHandler}
         />
-      </div>
     </div>
   );
 }
