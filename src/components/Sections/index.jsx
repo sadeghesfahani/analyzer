@@ -12,7 +12,7 @@ import {
   addPropertyAndMaterial,
   setSections,
 } from "../../../redux/slices/sections";
-import { setMaterials } from "../../../redux/slices/material"
+import { setMaterials } from "../../../redux/slices/material";
 
 function Sections() {
   const dispatch = useDispatch();
@@ -30,29 +30,49 @@ function Sections() {
         .then((res) => {
           setFileData(res);
           dispatch(setSections(res.sections));
-          dispatch(setMaterials(res.materials))
+          dispatch(setMaterials(res.materials));
         })
         .catch((e) => console.log(e));
-        electron.ipcRenderer.invoke('get-properties').then(res => {
-          dispatch(setProperties(res))
-        }).catch(e => console.log(e))
+      electron.ipcRenderer
+        .invoke("get-properties")
+        .then((res) => {
+          dispatch(setProperties(res));
+        })
+        .catch((e) => console.log(e));
     }
   }, []);
   const joinPropertyAndMaterial = () => {
-    const property = properties.find((p) => p.EDI_STD[0] === selectedProperty);
-    const material = materials.find((m) => m.id === selectedMaterial);
-    const propertyAndMaterial = { materials: material, properties:property, id: uuidv4() };
-    dispatch(addPropertyAndMaterial({ section, propertyAndMaterial }));
-    switch (section) {
-      case "column":
-        electron.ipcRenderer.send('save-file', {...fileData, sections: {...sections, column: propertyAndMaterial}})
-        break;
-      case "floor beams":
-        electron.ipcRenderer.send('save-file', {...fileData, sections: {...sections, floorBeams: propertyAndMaterial}})
-        break;
-      case "ceilig beams":
-        electron.ipcRenderer.send('save-file', {...fileData, sections: {...sections, ceiligBeams: propertyAndMaterial}})
-        break;
+    if (selectedMaterial && selectedProperty) {
+      const property = properties.find(
+        (p) => p.EDI_STD[0] === selectedProperty
+      );
+      const material = materials.find((m) => m.id === selectedMaterial);
+      const propertyAndMaterial = {
+        materials: material,
+        properties: property,
+        id: uuidv4(),
+      };
+      dispatch(addPropertyAndMaterial({ section, propertyAndMaterial }));
+      switch (section) {
+        case "column":
+          electron.ipcRenderer.send("save-file", {
+            ...fileData,
+            sections: { ...sections, column: propertyAndMaterial },
+          });
+          break;
+        case "floor beams":
+          electron.ipcRenderer.send("save-file", {
+            ...fileData,
+            sections: { ...sections, floorBeams: propertyAndMaterial },
+          });
+          break;
+        case "ceilig beams":
+          electron.ipcRenderer.send("save-file", {
+            ...fileData,
+            sections: { ...sections, ceiligBeams: propertyAndMaterial },
+          });
+          break;
+      }
     }
     setSelectedMaterial("");
     setSelectedProperty("");
@@ -73,8 +93,6 @@ function Sections() {
               <thead>
                 <tr>
                   <th>EDI_STD</th>
-                  <th>HT</th>
-                  <th>B</th>
                   <th>TF</th>
                   <th>TW</th>
                   <th>I33</th>
@@ -85,8 +103,6 @@ function Sections() {
                   <SectionTr
                     key={property.EDI_STD[0]}
                     edi_std={property.EDI_STD[0]}
-                    ht={property.HT[0]}
-                    b={property.B[0]}
                     tf={property.TF[0]}
                     tw={property.TW[0]}
                     i33={property.I33[0]}
@@ -134,8 +150,6 @@ function Sections() {
                 <th>Material Name</th>
                 <th>Modula of Elasticty E</th>
                 <th>EDI_STD</th>
-                <th>HT</th>
-                <th>B</th>
                 <th>TF</th>
                 <th>TW</th>
                 <th>I33</th>
@@ -147,8 +161,6 @@ function Sections() {
                   material_name={sections?.column?.materials?.name}
                   e={sections?.column?.materials?.e}
                   edi_std={sections?.column?.properties?.EDI_STD[0]}
-                  b={sections?.column?.properties?.B[0]}
-                  ht={sections?.column?.properties?.HT[0]}
                   tf={sections?.column?.properties?.TF[0]}
                   tw={sections?.column?.properties?.TW[0]}
                   i33={sections?.column?.properties?.I33[0]}
@@ -158,8 +170,6 @@ function Sections() {
                   material_name={sections?.floorBeams?.materials?.name}
                   e={sections?.floorBeams?.materials?.e}
                   edi_std={sections?.floorBeams?.properties?.EDI_STD[0]}
-                  b={sections?.floorBeams?.properties?.B[0]}
-                  ht={sections?.floorBeams?.properties?.HT[0]}
                   tf={sections?.floorBeams?.properties?.TF[0]}
                   tw={sections?.floorBeams?.properties?.TW[0]}
                   i33={sections?.floorBeams?.properties?.I33[0]}
@@ -169,8 +179,6 @@ function Sections() {
                   material_name={sections?.ceiligBeams?.materials?.name}
                   e={sections?.ceiligBeams?.materials?.e}
                   edi_std={sections?.ceiligBeams?.properties?.EDI_STD[0]}
-                  b={sections?.ceiligBeams?.properties?.B[0]}
-                  ht={sections?.ceiligBeams?.properties?.HT[0]}
                   tf={sections?.ceiligBeams?.properties?.TF[0]}
                   tw={sections?.ceiligBeams?.properties?.TW[0]}
                   i33={sections?.ceiligBeams?.properties?.I33[0]}
