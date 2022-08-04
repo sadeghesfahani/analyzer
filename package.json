@@ -21,7 +21,8 @@
     "react-redux": "^8.0.2",
     "read-excel-file": "^5.4.4",
     "uuid": "^8.3.2",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.10/xlsx-0.18.10.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.10/xlsx-0.18.10.tgz",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",
