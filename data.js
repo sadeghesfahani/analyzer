@@ -57,7 +57,7 @@ const data = {
             },
         ],
     },
-    seismicResistingFramesType: "",
+    seismicResistingFramesType: "Braced frame",
     structuresProperty: {
         heightOfStorey: "",
         lengthOfSpan: ""
