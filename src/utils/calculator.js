@@ -5,10 +5,11 @@ const readXlsxFile = require('read-excel-file/node')
 
 
 class Calculator {
-    constructor(sections, structuresProperty, intra, inter) {
+    constructor(sections, structuresProperty, intra, inter, seismicResistingFramesType) {
         this.intra = intra
         this.inter = inter
         this.structuresProperty = structuresProperty
+        this.seismicResistingFramesType = seismicResistingFramesType
         this.sections = sections
         this.xDirection = []
         this.yDirection = []
@@ -18,28 +19,50 @@ class Calculator {
 
 
     async getResult() {
-        const Gpi = this.G(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.i33)
-        const Gpe = this.G(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.i33)
+        const Gpi = this.G(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.I33[0])
+        const Gpe = this.G(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.I33[0])
 
         const rho = this.Rho()
-        if (rho <= 0.01) {
-            await this.loadFile('./data/Boundary_Condition_Rigid.xlsx')
-        } else if (rho > 0.01 && rho <= 0.05) {
-            await this.loadFile('./data/Boundary Condition_Rho_0_01.xlsx')
-        } else if (rho > 0.05 && rho <= 0.1) {
-            await this.loadFile('./data/Boundary Condition_Rho_0_05.xlsx')
-        } else if (rho > 0.1) {
-            await this.loadFile('./data/Boundary Condition_0_1.xlsx')
-        }
-        const result = this.getData(Gpi, Gpe)
-        const SRev = this.SRev()
-        let report = ""
-        if (SRev >= result) {
-            report = "rigid"
+        if (this.seismicResistingFramesType === 'Brace frame') {
+            if (rho <= 0.01) {
+                await this.loadFile('./data/Boundary_Condition_Rigid.xlsx')
+            } else if (rho > 0.01 && rho <= 0.05) {
+                await this.loadFile('./data/Boundary Condition_Rho_0_01.xlsx')
+            } else if (rho > 0.05 && rho <= 0.1) {
+                await this.loadFile('./data/Boundary Condition_Rho_0_05.xlsx')
+            } else if (rho > 0.1) {
+                await this.loadFile('./data/Boundary Condition_0_1.xlsx')
+            }
+            const result = this.getData(Gpi, Gpe)
+            const SRev = this.SRev()
+            let report = ""
+            if (SRev >= result) {
+                report = "rigid"
+            } else {
+                report = "semi-rigid"
+            }
+            return [result, report, Gpi, Gpe]
         } else {
-            report = "semi-rigid"
+
+            if (rho <= 0.01) {
+                await this.loadFile('./data/Rigid_Boundary_Rigid.xlsx')
+            } else if (rho > 0.01 && rho <= 0.2) {
+                await this.loadFile('./data/Rigid_Boundary_Rho = 0.01.xlsx')
+            } else if (rho > 0.2) {
+                await this.loadFile('./data/Rigid_Boundary_Rho = 0.2.xlsx')
+            }
+            const result = this.getData(Gpi, Gpe)
+            const SRev = this.SRev()
+            let report = ""
+            if (SRev >= result) {
+                report = "rigid"
+            } else {
+                report = "semi-rigid"
+            }
+            return [result, report, Gpi, Gpe]
+
         }
-        return [result, report, Gpi, Gpe]
+
     }
 
     G(e, i33) {
