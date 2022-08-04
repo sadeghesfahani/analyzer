@@ -1,3 +1,6 @@
+xml2js = require('xml2js');
+
+var parser = new xml2js.Parser();
 const data = require("../data")
 const {
   app,
@@ -99,7 +102,7 @@ function createSectionsWindow() {
       nodeIntegration: true,
     }
   });
-  sectionWindow.removeMenu()
+  // sectionWindow.removeMenu()
   if (app.isPackaged) {
     sectionWindow.loadFile('./.next/server/pages/section.html');
   } else {
@@ -284,7 +287,7 @@ function createSeismicPerformanceFactors() {
   }
 }
 
-function createPdfWindow(name){
+function createPdfWindow(name) {
   const pdfWindow = new BrowserWindow({
     title: 'PDF',
     parent: win,
@@ -295,10 +298,10 @@ function createPdfWindow(name){
     }
   });
   pdfWindow.removeMenu()
-    pdfWindow.loadFile(`./public/${name}`);
+  pdfWindow.loadFile(`./public/${name}`);
 }
 
-ipcMain.on('show-pdf',(event,name)=>{
+ipcMain.on('show-pdf', (event, name) => {
   createPdfWindow(name)
 })
 
@@ -310,7 +313,18 @@ app.on('window-all-closed', () => {
 
 
 ipcMain.on('read-file', (event, path) => {
-    filePath = path
+  filePath = path
+})
+
+ipcMain.handle('get-properties', () => {
+  const fileData = fs.readFileSync(__dirname + '/Ali.xml', 'utf8')
+  // const properties = parser.parse(fileData)
+  let data;
+  parser.parseString(fileData, function (err, result) {
+    data = JSON.parse(JSON.stringify(result.PROPERTY_FILE.STEEL_BOX))
+  });
+
+  return data
 })
 
 
