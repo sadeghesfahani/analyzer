@@ -61,7 +61,6 @@ function Connections() {
                     <ConnectionsCheckBox
                       key={item.name}
                       name={item.name}
-                      check={item.check}
                       value={item.value}
                       onChange={editInterModularConnection}
                     />
@@ -72,7 +71,6 @@ function Connections() {
                     <ConnectionsCheckBox
                       key={item.name}
                       name={item.name}
-                      check={item.check}
                       value={item.value}
                       onChange={editIntraModularConnection}
                     />
@@ -89,7 +87,6 @@ function Connections() {
                     <ConnectionsCheckBox
                       key={item.name}
                       name={item.name}
-                      check={item.check}
                       value={item.value}
                       onChange={editInterModularConnection}
                     />
@@ -100,7 +97,6 @@ function Connections() {
                     <ConnectionsCheckBox
                       key={item.name}
                       name={item.name}
-                      check={item.check}
                       value={item.value}
                       onChange={editIntraModularConnection}
                     />

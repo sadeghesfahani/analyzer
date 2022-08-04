@@ -42,6 +42,7 @@ function MaterialProperties() {
         />
       </div>
       <div className="border-2 border-gray-500 rounded px-1 pb-10 flex flex-col items-center flex-1 relative">
+
         <SectionTitle title="Materials" />
         <h5 className="text-center py-6 font-semibold text-md"> -Select a Material- </h5>
         <div className="border-2 border-gray-500 px-1 bg-gray-50 rounded  h-[400px] relative ">

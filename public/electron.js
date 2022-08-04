@@ -1,3 +1,6 @@
+xml2js = require('xml2js');
+
+var parser = new xml2js.Parser();
 const data = require("../data")
 const {
   app,
@@ -7,6 +10,8 @@ const {
   dialog
 } = require('electron');
 const fs = require('fs')
+const Calculator = require('../src/utils/calculator')
+
 app.disableHardwareAcceleration()
 let win;
 
@@ -37,7 +42,7 @@ function createMaterialWindow() {
     height: 700,
     title: 'Materials',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -54,13 +59,14 @@ function createMaterialWindow() {
 
 
 let materialModalWindow;
+
 function createMaterialModalWindow() {
   materialModalWindow = new BrowserWindow({
     width: 600,
     height: 700,
     title: 'Material',
     parent: materialWindow,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -75,11 +81,11 @@ function createMaterialModalWindow() {
   }
 }
 
-ipcMain.on("closeMaterialModal",(event,arg)=>{
+ipcMain.on("closeMaterialModal", (event, arg) => {
   materialModalWindow.close()
 })
 
-ipcMain.on('showMaterialModal',(event, arg) => {
+ipcMain.on('showMaterialModal', (event, arg) => {
   createMaterialModalWindow();
 })
 
@@ -89,14 +95,14 @@ function createSectionsWindow() {
     height: 750,
     title: 'Sections',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
-  sectionWindow.removeMenu()
+  // sectionWindow.removeMenu()
   if (app.isPackaged) {
     sectionWindow.loadFile('./.next/server/pages/section.html');
   } else {
@@ -112,7 +118,7 @@ function createConnectionsWindow() {
     height: 400,
     title: 'Connections',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -139,7 +145,7 @@ function createSeismicResistingFramesTypeWindow() {
     height: 250,
     title: 'Seismic resisting frames type',
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -166,7 +172,7 @@ function createStructuresPropertiesWindow() {
     height: 300,
     title: "Structure's properties",
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -193,7 +199,7 @@ function createAnalyzeWindow() {
     height: 320,
     title: "Analyze",
     parent: win,
-    modal:true,
+    modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
@@ -221,6 +227,84 @@ app.whenReady().then(() => {
   })
 })
 
+function createStabilityResultWindow() {
+  const stabilityWindow = new BrowserWindow({
+    width: 1350,
+    height: 700,
+    title: 'Stability result',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  stabilityWindow.removeMenu()
+  if (app.isPackaged) {
+    stabilityWindow.loadFile('./.next/server/pages/stabilityResult.html');
+  } else {
+    stabilityWindow.loadURL('http://localhost:3000/stabilityResult');
+  }
+}
+
+function createDesignForServiceabilityResult() {
+  const designForServiceabilityResult = new BrowserWindow({
+    width: 1350,
+    height: 700,
+    title: 'Design for serviceability result',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  designForServiceabilityResult.removeMenu()
+  if (app.isPackaged) {
+    designForServiceabilityResult.loadFile('./.next/server/pages/designForServiceability.html');
+  } else {
+    designForServiceabilityResult.loadURL('http://localhost:3000/designForServiceability');
+  }
+}
+
+function createSeismicPerformanceFactors() {
+  const seismicPerformanceFactors = new BrowserWindow({
+    width: 900,
+    height: 480,
+    title: 'Seismic performance factors',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  seismicPerformanceFactors.removeMenu()
+  if (app.isPackaged) {
+    seismicPerformanceFactors.loadFile('./.next/server/pages/seismicPerformanceFactors.html');
+  } else {
+    seismicPerformanceFactors.loadURL('http://localhost:3000/seismicPerformanceFactors');
+  }
+}
+
+function createPdfWindow(name) {
+  const pdfWindow = new BrowserWindow({
+    title: 'PDF',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  pdfWindow.removeMenu()
+  pdfWindow.loadFile(`./public/${name}`);
+}
+
+ipcMain.on('show-pdf', (event, name) => {
+  createPdfWindow(name)
+})
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
@@ -229,12 +313,18 @@ app.on('window-all-closed', () => {
 
 
 ipcMain.on('read-file', (event, path) => {
-  fs.readFile(path, (err, data) => {
-    if (err) {
-      console.log(err)
-    }
-    console.log(data.toString())
-  })
+  filePath = path
+})
+
+ipcMain.handle('get-properties', () => {
+  const fileData = fs.readFileSync(__dirname + '/Ali.xml', 'utf8')
+  // const properties = parser.parse(fileData)
+  let data;
+  parser.parseString(fileData, function (err, result) {
+    data = JSON.parse(JSON.stringify(result.PROPERTY_FILE.STEEL_BOX))
+  });
+
+  return data
 })
 
 
@@ -327,11 +417,33 @@ const template = [{
     click() {
       createAnalyzeWindow()
     }
+  },
+  {
+    label: 'Result',
+    submenu: [{
+        label: 'Stability result',
+        click() {
+          createStabilityResultWindow()
+        }
+      },
+      {
+        label: 'Design for serviceability result',
+        click() {
+          createDesignForServiceabilityResult()
+        }
+      },
+      {
+        label: 'Seismic performance factors',
+        click() {
+          createSeismicPerformanceFactors()
+        }
+      }
+    ]
   }
 ]
 
 ipcMain.handle('get-file-data', async (event, data) => {
-  const fileData = await fs.readFileSync(filePath, 'utf8')
+  const fileData = fs.readFileSync(filePath, 'utf8')
   return JSON.parse(fileData)
 })
 
@@ -341,6 +453,28 @@ ipcMain.on('save-file', (event, data) => {
       console.log(err)
     }
   })
+})
+
+ipcMain.on("load-file", (event, arg) => {
+  dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [{
+      name: ".yyy",
+      extensions: ["yyy"]
+    }]
+  }).then(result => {
+    filePath = result.filePaths[0]
+  }).catch(err => {
+    console.log(err)
+  })
+})
+
+ipcMain.handle('get-result', async (event, arg) => {
+  const fileData = fs.readFileSync(filePath, 'utf8')
+  const data = JSON.parse(fileData)
+  const calculator = new Calculator(data.sections, data.structuresProperty, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value)
+  const result = calculator.getResult()
+  return result
 })
 
 const menu = Menu.buildFromTemplate(template)

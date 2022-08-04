@@ -7,6 +7,7 @@ import SectionTitle from "../SectionTitle";
 import SectionTr from "../SectionTr";
 import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import { setProperties } from "../../../redux/slices/properties";
 import {
   addPropertyAndMaterial,
   setSections,
@@ -32,12 +33,15 @@ function Sections() {
           dispatch(setMaterials(res.materials))
         })
         .catch((e) => console.log(e));
+        electron.ipcRenderer.invoke('get-properties').then(res => {
+          dispatch(setProperties(res))
+        }).catch(e => console.log(e))
     }
   }, []);
   const joinPropertyAndMaterial = () => {
-    const property = properties.find((p) => p.id === selectedProperty);
+    const property = properties.find((p) => p.EDI_STD[0] === selectedProperty);
     const material = materials.find((m) => m.id === selectedMaterial);
-    const propertyAndMaterial = { material, properties:property, id: uuidv4() };
+    const propertyAndMaterial = { materials: material, properties:property, id: uuidv4() };
     dispatch(addPropertyAndMaterial({ section, propertyAndMaterial }));
     switch (section) {
       case "column":
@@ -64,8 +68,8 @@ function Sections() {
         <div className="border border-black p-1 flex flex-col relative">
           <SectionTitle title={"Properties"} />
           <h5 className="text-center mb-1">Select a property</h5>
-          <div className="border border-black flex-1 bg-white">
-            <table>
+          <div className="border border-black flex-1 bg-white overflow-y-auto">
+            <table className="">
               <thead>
                 <tr>
                   <th>EDI_STD</th>
@@ -76,17 +80,16 @@ function Sections() {
                   <th>I33</th>
                 </tr>
               </thead>
-              <tbody>
-                {properties.map((property) => (
+              <tbody className="">
+                {properties?.map((property) => (
                   <SectionTr
-                    key={property.id}
-                    id={property.id}
-                    edi_std={property.edi_std}
-                    ht={property.ht}
-                    b={property.b}
-                    tf={property.tf}
-                    tw={property.tw}
-                    i33={property.i33}
+                    key={property.EDI_STD[0]}
+                    edi_std={property.EDI_STD[0]}
+                    ht={property.HT[0]}
+                    b={property.B[0]}
+                    tf={property.TF[0]}
+                    tw={property.TW[0]}
+                    i33={property.I33[0]}
                     selectedProperty={selectedProperty}
                     setSelectedProperty={setSelectedProperty}
                   />
@@ -98,7 +101,7 @@ function Sections() {
         <div className="border border-black flex-1 p-1 flex flex-col relative">
           <SectionTitle title="Material" />
           <h5 className="text-center mb-1">Select a material</h5>
-          <div className="border border-black flex-1 bg-white">
+          <div className="border border-black flex-1 bg-white overflow-y-auto">
             <MaterialTable>
               {materials.map((material) => (
                 <MaterialTr
@@ -141,33 +144,36 @@ function Sections() {
             <tbody>
               {section === "column" ? (
                 <SectionsPropertiesTr
-                  material_name={sections?.column?.material?.name}
-                  e={sections?.column?.material?.e}
-                  edi_std={sections?.column?.property?.edi_std}
-                  b={sections?.column?.property?.b}
-                  tf={sections?.column?.property?.tf}
-                  tw={sections?.column?.property?.tw}
-                  i33={sections?.column?.property?.i33}
+                  material_name={sections?.column?.materials?.name}
+                  e={sections?.column?.materials?.e}
+                  edi_std={sections?.column?.properties?.EDI_STD[0]}
+                  b={sections?.column?.properties?.B[0]}
+                  ht={sections?.column?.properties?.HT[0]}
+                  tf={sections?.column?.properties?.TF[0]}
+                  tw={sections?.column?.properties?.TW[0]}
+                  i33={sections?.column?.properties?.I33[0]}
                 />
               ) : section === "floor beams" ? (
                 <SectionsPropertiesTr
-                  material_name={sections?.floorBeams?.material?.name}
-                  e={sections?.floorBeams?.material?.e}
-                  edi_std={sections?.floorBeams?.property?.edi_std}
-                  b={sections?.floorBeams?.property?.b}
-                  tf={sections?.floorBeams?.property?.tf}
-                  tw={sections?.floorBeams?.property?.tw}
-                  i33={sections?.floorBeams?.property?.i33}
+                  material_name={sections?.floorBeams?.materials?.name}
+                  e={sections?.floorBeams?.materials?.e}
+                  edi_std={sections?.floorBeams?.properties?.EDI_STD[0]}
+                  b={sections?.floorBeams?.properties?.B[0]}
+                  ht={sections?.floorBeams?.properties?.HT[0]}
+                  tf={sections?.floorBeams?.properties?.TF[0]}
+                  tw={sections?.floorBeams?.properties?.TW[0]}
+                  i33={sections?.floorBeams?.properties?.I33[0]}
                 />
               ) : (
                 <SectionsPropertiesTr
-                  material_name={sections?.ceiligBeams?.material?.name}
-                  e={sections?.ceiligBeams?.material?.e}
-                  edi_std={sections?.ceiligBeams?.property?.edi_std}
-                  b={sections?.ceiligBeams?.property?.b}
-                  tf={sections?.ceiligBeams?.property?.tf}
-                  tw={sections?.ceiligBeams?.property?.tw}
-                  i33={sections?.ceiligBeams?.property?.i33}
+                  material_name={sections?.ceiligBeams?.materials?.name}
+                  e={sections?.ceiligBeams?.materials?.e}
+                  edi_std={sections?.ceiligBeams?.properties?.EDI_STD[0]}
+                  b={sections?.ceiligBeams?.properties?.B[0]}
+                  ht={sections?.ceiligBeams?.properties?.HT[0]}
+                  tf={sections?.ceiligBeams?.properties?.TF[0]}
+                  tw={sections?.ceiligBeams?.properties?.TW[0]}
+                  i33={sections?.ceiligBeams?.properties?.I33[0]}
                 />
               )}
             </tbody>
