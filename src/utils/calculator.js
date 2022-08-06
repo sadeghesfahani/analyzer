@@ -21,6 +21,10 @@ class Calculator {
     async getResult() {
         const Gpi = this.G(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.I33[0])
         const Gpe = this.G(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.I33[0])
+        console.log("Gpi",Gpi,"Gpe", Gpe)
+        console.log(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.I33[0])
+        console.log(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.I33[0])
+
 
         const rho = this.Rho()
         if (this.seismicResistingFramesType === 'Brace frame') {
