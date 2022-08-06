@@ -1,65 +1,114 @@
-import React from 'react'
-import Image from 'next/image'
+import React from "react";
+import Image from "next/image";
 
-const Line = () => ("-------------------------------------------------------")
+const Line = () => "-------------------------------------------------------";
 
-function Result() {
+function Result({
+  bottom,
+  left,
+  coI33,
+  coMe,
+  fI33,
+  fMe,
+  ceI33,
+  ceMe,
+  gpi,
+  gpe,
+  u1,
+  u2,
+  u3,
+  r1,
+  r2,
+  r3,
+  intraU1,
+  intraU2,
+  intraU3,
+  intraR1,
+  intraR2,
+  intraR3,
+  analyze1,
+  analyze2,
+  analyze3,
+  heightOfStorey,
+  lengthOfSpan,
+  seismicResistingFramesType
+}) {
   return (
-    <div className='flex h-full'>
-        <div className='flex-1 h-full'>
-            <img src="result2.png" alt="" className='h-full'/>
-        </div>
-        <div className='flex-1 border h-full text-xs overflow-y-auto px-1'>
-            <Line/>
-            <p>Project_Name : untitled</p>
-            <Line/>
-            <p>Gpi =(Material_Ecolumn*Section_I33column/Lcolumn) / (Material_Efloor beam*Section_I33 floor beam/Lfloorbeam)</p>
-            <p>Gpi=(200000000000.00*1.23/3.00) / (199947.98*35.70/6.00) = 68925.49</p>
-            <Line/>
-            <p>Gpe=(Material_ Ecolumn*Section_I33column/Lcolumn) / (Material_ Eceiling beam*Section_I33 ceiling beam/Lceilingbeam)</p>
-            <p>Gpe=(200000000000.00*1.23/3.00) / (199947.98*6.59/6.00) = 373390.00</p>
-            <Line/>
-            <p>Lcolumn : 3</p>
-            <p>Lfloor_beam : 6</p>
-            <p>Lceiling_beam : 6</p>
-            <Line/>
-            <p>Section - Columns  - i33 : 1.23</p>
-            <p>Section - Floor    - i33 : 35.7</p>
-            <p>Section - Ceiling  - i33 : 6.59</p>
-            <p>Material - Columns - Me  : 200000000000</p>
-            <p>Material - Floor   - Me  : 199947.98</p>
-            <p>Material - Ceiling - Me  : 199947.98</p>
-            <Line/>
-            <p>inter - U1 : True:22</p>
-            <p>inter - U2 : True:10</p>
-            <p>inter - U3 : True:33</p>
-            <p>inter - R1 : True:1000000</p>
-            <p>inter - R2 : True:1500000</p>
-            <p>inter - R2 : True:2000000</p>
-            <Line/>
-            <p>intra - U1 : False:100</p>
-            <p>intra - U2 : False:1.234</p>
-            <p>intra - U3 : False:120</p>
-            <p>intra - R1 : True:3000000</p>
-            <p>intra - R2 : True:3500000</p>
-            <p>intra - R2 : True:4000000</p>
-            <Line/>
-            <p>Analyze: Design_For_Ultimate_Limit_State  : True</p>
-            <p>Analyze: Design_For_Service_Ability  : False</p>
-            <p>Analyze: Seismic_Performance_Factors  : False</p>
-            <Line/>
-            <p>Structure__Height_of_storey  : 3</p>
-            <p>Structure__Length_of_span  : 6</p>
-            <Line/>
-            <p>Seismic_resisting_frames_type__Braced  : -1</p>
-            <p>Seismic_resisting_frames_type__Moment  : 0</p>
-            <Line/>
-        </div>
-        <div className='flex-1 h-full'>
-            <img src="result-1.png" alt="" className='h-full'/>
-        </div>
+    <div className="flex h-full">
+      <div className="flex-1 h-full">
+        <img src="result2.png" alt="" className="h-full" />
+      </div>
+      <div className="flex-1 border h-full text-xs overflow-y-auto px-1">
+        <Line />
+        <p>Project_Name : untitled</p>
+        <Line />
+        <p>
+          Gpi =(Material_Ecolumn*Section_I33column/Lcolumn) / (Material_Efloor
+          beam*Section_I33 floor beam/Lfloorbeam)
+        </p>
+        <p>
+          Gpi=({coMe}*{coI33}/3.00) / ({fMe}*{fI33}/6.00) = {gpi}
+        </p>
+        <Line />
+        <p>
+          Gpe=(Material_ Ecolumn*Section_I33column/Lcolumn) / (Material_
+          Eceiling beam*Section_I33 ceiling beam/Lceilingbeam)
+        </p>
+        <p>
+          Gpe=({coMe}*{coI33}/3.00) / ({ceMe}*{ceI33}/6.00) = {gpe}
+        </p>
+        <Line />
+        <p>Lcolumn : 3</p>
+        <p>Lfloor_beam : 6</p>
+        <p>Lceiling_beam : 6</p>
+        <Line />
+        <p>Section - Columns - i33 : {coI33}</p>
+        <p>Section - Floor - i33 : {fI33}</p>
+        <p>Section - Ceiling - i33 : {ceI33}</p>
+        <p>Material - Columns - Me : {coMe}</p>
+        <p>Material - Floor - Me : {fMe}</p>
+        <p>Material - Ceiling - Me : {ceMe}</p>
+        <Line />
+        <p>inter - U1 : {u1}</p>
+        <p>inter - U2 : {u2}</p>
+        <p>inter - U3 : {u3}</p>
+        <p>inter - R1 : {r1}</p>
+        <p>inter - R2 : {r2}</p>
+        <p>inter - R2 : {r3}</p>
+        <Line />
+        <p>intra - U1 : {intraU1}</p>
+        <p>intra - U2 : {intraU2}</p>
+        <p>intra - U3 : {intraU3}</p>
+        <p>intra - R1 : {intraR1}</p>
+        <p>intra - R2 : {intraR2}</p>
+        <p>intra - R2 : {intraR3}</p>
+        <Line />
+        <p>
+          Analyze: Design_For_Ultimate_Limit_State :{" "}
+          {analyze1 ? "True" : "False"}
+        </p>
+        <p>
+          Analyze: Design_For_Service_Ability : {analyze2 ? "True" : "False"}
+        </p>
+        <p>
+          Analyze: Seismic_Performance_Factors : {analyze3 ? "True" : "False"}
+        </p>
+        <Line />
+        <p>Structure__Height_of_storey : {heightOfStorey}</p>
+        <p>Structure__Length_of_span : {lengthOfSpan}</p>
+        <Line />
+        <p>Seismic_resisting_frames_type : {seismicResistingFramesType}</p>
+        <Line />
+      </div>
+      <div className="flex-1 h-full relative">
+        <img src="result-1.png" alt="" className="h-full" />
+        <div
+          style={{ bottom: bottom, left: left }}
+          className={`bg-blue-500 absolute p-3 rounded-full `}
+        ></div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Result
+export default Result;
