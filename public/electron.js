@@ -276,7 +276,7 @@ function createStabilityResultWindow() {
       preload: __dirname + '/preload.js'
     }
   });
-  stabilityWindow.removeMenu()
+  // stabilityWindow.removeMenu()
   if (app.isPackaged) {
     stabilityWindow.loadFile('./.next/server/pages/stabilityResult.html');
   } else {

@@ -67,16 +67,16 @@ class Calculator {
 
     G(e, i33) {
         const alpha = this.calculateAlpha(e, i33)
-        return (alpha) * ((e * i33 / this.structuresProperty.lengthOfSpan) / ((this.sections.column.materials.e * this.sections.column.properties.i33 / this.structuresProperty.heightOfStorey)))
+        return (alpha) * ((e * i33 / this.structuresProperty.lengthOfSpan) / ((this.sections.column.materials.e * this.sections.column.properties.I33[0] / this.structuresProperty.heightOfStorey)))
 
     }
 
     SRev() {
-        return this.intra / (this.sections.column.materials.e * this.sections.column.properties.i33 / this.structuresProperty.heightOfStorey)
+        return this.intra / (this.sections.column.materials.e * this.sections.column.properties.I33[0] / this.structuresProperty.heightOfStorey)
     }
 
     Rho() {
-        return (this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.i33) / (this.structuresProperty.lengthOfSpan * this.intra)
+        return (this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.I33[0]) / (this.structuresProperty.lengthOfSpan * this.intra)
     }
 
     calculateAlpha(e, i33) {
