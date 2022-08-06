@@ -276,7 +276,7 @@ function createStabilityResultWindow() {
       preload: __dirname + '/preload.js'
     }
   });
-  // stabilityWindow.removeMenu()
+  stabilityWindow.removeMenu()
   if (app.isPackaged) {
     stabilityWindow.loadFile('./.next/server/pages/stabilityResult.html');
   } else {
@@ -443,7 +443,7 @@ ipcMain.handle('get-result', async (event, arg) => {
   const calculator = new Calculator(data.sections, {
     heightOfStorey: data.structuresProperty.heightOfStorey * 1000,
     lengthOfSpan: data.structuresProperty.lengthOfSpan * 1000
-  }, data.connections.interModularConnection[5].value, data.connections.intraModularConnection[5].value, data.seismicResistingFramesType)
+  }, data.connections.intraModularConnection[5].value, data.connections.interModularConnection[5].value, data.seismicResistingFramesType)
   const result = calculator.getResult()
   return result
 })
