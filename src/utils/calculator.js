@@ -21,10 +21,6 @@ class Calculator {
     async getResult() {
         const Gpi = this.G(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.I33[0])
         const Gpe = this.G(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.I33[0])
-        console.log("Gpi",Gpi,"Gpe", Gpe)
-        console.log(this.sections.floorBeams.materials.e, this.sections.floorBeams.properties.I33[0])
-        console.log(this.sections.ceiligBeams.materials.e, this.sections.ceiligBeams.properties.I33[0])
-
 
         const rho = this.Rho()
         if (this.seismicResistingFramesType === 'Brace frame') {
@@ -70,8 +66,10 @@ class Calculator {
     }
 
     G(e, i33) {
+        e = Number(e)
+        i33 = Number(i33)
         const alpha = this.calculateAlpha(e, i33)
-        return (alpha) * ((e * i33 / this.structuresProperty.lengthOfSpan) / ((this.sections.column.materials.e * this.sections.column.properties.I33[0] / this.structuresProperty.heightOfStorey)))
+        return (alpha) * ((e * i33 / +this.structuresProperty.lengthOfSpan) / ((+this.sections.column.materials.e * +this.sections.column.properties.I33[0] / +this.structuresProperty.heightOfStorey)))
 
     }
 
@@ -84,8 +82,10 @@ class Calculator {
     }
 
     calculateAlpha(e, i33) {
-        const rStar = (1 + 4 * (e * i33) / (this.structuresProperty.lengthOfSpan * this.intra)) * (1 + 4 * (e * i33) / (this.structuresProperty.lengthOfSpan * this.inter)) - ((1 + 4 * (e * i33) / (this.structuresProperty.lengthOfSpan)) * (4 / (this.intra * this.inter)))
-        const alpha = (1 + (2 * e * i33) / (this.structuresProperty.lengthOfSpan * this.intra)) / rStar
+        e = Number(e)
+        i33 = Number(i33)
+        const rStar = (1 + 4 * (e * i33) / (+this.structuresProperty.lengthOfSpan * +this.intra)) * (1 + 4 * (e * i33) / (+this.structuresProperty.lengthOfSpan * +this.inter)) - ((1 + 4 * (e * i33) / (+this.structuresProperty.lengthOfSpan)) * (4 / (+this.intra * +this.inter)))
+        const alpha = (1 + (2 * e * i33) / (+this.structuresProperty.lengthOfSpan * +this.intra)) / rStar
         return alpha
 
     }
