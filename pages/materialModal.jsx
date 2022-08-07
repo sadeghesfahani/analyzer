@@ -108,7 +108,7 @@ function MaterialModal() {
                             <span>Modulus of Elasticity, E</span>
                             <div className="flex gap-1">
                                 <input value={e} onChange={(e) => setE(e.target.value)} type="text"
-                                       defaultValue="205000" className={inputStyles}/>
+                                       className={inputStyles}/>
                                 <span>MPa</span>
                             </div>
                         </div>
