@@ -74,14 +74,14 @@ function Result({
         <p>inter - U3 : {u3}</p>
         <p>inter - R1 : {r1}</p>
         <p>inter - R2 : {r2}</p>
-        <p>inter - R2 : {r3}</p>
+        <p>inter - R3 : {r3}</p>
         <Line />
         <p>intra - U1 : {intraU1}</p>
         <p>intra - U2 : {intraU2}</p>
         <p>intra - U3 : {intraU3}</p>
         <p>intra - R1 : {intraR1}</p>
         <p>intra - R2 : {intraR2}</p>
-        <p>intra - R2 : {intraR3}</p>
+        <p>intra - R3 : {intraR3}</p>
         <Line />
         <p>
           Analyze: Design_For_Ultimate_Limit_State :{" "}
