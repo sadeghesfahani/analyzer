@@ -84,7 +84,7 @@ function Sections() {
       <select className="cursor-pointer bg-primary-500 hover:bg-primary-600 text-white rounded py-2 px-4" value={section} onChange={(e) => setSection(e.target.value)}>
         <option value={"column"}>Columns</option>
         <option value={"floor beams"}>Floor Beams</option>
-        <option value={"ceilig beams"}>Ceilig Beams</option>
+        <option value={"ceilig beams"}>Ceiling Beams</option>
       </select>
       <div className="flex gap-1 h-[350px]">
         <div className="border border-black p-3 flex flex-col relative">
