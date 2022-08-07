@@ -11,6 +11,9 @@
     "lint": "next lint",
     "electron": "electron ."
   },
+  "build":{
+    "icon": "./.next/static/icon.png"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
     "electron": "^19.0.10",
