@@ -20,8 +20,9 @@ function MaterialProperties() {
       setFileData(res)
       dispatch(setMaterials(res.materials))
     }).catch(e=>console.log(e))
+    
    }
-  },[materials])
+  },[])
 
 
   const deleteMaterialHandler = () => {
@@ -45,7 +46,7 @@ function MaterialProperties() {
 
         <SectionTitle title="Materials" />
         <h5 className="text-center py-6 font-semibold text-md"> -Select a Material- </h5>
-        <div className="border-2 border-gray-500 px-1 bg-gray-50 rounded  h-[400px] relative ">
+        <div className="border-2 border-gray-500 px-1 bg-gray-50 rounded  h-[400px] relative overflow-y-auto">
           <div className="absolute bottom-2 right-2">
 
             {selectedMaterial && (
