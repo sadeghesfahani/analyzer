@@ -87,7 +87,8 @@ function createMaterialModalWindow() {
 }
 
 ipcMain.on("closeMaterialModal", (event, arg) => {
-  materialModalWindow.close()
+  materialWindow.close()
+  createMaterialWindow()
 })
 
 ipcMain.on('showMaterialModal', (event, arg) => {
