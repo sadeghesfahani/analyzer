@@ -11,22 +11,22 @@ export default function Header({otherMenus}) {
   return (
     <header className="flex w-full h-14 z-1 justify-between items-center absolute top-0 left-0 right-0 bg-primary-500 px-4 py-2.5">
       <div className="flex h-full  gap-2">
-        <Dropdown title="file">
+        <Dropdown title="File">
           {!otherMenus ? (
             <>
               <a
             className={dropdowned}
             onClick={() => showWindow("create-new-file")}
           >
-            new
+            New
           </a>
           <a className={dropdowned} onClick={() => showWindow("load-file")}>
-            load
+            Load
           </a>
             </>
           ):
           <a className={dropdowned} onClick={()=>showWindow('close-file')}>
-            close
+            Close
           </a>
         }
         </Dropdown>
