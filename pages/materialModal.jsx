@@ -14,13 +14,19 @@ function MaterialModal() {
     const dispatch = useDispatch()
     const {materials} = useSelector((state) => state.material);
     const [fileData, setFileData] = useState()
+    const [material, setMaterial] = useState(null)
     const [name, setName] = useState('')
     const [e, setE] = useState('205000')
+    const [weight, setWeight] = useState("")
     useEffect(() => {
         if (window) {
             electron.ipcRenderer.invoke("get-file-data").then(res => {
                 setFileData(res)
-                dispatch(setMaterials(res.materials))
+                res.temp.materials ? dispatch(setMaterials(res.temp.materials)) :dispatch(setMaterials(res.materials))
+                res.temp.material && 
+                    setMaterial(res.temp.material)
+                    setName(res.temp.material.name)
+                    setE(res.temp.material.e)
             }).catch(e => console.log(e))
         }
     }, [])
@@ -31,11 +37,17 @@ function MaterialModal() {
             e,
         };
         dispatch(addMaterial(newMaterial));
-        electron.ipcRenderer.send('save-file', {...fileData, materials: [...materials, newMaterial]})
+        electron.ipcRenderer.send('save-file', {...fileData, temp: {...fileData.temp, materials:[...materials, newMaterial]}})
         electron.ipcRenderer.send('closeMaterialModal')
         setName("");
         setE("");
     };
+
+    const updateMaterialHandler = () => {
+        electron.ipcRenderer.send('save-file',{...fileData, temp:{...fileData.temp, material:null,
+        materials: materials.map(m => m.id === material.id ? {...m, name, e} : m)}})
+        electron.ipcRenderer.send('closeMaterialModal')
+    }
 
     return (
         <div className="p-4 material-window">
@@ -55,18 +67,6 @@ function MaterialModal() {
                             </select>
                         </div>
                         <div className={rowStyles}>
-                            <label>Directional Symmetry Type</label>
-                            <select id="" className={inputStyles}>
-                                <option value="">Isotropic</option>
-                            </select>
-                        </div>
-                        <div className={rowStyles}>
-                            <label>Material Display Color</label>
-                            <div className="w-[180px] flex">
-                                <input type="color" className="w-full cursor-pointer rounded "/>
-                            </div>
-                        </div>
-                        <div className={rowStyles}>
                             <label>Material Notes</label>
                             <Button title="Modify/Show Notes" className="w-[180px]"/>
                         </div>
@@ -76,26 +76,16 @@ function MaterialModal() {
                     <SectionTitle title="Material Weight and Mass"/>
                     <div className={boxStyles}>
                         <div className={rowStyles}>
-                            <label>
-                                <input type="radio" name="weight"/>
-                                <span>Specify Weight Density</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="weight"/>
-                                <span>Specify Mass Density</span>
-                            </label>
-                        </div>
-                        <div className={rowStyles}>
                             <span>Weight per Unit Volume</span>
                             <div className="flex gap-1 -translate-x-5">
-                                <input type="text" defaultValue="0.000077" className={smallInputStyles}/>
+                                <input type="text" value={weight} onChange={e=>setWeight(prev=>isNaN(+e.target.value) ? prev : e.target.value)} className={smallInputStyles}/>
                                 <span>N/mm³</span>
                             </div>
                         </div>
                         <div className={rowStyles}>
                             <span>Mass per Unit Volume</span>
                             <div className="flex gap-1">
-                                <input type="text" defaultValue="7.849E-09" className={smallInputStyles}/>
+                                <input type="text" value={(+weight / 9.81).toFixed(2)} className={smallInputStyles} disabled/>
                                 <span>N-s²/mm⁴</span>
                             </div>
                         </div>
@@ -132,21 +122,26 @@ function MaterialModal() {
                                 <span>MPa</span>
                             </div>
                         </div>
+                        <div className={rowStyles}>
+                            <span>Yield Stress, Fy</span>
+                            <div className="flex gap-1 -translate-x-[1px]">
+                                <input type="text" className={inputStyles}/>
+                                <span>MPa</span>
+                            </div>
+                        </div>
+                        <div className={rowStyles}>
+                            <span>Ultimate Stress, Fu</span>
+                            <div className="flex gap-1 -translate-x-[1px]">
+                                <input type="text" className={inputStyles}/>
+                                <span>MPa</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div className="border py-6 relative flex justify-center">
-                    <SectionTitle title="Design Property Data"/>
-                    <Button title='Modify/Show Material Property Design Data' className="translate-y-1"/>
-                </div>
-                <div className="border py-6 relative flex justify-center gap-4">
-                    <SectionTitle title="Advanced Material Property Data"/>
-                    <Button title='Nonlinear Material Data' className="translate-y-1"/>
-                    <Button title='Material Damping Properties' className="translate-y-1"/>
                 </div>
                 <div className="flex justify-end gap-2">
                     <Button title='Cancel' className="w-20 bg-red-400 hover:bg-red-600 "
                             onClick={() => electron.ipcRenderer.send('closeMaterialModal')}/>
-                    <Button title="Save" className="w-20" onClick={addMaterialHandler}/>
+                    <Button title="OK" className="w-20" onClick={material ? updateMaterialHandler :addMaterialHandler}/>
                 </div>
             </div>
         </div>
