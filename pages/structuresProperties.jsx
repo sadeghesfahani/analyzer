@@ -60,11 +60,18 @@ function StructuresProperties() {
             />
           </div>
         </div>
+          <div className="flex gap-1">
           <Button
-            title={"Save"}
-            className="border border-black py-1"
+            title={"OK"}
+            className="border border-black py-1 w-20"
             onClick={saveHandler}
           />
+          <Button
+            title={"Cancel"}
+            className="border border-black py-1 w-20"
+            onClick={()=>electron.ipcRenderer.send("close-structuresProperties-window")}
+          />
+          </div>
       </div>
     </div>
   );

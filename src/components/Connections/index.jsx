@@ -44,10 +44,10 @@ function Connections() {
           onChange={(e) => setSelectValue(e.target.value)}
         >
           <option value={"Inter modular connection"}>
-            Inter modular connection
+            Inter-modular-connection
           </option>
           <option value={"Intra modular connection"}>
-            Intra modular connection
+            Intra-modular-connection
           </option>
         </select>
 
@@ -105,11 +105,18 @@ function Connections() {
           </div>
         </div>
       </div>
+        <div className="flex gap-1">
         <Button
-          title="Save and Close"
-          className="text-sm px-4"
+          title="OK"
+          className="w-20"
           onClick={saveHandler}
         />
+        <Button
+          title="Cancel"
+          className="w-20"
+          onClick={()=>electron.ipcRenderer.send('close-connections-window')}
+        />
+        </div>
     </div>
   );
 }

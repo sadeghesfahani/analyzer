@@ -52,12 +52,13 @@ function SeismicResistingFramesType() {
           </div>
         </div>
       </div>
-      <div className="self-center py-3 px-4">
+      <div className="self-center py-3 flex gap-1">
         <Button
-          title="Save"
-          className={" w-[100px] "}
+          title="OK"
+          className={"w-20"}
           onClick={saveHandler}
         />
+        <Button title="Cancel" className="w-20" onClick={()=>electron.ipcRenderer.send('close-seismicResistingFramesType-window')}/>
       </div>
     </div>
   );
