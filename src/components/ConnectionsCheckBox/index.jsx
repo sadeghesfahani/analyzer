@@ -10,7 +10,7 @@ function ConnectionsCheckBox({name, value, onChange}) {
         <label htmlFor={`id-${name}`}>{name}</label>
         <input type="text" className="border border-black w-full" id={`id-${name}`} value={value}  onChange={(e)=>dispatch(onChange({name,value:e.target.value}))} />
       </div>
-      <span className="text-[12px]">{name[0] === "U" ? "N*mm/rad" : "N/mm"}</span>
+      <span className="text-[12px]">{name[0] === "R" ? "N*mm/rad" : "N/mm"}</span>
     </div>
   );
 }
