@@ -104,8 +104,8 @@ function Result({
         <img src="result-1.png" alt="" className="h-full" />
         <div
           style={{ bottom: bottom, left: left }}
-          className={`bg-blue-500 absolute p-3 rounded-full `}
-        ></div>
+          className={`text-blue-500 absolute text-3xl font-bold`}
+        >*</div>
       </div>
     </div>
   );
