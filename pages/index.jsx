@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <div
-      className="h-full bg-gradient-to-tr from-red-50 to-slate-50 pt-14"
+      className="h-full bg-image pt-14"
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => dropping(e)}
     >
@@ -48,32 +48,32 @@ export default function Home() {
 
       <main className="h-full">
         <Header otherMenus={fileLoaded} />
-        <div className="flex h-full gap-8 justify-center text-slate-800 items-center">
-          {!fileLoaded && (
-            <>
-              <div className={itemsStyle}>
-                <div className="flex flex-col items-end ">
-                  <VscFiles fontSize={86} />
-                  <h4 className="relative bottom-6 left-1 font-semibold">
-                    .yyy
-                  </h4>
-                </div>
-                <div className="flex flex-col gap-3 justify-start items-center">
-                  <h3 className="font-semibold text-l ">
-                    Drag and drop to load
-                  </h3>
-                  <h4 className="font-semibold">or</h4>
-                  <button
-                    onClick={() => electron.ipcRenderer.send("load-file")}
-                    className="bg-blue-500 w-full cursor-pointer hover:bg-blue-600 text-white font-semibold rounded-md px-4 py-2"
-                  >
-                    Browse
-                  </button>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
+        {/*<div className="flex h-full gap-8 justify-center text-slate-800 items-center">*/}
+        {/*  {!fileLoaded && (*/}
+        {/*    <>*/}
+        {/*      <div className={itemsStyle}>*/}
+        {/*        <div className="flex flex-col items-end ">*/}
+        {/*          <VscFiles fontSize={86} />*/}
+        {/*          <h4 className="relative bottom-6 left-1 font-semibold">*/}
+        {/*            .yyy*/}
+        {/*          </h4>*/}
+        {/*        </div>*/}
+        {/*        <div className="flex flex-col gap-3 justify-start items-center">*/}
+        {/*          <h3 className="font-semibold text-l ">*/}
+        {/*            Drag and drop to load*/}
+        {/*          </h3>*/}
+        {/*          <h4 className="font-semibold">or</h4>*/}
+        {/*          <button*/}
+        {/*            onClick={() => electron.ipcRenderer.send("load-file")}*/}
+        {/*            className="bg-blue-500 w-full cursor-pointer hover:bg-blue-600 text-white font-semibold rounded-md px-4 py-2"*/}
+        {/*          >*/}
+        {/*            Browse*/}
+        {/*          </button>*/}
+        {/*        </div>*/}
+        {/*      </div>*/}
+        {/*    </>*/}
+        {/*  )}*/}
+        {/*</div>*/}
       </main>
     </div>
   );
