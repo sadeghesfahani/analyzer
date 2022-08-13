@@ -8,60 +8,63 @@ export default function Header({otherMenus}) {
   const showWindow = (name) => {
     electron.ipcRenderer.send(name);
   };
+  const workWithFileMenus = (name) => {
+    if(!otherMenus)alert('Please load a file first or create new one')
+    else electron.ipcRenderer.send(name);
+  }
   return (
     <header className="flex w-full h-14 z-1 justify-between items-center absolute top-0 left-0 right-0 bg-primary-500 px-4 py-2.5">
       <div className="flex h-full  gap-2">
-        <Dropdown title="file">
+        <Dropdown title="File">
           {!otherMenus ? (
             <>
               <a
             className={dropdowned}
             onClick={() => showWindow("create-new-file")}
           >
-            new
+            New
           </a>
           <a className={dropdowned} onClick={() => showWindow("load-file")}>
-            load
+            Load
           </a>
             </>
           ):
           <a className={dropdowned} onClick={()=>showWindow('close-file')}>
-            close
+            Close
           </a>
         }
         </Dropdown>
-        {otherMenus && (
           <>
             <Dropdown title="Define">
               <a
                 className={dropdowned}
-                onClick={() => showWindow("show-material-window")}
+                onClick={() => workWithFileMenus("show-material-window")}
               >
                 Material Properties
               </a>
               <a
                 className={dropdowned}
-                onClick={() => showWindow("show-section-window")}
+                onClick={() => workWithFileMenus("show-section-window")}
               >
                 Sections
               </a>
               <a
                 className={dropdowned}
-                onClick={() => showWindow("show-connections-window")}
+                onClick={() => workWithFileMenus("show-connections-window")}
               >
                 Connections
               </a>
               <a
                 className={dropdowned}
                 onClick={() =>
-                  showWindow("show-seismicResistingFramesType-window")
+                  workWithFileMenus("show-seismicResistingFramesType-window")
                 }
               >
                 Seismic resisting frames type
               </a>
               <a
                 className={dropdowned}
-                onClick={() => showWindow("show-structuresProperties-window")}
+                onClick={() => workWithFileMenus("show-structuresProperties-window")}
               >
                 Structure&apos;s property
               </a>
@@ -70,20 +73,20 @@ export default function Header({otherMenus}) {
               title="Analyze"
               className=" bg-primary-400  hover:bg-primary-300"
               onClick={() => {
-                showWindow("show-analyze-window");
+                workWithFileMenus("show-analyze-window");
               }}
             />
             <Dropdown title="Result">
               <a
                 className={dropdowned}
-                onClick={() => showWindow("show-stability-result")}
+                onClick={() => workWithFileMenus("show-stability-result")}
               >
                 Stability result
               </a>
               <a
                 className={dropdowned}
                 onClick={() =>
-                  showWindow("show-designForServiceability-window")
+                  workWithFileMenus("show-designForServiceability-window")
                 }
               >
                 Design for serviceability result
@@ -91,14 +94,13 @@ export default function Header({otherMenus}) {
               <a
                 className={dropdowned}
                 onClick={() =>
-                  showWindow("show-seismicPerformanceFactors-window")
+                  workWithFileMenus("show-seismicPerformanceFactors-window")
                 }
               >
                 Seismic performance factors
               </a>
             </Dropdown>
           </>
-        )}
       </div>
       <div className="flex h-full">
         <HeaderButton

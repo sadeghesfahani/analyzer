@@ -51,6 +51,15 @@ function createMaterialWindow() {
     }
   });
   materialWindow.removeMenu()
+  materialWindow.on('app-command',()=>{
+    const fileData = fs.readFileSync(filePath, 'utf8')
+    const data = JSON.parse(fileData)
+    fs.writeFile(filePath, JSON.stringify({...data,temp:{}}), function (err) {
+      if (err) {
+        console.log(err)
+      }
+    })
+  })
   if (app.isPackaged) {
     materialWindow.loadFile('./.next/server/pages/material.html');
   } else {
@@ -62,6 +71,10 @@ ipcMain.on('show-material-window', () => {
   createMaterialWindow()
 })
 
+
+ipcMain.on('close-material-window',()=>{
+  materialWindow.close()
+})
 
 let materialModalWindow;
 
@@ -78,6 +91,15 @@ function createMaterialModalWindow() {
       nodeIntegration: true,
     }
   });
+  materialModalWindow.on('closed',()=>{
+    const fileData = fs.readFileSync(filePath, 'utf8')
+    const data = JSON.parse(fileData)
+    fs.writeFile(filePath, JSON.stringify({...data,temp:{...data.temp,material:null}}), function (err) {
+      if (err) {
+        console.log(err)
+      }
+    })
+  })
   materialModalWindow.removeMenu()
   if (app.isPackaged) {
     materialModalWindow.loadFile('./.next/server/pages/materialModal.html');
@@ -95,8 +117,10 @@ ipcMain.on('showMaterialModal', (event, arg) => {
   createMaterialModalWindow();
 })
 
+
+let sectionWindow;
 function createSectionsWindow() {
-  const sectionWindow = new BrowserWindow({
+  sectionWindow = new BrowserWindow({
     minWidth: 1160,
     minHeight: 750,
     width: 1160,
@@ -120,6 +144,10 @@ function createSectionsWindow() {
 
 ipcMain.on('show-section-window', () => {
   createSectionsWindow()
+})
+
+ipcMain.on('close-section-window',()=>{
+  sectionWindow.close()
 })
 
 let connectionWindow;

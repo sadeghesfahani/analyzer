@@ -36,7 +36,10 @@ function Analyze() {
                     ))}
                 </div>
             </div>
-                <Button title={'Save'} className="w-40" onClick={saveHandler}/>
+                <div className='flex gap-1'>
+                  <Button title={'OK'} className="w-20" onClick={saveHandler}/>
+                  <Button title={'Cancel'} className="w-20" onClick={()=>electron.ipcRenderer.send("close-analyze-window")}/>
+                </div>
         </div>
     </div>
   )

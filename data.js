@@ -74,7 +74,8 @@ const data = {
             name: 'Seismic performance factors',
             check: false
         },
-    ]
+    ],
+    temp:{}
 }
 
 module.exports = data;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Result from "../src/components/Result"
 
 function StabilityResult() {
@@ -6,6 +6,7 @@ function StabilityResult() {
   const [gpe, setGpe] = React.useState(0)
   const [showRes, setShowRes] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
+  const [loading, setLoading] = useState(true)
   useEffect(()=>{
     if(window){
       electron.ipcRenderer.invoke('get-file-data').then(res=>{
@@ -17,6 +18,10 @@ function StabilityResult() {
           && sections.column.materials.e && sections.floorBeams.materials.e && sections.ceiligBeams.materials.e && structuresProperty.lengthOfSpan && structuresProperty.heightOfStorey
           && connections.interModularConnection[5].value && connections.intraModularConnection[5].value){
             setShowRes(true)
+            const ranNum = Math.floor(Math.random()*2001)+3000
+            setTimeout(()=>{
+                setLoading(false)
+            },ranNum)
         }
           
       }).catch(err=>console.log(err))
@@ -31,7 +36,7 @@ function StabilityResult() {
   },[])
 
   const Res = () => (
-    <Result left={(((gpe * 1000) - 1)*50) + 50} bottom={(((gpi * 1000) - 1)*58) + 100}
+    <Result left={(((gpe * 1000) - 1)*45) + 66} bottom={(((gpi * 1000) - 1)*57) + 95}
         coI33={fileData?.sections?.column?.properties?.I33[0]}
         fI33={fileData?.sections?.floorBeams?.properties?.I33[0]}
         ceI33={fileData?.sections?.ceiligBeams?.properties?.I33[0]}
@@ -62,7 +67,9 @@ function StabilityResult() {
   )
   return (
     <div className='bg-white h-full'>
-      {showRes ? <Res /> : <div className='h-full flex justify-center items-center'><p>There is not enough data to see results</p></div>}
+      {!showRes ? <div className='h-full flex justify-center items-center'><p>There is not enough data to see results</p></div>:
+      loading ? <div className='spin max-w-max h-max'></div>: <Res /> 
+      }
     </div>
   )
 }
