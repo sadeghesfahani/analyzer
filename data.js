@@ -63,7 +63,7 @@ const data = {
         lengthOfSpan: ""
     },
     analyze: [{
-            name: 'design for Ultimate limit state',
+            name: 'Design for ultimate limit state',
             check: false
         },
         {
