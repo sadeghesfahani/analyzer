@@ -37,6 +37,7 @@ function StructuresProperties() {
           <SectionTitle title="Structure's property" />
           <div className="flex flex-col gap-2">
             <label htmlFor={"heightOfStorey"} className="font-semibold ">Height of storey :</label>
+            <div className="flex gap-1">
             <input
                 id={"heightOfStorey"}
                 className="border"
@@ -46,11 +47,14 @@ function StructuresProperties() {
                 dispatch(setHeightOfStorey(e.target.value));
               }}
             />
+            <h6>mm</h6>
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <label
                 htmlFor={"lengthOfSpan"}
                 className="font-semibold ">Length of span :</label>
+            <div className="flex gap-1">
             <input
                 id={"lengthOfSpan"}
                 className="border"
@@ -58,6 +62,8 @@ function StructuresProperties() {
               value={structuresProperty.lengthOfSpan}
               onChange={(e) => dispatch(setLengthOfSpan(e.target.value))}
             />
+            <h6>mm</h6>
+            </div>
           </div>
         </div>
           <div className="flex gap-1">
