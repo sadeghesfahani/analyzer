@@ -31,12 +31,33 @@ function Result({
   analyze3,
   heightOfStorey,
   lengthOfSpan,
-  seismicResistingFramesType
+  seismicResistingFramesType,
+  report,
+  rho
 }) {
+  let ELFimg = "";
+  let boundaryImg = "";
+  if(seismicResistingFramesType === "Braced Frame"){
+    if(report === "rigid") {ELFimg = "Braced Frame/Rigid/ELF.png"; boundaryImg = "Braced Frame/Rigid/Rigid Boundary.png"}
+    else if(rho < 0.2) {ELFimg = "Braced Frame/Rho = 0.01/ELF.png"; boundaryImg = "Braced Frame/Rho = 0.01/Rigid Boundary.png"}
+    else {ELFimg = "Braced Frame/Rho = 0.2/ELF.png"; boundaryImg = "Braced Frame/Rho = 0.2/Rigid Boundary.png"}
+  }else {
+    if(analyze1){
+      if(report === "rigid") {ELFimg = "Moment Frame/Ultimate/Rigid/ELF.png"; boundaryImg = "Moment Frame/Ultimate/Rigid/Rigid Boundary.png"}
+      else if(rho < 0.05) {ELFimg = "Moment Frame/Ultimate/Rho = 0.01/ELF.png"; boundaryImg = "Moment Frame/Ultimate/Rho = 0.01/Rigid Boundary.png"}
+      else if(rho < 0.1) {ELFimg = "Moment Frame/Ultimate/Rho = 0.05/ELF.png"; boundaryImg = "Moment Frame/Ultimate/Rho = 0.05/Rigid Boundary.png"}
+      else {ELFimg = "Moment Frame/Ultimate/Rho = 0.10/ELF.png"; boundaryImg = "Moment Frame/Ultimate/Rho = 0.10/Rigid Boundary.png"}
+    }else {
+      if(report === "rigid") {ELFimg = "Moment Frame/Ultimate/Rigid/ELF.png"; boundaryImg = "Moment Frame/Drift/Rigid/Boundary.png"}
+      else if(rho < 0.05) {ELFimg = "Moment Frame/Ultimate/Rho = 0.01/ELF.png"; boundaryImg = "Moment Frame/Drift/Rho = 0.01/Rigid Boundary.png"}
+      else if(rho < 0.1) {ELFimg = "Moment Frame/Ultimate/Rho = 0.05/ELF.png"; boundaryImg = "Moment Frame/Drift/Rho = 0.05/Rigid Boundary.png"}
+      else {ELFimg = "Moment Frame/Ultimate/Rho = 0.10/ELF.png"; boundaryImg = "Moment Frame/Drift/Rho = 0.1/Rigid Boundary.png"}
+    }
+  }
   return (
     <div className="flex h-full">
-      <div className="flex-1 h-full">
-        <img src="result2.png" alt="" className="h-full" />
+      <div className="flex-1 h-full border">
+        <img src={ELFimg} alt="" className="h-full" />
       </div>
       <div className="flex-1 border h-full text-xs overflow-y-auto px-1">
         <Line />
@@ -47,7 +68,7 @@ function Result({
           beam*Section_I33 floor beam/Lfloorbeam)
         </p>
         <p>
-          Gpi=({coMe}*{coI33}/3.00) / ({fMe}*{fI33}/6.00) = {gpi}
+          Gpi=({coMe}*{coI33}/{heightOfStorey}) / ({fMe}*{fI33}/{lengthOfSpan}) = {gpi}
         </p>
         <Line />
         <p>
@@ -55,12 +76,12 @@ function Result({
           Eceiling beam*Section_I33 ceiling beam/Lceilingbeam)
         </p>
         <p>
-          Gpe=({coMe}*{coI33}/3.00) / ({ceMe}*{ceI33}/6.00) = {gpe}
+          Gpe=({coMe}*{coI33}/{heightOfStorey}) / ({ceMe}*{ceI33}/{lengthOfSpan}) = {gpe}
         </p>
         <Line />
-        <p>Lcolumn : 3</p>
-        <p>Lfloor_beam : 6</p>
-        <p>Lceiling_beam : 6</p>
+        <p>Lcolumn {heightOfStorey}: </p>
+        <p>Lfloor_beam : {lengthOfSpan}</p>
+        <p>Lceiling_beam : {lengthOfSpan}</p>
         <Line />
         <p>Section - Columns - i33 : {coI33}</p>
         <p>Section - Floor - i33 : {fI33}</p>
@@ -100,8 +121,8 @@ function Result({
         <p>Seismic_resisting_frames_type : {seismicResistingFramesType}</p>
         <Line />
       </div>
-      <div className="flex-1 h-full relative">
-        <img src="result-1.png" alt="" className="h-full" />
+      <div className="flex-1 h-full relative border">
+        <img src={boundaryImg} alt="" className="h-full" />
         <div
           style={{ bottom: bottom, left: left }}
           className={`text-blue-500 absolute text-3xl font-bold`}
