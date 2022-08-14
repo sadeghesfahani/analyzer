@@ -100,9 +100,19 @@ export default function Header({otherMenus}) {
                 Seismic performance factors
               </a>
             </Dropdown>
+            <Dropdown title="Help">
+            <a
+                className={dropdowned}
+                onClick={() =>
+                  electron.ipcRenderer.send("show-pdf", "main.pdf")
+                }
+              >
+                Article
+              </a>
+            </Dropdown>
           </>
       </div>
-      <div className="flex h-full">
+      {/* <div className="flex h-full">
         <HeaderButton
           title={
             <div className="flex flex-row items-center gap-1">
@@ -115,7 +125,7 @@ export default function Header({otherMenus}) {
             electron.ipcRenderer.send("show-pdf", "result3.pdf");
           }}
         />
-      </div>
+      </div> */}
     </header>
   );
 }
