@@ -4,6 +4,8 @@ import Result from "../src/components/Result"
 function StabilityResult() {
   const [gpi, setGpi] = React.useState(0)
   const [gpe, setGpe] = React.useState(0)
+  const [rho, setRho] = React.useState(0)
+  const [report, setReport] = React.useState('')
   const [showRes, setShowRes] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
   const [loading, setLoading] = useState(true)
@@ -14,9 +16,10 @@ function StabilityResult() {
         const sections = res.sections
         const structuresProperty = res.structuresProperty
         const connections = res.connections
+        const analyze = res.analyze
         if(sections.column.properties?.I33[0] && sections.floorBeams.properties?.I33[0] && sections.ceiligBeams.properties?.I33[0]
           && sections.column.materials.e && sections.floorBeams.materials.e && sections.ceiligBeams.materials.e && structuresProperty.lengthOfSpan && structuresProperty.heightOfStorey
-          && connections.interModularConnection[5].value && connections.intraModularConnection[5].value){
+          && connections.interModularConnection[5].value && connections.intraModularConnection[5].value && (analyze[0].check || analyze[1].check)){
             setShowRes(true)
             const ranNum = Math.floor(Math.random()*2001)+3000
             setTimeout(()=>{
@@ -28,9 +31,10 @@ function StabilityResult() {
       
     }
     electron.ipcRenderer.invoke('get-result').then(res=>{
-      console.log(res)
       setGpi(res[2])
       setGpe(res[3])
+      setRho(res[4])
+      setReport(res[1])
       }).catch(err=>console.log(err))
       
   },[])
@@ -63,6 +67,8 @@ function StabilityResult() {
         heightOfStorey={fileData?.structuresProperty?.heightOfStorey}
         lengthOfSpan={fileData?.structuresProperty?.lengthOfSpan}
         seismicResistingFramesType={fileData?.seismicResistingFramesType}
+        rhos={rho}
+        report={report}
       />
   )
   return (
