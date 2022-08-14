@@ -10,18 +10,18 @@ const itemsStyle =
 export default function Home() {
   const [fileLoaded, setFileLoaded] = useState(false);
 
-  function dropping(e) {
-    if(!fileLoaded){
-      for (const f of e.dataTransfer.files) {
-        if (f.path.endsWith(".yyy")) {
-          electron.ipcRenderer.send("read-file", f.path);
-          setFileLoaded(true);
-        } else {
-          alert("File not supported");
-        }
-      }
-    }
-  }
+  // function dropping(e) {
+  //   if(!fileLoaded){
+  //     for (const f of e.dataTransfer.files) {
+  //       if (f.path.endsWith(".yyy")) {
+  //         electron.ipcRenderer.send("read-file", f.path);
+  //         setFileLoaded(true);
+  //       } else {
+  //         alert("File not supported");
+  //       }
+  //     }
+  //   }
+  // }
 
   useEffect(()=>{
     if(window){
@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <div
       className="h-full bg-image pt-14"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => dropping(e)}
+      // onDragOver={(e) => e.preventDefault()}
+      // onDrop={(e) => dropping(e)}
     >
       <Head>
         <title>Design of inter-modular connections</title>
