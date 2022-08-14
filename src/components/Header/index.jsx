@@ -83,14 +83,14 @@ export default function Header({otherMenus}) {
               >
                 Stability result
               </a>
-              <a
+              {/* <a
                 className={dropdowned}
                 onClick={() =>
                   workWithFileMenus("show-designForServiceability-window")
                 }
               >
                 Design for serviceability result
-              </a>
+              </a> */}
               <a
                 className={dropdowned}
                 onClick={() =>
