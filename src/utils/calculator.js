@@ -41,7 +41,7 @@ class Calculator {
             } else {
                 report = "semi-rigid"
             }
-            return [result, report, Gpi, Gpe]
+            return [result, report, Gpi, Gpe, rho]
         } else {
 
             if (rho <= 0.01) {
