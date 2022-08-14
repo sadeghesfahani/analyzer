@@ -425,8 +425,8 @@ ipcMain.on('create-new-file', (event) => {
   dialog.showSaveDialog({
     defaultPath: 'new-file',
     filters: [{
-      name: ".yyy",
-      extensions: ["yyy"]
+      name: ".mf",
+      extensions: ["mf"]
     }]
   }).then(result => {
     fs.writeFile(result.filePath, JSON.stringify(data), function (err) {
@@ -448,8 +448,8 @@ ipcMain.on("load-file", (event, arg) => {
   dialog.showOpenDialog({
     properties: ['openFile'],
     filters: [{
-      name: ".yyy",
-      extensions: ["yyy"]
+      name: ".mf",
+      extensions: ["mf"]
     }]
   }).then(result => {
     filePath = result.filePaths[0]
