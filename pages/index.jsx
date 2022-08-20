@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { VscFiles } from "react-icons/vsc";
 import Header from "../src/components/Header";
+import Loading from "../src/components/Loading/Loading";
 
 const itemsStyle =
   "sm:flex flex-col hidden opacity-90 border-dashed border-4 rounded-md border-slate-800 color-slate-800 gap-2 items-center justify-center w-80 h-80";
@@ -33,7 +34,17 @@ export default function Home() {
         })
     }
   },[])
-
+    const [loading, setLoading] = useState(true);
+    const [progress, setProgress] = useState(0);
+    useEffect(()=>{
+        if (progress <= 100) {
+            setTimeout(() => {
+                setProgress(progress + 1);
+            }, 10);
+        } else{
+            setLoading(false);
+        }
+    }, [progress])
   return (
     <div
       className="h-full bg-image pt-14"
@@ -48,6 +59,7 @@ export default function Home() {
 
       <main className="h-full">
         <Header otherMenus={fileLoaded} />
+        <Loading progress={progress} />
         {/*<div className="flex h-full gap-8 justify-center text-slate-800 items-center">*/}
         {/*  {!fileLoaded && (*/}
         {/*    <>*/}
