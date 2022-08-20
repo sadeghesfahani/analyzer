@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Result from "../src/components/Result"
+import Loading from "../src/components/Loading/Loading";
 
 function StabilityResult() {
   const [gpi, setGpi] = React.useState(0)
@@ -71,10 +72,20 @@ function StabilityResult() {
         report={report}
       />
   )
+  const [progress, setProgress] = useState(0);
+  useEffect(()=>{
+    if (progress <= 100) {
+      setTimeout(() => {
+        setProgress(progress + 1);
+      }, 10);
+    } else{
+      setLoading(false);
+    }
+  }, [progress])
   return (
     <div className='bg-white h-full'>
       {!showRes ? <div className='h-full flex justify-center items-center'><p>There is not enough data to see results</p></div>:
-      loading ? <div className='spin max-w-max h-max'></div>: <Res /> 
+      loading ? <Loading progress={progress}/> : <Res />
       }
     </div>
   )
