@@ -109,6 +109,11 @@ export default function Header({otherMenus}) {
               >
                 Article
               </a>
+              <a
+                  className={dropdowned}
+              >
+                About us
+              </a>
             </Dropdown>
           </>
       </div>
