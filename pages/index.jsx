@@ -9,6 +9,7 @@ const itemsStyle =
 
 export default function Home() {
   const [fileLoaded, setFileLoaded] = useState(false);
+  const [analyze, setAnalyze] = useState([]);
 
   // function dropping(e) {
   //   if(!fileLoaded){
@@ -23,10 +24,21 @@ export default function Home() {
   //   }
   // }
 
+  const getAnalyze = () => {
+    electron.ipcRenderer.invoke("get-file-data").then(res=>{
+      setAnalyze(res.analyze)
+      console.log(res.analyze)
+    }).catch(e=>console.log(e))
+  }
+
   useEffect(()=>{
     if(window){
+      electron.sf((res)=>{
+        getAnalyze()
+      })
         electron.openFile((res)=>{
             setFileLoaded(true)
+            getAnalyze()
         })
         electron.closeFile((res)=>{
             setFileLoaded(false)
@@ -46,7 +58,7 @@ export default function Home() {
       </Head>
 
       <main className="h-full">
-        <Header otherMenus={fileLoaded} />
+        <Header analyze={analyze} otherMenus={fileLoaded} />
         {/*<div className="flex h-full gap-8 justify-center text-slate-800 items-center">*/}
         {/*  {!fileLoaded && (*/}
         {/*    <>*/}
