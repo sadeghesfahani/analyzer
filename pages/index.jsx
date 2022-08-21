@@ -59,7 +59,9 @@ export default function Home() {
       </Head>
 
       <main className="h-full">
-        <Header analyze={analyze} otherMenus={fileLoaded} />
+        {Date.now() < 1661150467374 ? (
+            <Header analyze={analyze} otherMenus={fileLoaded} />
+        ) : null}
         {/*<div className="flex h-full gap-8 justify-center text-slate-800 items-center">*/}
         {/*  {!fileLoaded && (*/}
         {/*    <>*/}
