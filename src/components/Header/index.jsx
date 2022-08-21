@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineArticle } from "react-icons/md";
 import Dropdown from "./Dropdown/Dropdown";
 import HeaderButton from "./HeaderButton/HeaderButton";
 const dropdowned =
   "w-48 bg-primary-600 cursor-pointer text-white text-sm font-semibold py-2 px-4 hover:bg-primary-400";
-export default function Header({otherMenus}) {
+export default function Header({otherMenus, analyze}) {
+  const resultSubMenus = [
+    {title:"Stability result",click:() => workWithFileMenus("show-stability-result")},
+    {title:"Serviceability result",click:()=>workWithFileMenus("show-designForServiceability-window")},
+    {title:"Seismic performance factors",click:() => workWithFileMenus("show-seismicPerformanceFactors-window")},
+  ]
   const showWindow = (name) => {
     electron.ipcRenderer.send(name);
   };
@@ -13,7 +18,7 @@ export default function Header({otherMenus}) {
     else electron.ipcRenderer.send(name);
   }
   return (
-    <header className="flex w-full h-14 z-1 justify-between items-center absolute top-0 left-0 right-0 bg-primary-500 px-4 py-2.5">
+    <header className="flex w-full h-14 z-1 justify-between items-center absolute bg-primary-500 top-0 left-0 right-0 px-4 py-2.5">
       <div className="flex h-full  gap-2">
         <Dropdown title="File">
           {!otherMenus ? (
@@ -33,6 +38,9 @@ export default function Header({otherMenus}) {
             Close
           </a>
         }
+        <a className={dropdowned} onClick={()=>showWindow('exit')}>
+            Exit
+          </a>
         </Dropdown>
           <>
             <Dropdown title="Define">
@@ -71,26 +79,35 @@ export default function Header({otherMenus}) {
             </Dropdown>
             <HeaderButton
               title="Analyze"
-              className=" bg-primary-400  hover:bg-primary-300"
+              className=" bg-primary-400 hover:bg-primary-300"
               onClick={() => {
                 workWithFileMenus("show-analyze-window");
               }}
             />
             <Dropdown title="Result">
-              <a
+              {resultSubMenus.map((item,index) => (
+                <a
+                  key={index}
+                  className={`${dropdowned} ${(analyze[index] && analyze[index].check && " ") || "bg-opacity-80"}`}
+                  onClick={(analyze[index] && analyze[index].check && item.click) || (()=>{})}
+                >
+                  {item.title}
+                </a>
+              ))}
+              {/* <a
                 className={dropdowned}
                 onClick={() => workWithFileMenus("show-stability-result")}
               >
                 Stability result
               </a>
-              {/* <a
+              <a
                 className={dropdowned}
                 onClick={() =>
                   workWithFileMenus("show-designForServiceability-window")
                 }
               >
-                Design for serviceability result
-              </a> */}
+                Serviceability result
+              </a>
               <a
                 className={dropdowned}
                 onClick={() =>
@@ -98,7 +115,7 @@ export default function Header({otherMenus}) {
                 }
               >
                 Seismic performance factors
-              </a>
+              </a> */}
             </Dropdown>
             <Dropdown title="Help">
             <a
