@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { VscFiles } from "react-icons/vsc";
 import Header from "../src/components/Header";
+import Loading from "../src/components/Loading/Loading";
 
 const itemsStyle =
   "sm:flex flex-col hidden opacity-90 border-dashed border-4 rounded-md border-slate-800 color-slate-800 gap-2 items-center justify-center w-80 h-80";

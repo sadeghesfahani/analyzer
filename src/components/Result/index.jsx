@@ -125,7 +125,7 @@ function Result({
         <img src={boundaryImg} alt="" className="h-full" />
         <div
           style={{ bottom: bottom, left: left }}
-          className={`text-blue-500 absolute text-3xl font-bold`}
+          className={`text-red-600 absolute text-4xl font-bold`}
         >*</div>
       </div>
     </div>
