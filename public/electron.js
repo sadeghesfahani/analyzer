@@ -372,6 +372,33 @@ ipcMain.on('show-seismicPerformanceFactors-window', () => {
   createSeismicPerformanceFactors()
 })
 
+function createArticlesWindow() {
+  const seismicPerformanceFactors = new BrowserWindow({
+    width: 400,
+    height: 600,
+    minHeight: 600,
+    minWidth: 400,
+    resizable: true,
+    title: 'Articles',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  seismicPerformanceFactors.removeMenu()
+  if (app.isPackaged) {
+    seismicPerformanceFactors.loadFile('./.next/server/pages/articles.html');
+  } else {
+    seismicPerformanceFactors.loadURL('http://localhost:3000/articles');
+  }
+}
+
+ipcMain.on('show-articles-window', () => {
+  createArticlesWindow()
+})
+
 function createPdfWindow(name) {
   const pdfWindow = new BrowserWindow({
     title: 'PDF',

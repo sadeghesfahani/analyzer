@@ -128,6 +128,9 @@ export default function Header({otherMenus, analyze}) {
               </a>
               <a
                   className={dropdowned}
+                  onClick={() =>
+                      showWindow("show-articles-window")
+                  }
               >
                 About us
               </a>
