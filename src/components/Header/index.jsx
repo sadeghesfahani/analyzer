@@ -88,7 +88,7 @@ export default function Header({otherMenus, analyze}) {
               {resultSubMenus.map((item,index) => (
                 <a
                   key={index}
-                  className={`${dropdowned} ${(analyze[index] && analyze[index].check && " ") || "bg-opacity-80"}`}
+                  className={`${dropdowned} ${(analyze[index] && analyze[index].check && " ") || "bg-opacity-80 cursor-not-allowed text-gray-500"}`}
                   onClick={(analyze[index] && analyze[index].check && item.click) || (()=>{})}
                 >
                   {item.title}
