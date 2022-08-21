@@ -32,7 +32,7 @@ function StructuresProperties() {
   };
   return (
     <div className="p-4 flex gap-4 h-full w-full items-center justify-center">
-      <div className="flex flex-col gap-4 flex-[0.6]">
+      <div className="flex flex-col items-center gap-4 flex-[0.6]">
         <div className="border border-black px-4 py-6 flex flex-col gap-4 relative text-sm">
           <SectionTitle title="Structure's property" />
           <div className="flex flex-col gap-2">
@@ -69,12 +69,12 @@ function StructuresProperties() {
           <div className="flex gap-1">
           <Button
             title={"OK"}
-            className="border border-black py-1 w-20"
+            className=" py-1 w-20"
             onClick={saveHandler}
           />
           <Button
             title={"Cancel"}
-            className="border border-black py-1 w-20"
+            className="py-1 w-20"
             onClick={()=>electron.ipcRenderer.send("close-structuresProperties-window")}
           />
           </div>
