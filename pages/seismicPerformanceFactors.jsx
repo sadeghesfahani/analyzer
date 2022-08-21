@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
 
-function SeismicPerformanceFactors() {
-    return (
-        <div className='flex items-center justify-between h-full'>
+
+const Res = () => (
+   <div className='flex items-center justify-between h-full'>
             <div className='flex text-3xl font-bold flex-col items-center gap-1 w-48 relative bottom-28 left-28 '>
                 <div className="flex  flex-row justify-between w-full ">
                     <h1 className="w-1/4">R</h1>
@@ -22,7 +23,31 @@ function SeismicPerformanceFactors() {
             </div>
             <img src="result3.png" className='h-full' alt=""/>
         </div>
-    )
-}
+)
+
+function SeismicPerformanceFactors() {
+  const [frame, setFrame] = useState("")
+  useEffect(() => {
+    if (window) {
+      electron.ipcRenderer
+        .invoke("get-file-data")
+        .then((res) => {
+          setFrame(res.seismicResistingFramesType);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, []);
+  return (
+    <>
+    {frame === "Braced frame" ? <Res/> : 
+      <div className='h-full flex justify-center items-center'>
+        <p>
+      You have selected &quot;Moment frame&quot;, please check this window in the future
+      </p>
+      </div>
+    }
+    </>
+  )
+  }
 
 export default SeismicPerformanceFactors

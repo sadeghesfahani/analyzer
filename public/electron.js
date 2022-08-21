@@ -28,6 +28,11 @@ function createWindow() {
     }
   });
   win.removeMenu()
+  win.on("focus",()=>{
+    if(filePath){
+      win.webContents.send("sf","tst")
+    }
+  })
   if (app.isPackaged) {
     win.loadFile('./.next/server/pages/index.html');
   } else {
@@ -278,7 +283,7 @@ ipcMain.on('show-analyze-window', () => {
   createAnalyzeWindow()
 })
 
-ipcMain.on('close-analyze-window', (event, arg) => {
+ipcMain.on('close-analyze-window', (event) => {
   analyzeWindow.close()
 })
 
@@ -322,7 +327,7 @@ function createDesignForServiceabilityResult() {
     width: 1350,
     height: 700,
     resizable: false,
-    title: 'Design for serviceability result',
+    title: 'Serviceability result',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
@@ -475,4 +480,8 @@ ipcMain.handle('get-result', async (event, arg) => {
   }, data.connections.intraModularConnection[5].value, data.connections.interModularConnection[5].value, data.seismicResistingFramesType)
   const result = calculator.getResult()
   return result
+})
+
+ipcMain.on("exit",()=>{
+  win.close()
 })

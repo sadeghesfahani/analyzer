@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 function Analyze() {
     const dispatch = useDispatch()
     const { analyze } = useSelector(state => state.analyze)
+    const [frame, setFrame] = useState('')
     const [fileData, setFileData] = useState();
   useEffect(() => {
     if (window) {
@@ -16,6 +17,7 @@ function Analyze() {
         .invoke("get-file-data")
         .then((res) => {
           setFileData(res);
+          setFrame(res.seismicResistingFramesType)
           dispatch(setAnalyze(res.analyze));
         })
         .catch((e) => console.log(e));
@@ -32,7 +34,7 @@ function Analyze() {
                 <SectionTitle title='Analyze' className='text-sm'/>
                 <div className='flex flex-col gap-4'>
                     {analyze.map((item) => (
-                        <AnalyzeCheckBox key={item.name} name={item.name} checked={item.check}/>
+                        <AnalyzeCheckBox key={item.name} disabled={frame==="Braced frame" && item.name === "Design for serviceability"} name={item.name} checked={item.check}/>
                     ))}
                 </div>
             </div>

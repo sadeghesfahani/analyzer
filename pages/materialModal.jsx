@@ -123,14 +123,14 @@ function MaterialModal() {
                             </div>
                         </div>
                         <div className={rowStyles}>
-                            <span>Yield Stress, Fy</span>
+                            <span className="flex">Yield Stress, F<h6 className='text-[14px] mt-1 ml-[2px]'>y</h6></span>
                             <div className="flex gap-1 -translate-x-[1px]">
                                 <input type="text" className={inputStyles}/>
                                 <span>MPa</span>
                             </div>
                         </div>
                         <div className={rowStyles}>
-                            <span>Ultimate Stress, Fu</span>
+                            <span className="flex">Ultimate Stress, F<h6 className='text-[14px] mt-1 ml-[1px]'>u</h6></span>
                             <div className="flex gap-1 -translate-x-[1px]">
                                 <input type="text" className={inputStyles}/>
                                 <span>MPa</span>

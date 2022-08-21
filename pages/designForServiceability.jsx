@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Result from "../src/components/Result"
+import Loading from "../src/components/Loading/Loading";
 
-function DesignForServiceability() {
+function DesginForServiceability() {
   const [gpi, setGpi] = React.useState(0)
   const [gpe, setGpe] = React.useState(0)
+  const [rho, setRho] = React.useState(0)
+  const [report, setReport] = React.useState('')
   const [showRes, setShowRes] = React.useState(false)
   const [fileData, setFileData] = React.useState(null)
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = useState(true)
   useEffect(()=>{
     if(window){
       electron.ipcRenderer.invoke('get-file-data').then(res=>{
@@ -14,9 +17,10 @@ function DesignForServiceability() {
         const sections = res.sections
         const structuresProperty = res.structuresProperty
         const connections = res.connections
+        const analyze = res.analyze
         if(sections.column.properties?.I33[0] && sections.floorBeams.properties?.I33[0] && sections.ceiligBeams.properties?.I33[0]
           && sections.column.materials.e && sections.floorBeams.materials.e && sections.ceiligBeams.materials.e && structuresProperty.lengthOfSpan && structuresProperty.heightOfStorey
-          && connections.interModularConnection[5].value && connections.intraModularConnection[5].value){
+          && connections.interModularConnection[5].value && connections.intraModularConnection[5].value && (analyze[0].check || analyze[1].check)){
             setShowRes(true)
             const ranNum = Math.floor(Math.random()*2001)+3000
             setTimeout(()=>{
@@ -28,15 +32,16 @@ function DesignForServiceability() {
       
     }
     electron.ipcRenderer.invoke('get-result').then(res=>{
-      console.log(res)
       setGpi(res[2])
       setGpe(res[3])
+      setRho(res[4])
+      setReport(res[1])
       }).catch(err=>console.log(err))
       
   },[])
 
   const Res = () => (
-    <Result left={(((gpe * 1000) - 1)*50) + 50} bottom={(((gpi * 1000) - 1)*58) + 100}
+    <Result left={(((gpe * 10) - 1)*59) + 102} bottom={(((gpi * 10) - 1)*52) + 113}
         coI33={fileData?.sections?.column?.properties?.I33[0]}
         fI33={fileData?.sections?.floorBeams?.properties?.I33[0]}
         ceI33={fileData?.sections?.ceiligBeams?.properties?.I33[0]}
@@ -63,15 +68,27 @@ function DesignForServiceability() {
         heightOfStorey={fileData?.structuresProperty?.heightOfStorey}
         lengthOfSpan={fileData?.structuresProperty?.lengthOfSpan}
         seismicResistingFramesType={fileData?.seismicResistingFramesType}
+        rhos={rho}
+        report={report}
       />
   )
+  const [progress, setProgress] = useState(0);
+  useEffect(()=>{
+    if (progress <= 100) {
+      setTimeout(() => {
+        setProgress(progress + 1);
+      }, 10);
+    } else{
+      setLoading(false);
+    }
+  }, [progress])
   return (
     <div className='bg-white h-full'>
-      {!showRes ? <div className='h-full flex justify-center items-center'><p>There is not enough data to see results</p></div> : 
-        loading ? <div className='spin'></div> : <Res />
+      {!showRes ? <div className='h-full flex justify-center items-center'><p>There is not enough data to see results</p></div>:
+      loading ? <Loading progress={progress}/> : <Res />
       }
     </div>
   )
 }
 
-export default DesignForServiceability
+export default DesginForServiceability
