@@ -121,16 +121,13 @@ export default function Header({otherMenus, analyze}) {
             <a
                 className={dropdowned}
                 onClick={() =>
-                  electron.ipcRenderer.send("show-pdf", "main.pdf")
+                    showWindow("show-articles-window")
                 }
               >
-                Article
+                Articles
               </a>
               <a
                   className={dropdowned}
-                  onClick={() =>
-                      showWindow("show-articles-window")
-                  }
               >
                 About us
               </a>
