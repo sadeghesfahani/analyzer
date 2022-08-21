@@ -64,7 +64,7 @@ const data = {
     },
     analyze: [{
             name: 'Design for ultimate limit state',
-            check: false
+            check: true
         },
         {
             name: 'Design for serviceability',
