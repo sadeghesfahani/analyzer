@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 
 const Res = () => (
-   <div className='flex items-center justify-between h-full'>
-            <div className='flex text-3xl font-bold flex-col items-center gap-1 w-48 relative bottom-28 left-28 '>
+   <div className='flex items-center justify-between h-full bg-white'>
+            <div className='flex text-3xl font-bold flex-col items-center gap-1 w-48 relative bottom-24 left-16 '>
                 <div className="flex  flex-row justify-between w-full ">
                     <h1 className="w-1/4">R</h1>
                     <h1 className="w-1/4">=</h1>
@@ -21,7 +21,7 @@ const Res = () => (
                     <h1 className="w-2/4">2 - 3</h1>
                 </div>
             </div>
-            <img src="result3.png" className='h-full' alt=""/>
+            <img src="AutoCad.png" className='h-full ' alt=""/>
         </div>
 )
 
