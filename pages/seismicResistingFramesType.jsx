@@ -20,7 +20,17 @@ function SeismicResistingFramesType() {
    }
   },[])
   const saveHandler = () => {
-    electron.ipcRenderer.send('save-file', {...fileData, seismicResistingFramesType: selected})
+    if(selected === "Braced frame"){
+      const analyze = fileData.analyze
+      analyze[0].check = true
+      analyze[1].check = false
+      analyze[2].check = false
+      electron.ipcRenderer.send('save-file', {...fileData, seismicResistingFramesType: selected,
+      analyze
+      })
+    }else{
+      electron.ipcRenderer.send('save-file', {...fileData, seismicResistingFramesType: selected})
+    }
     electron.ipcRenderer.send('close-seismicResistingFramesType-window')
   }
   return (
