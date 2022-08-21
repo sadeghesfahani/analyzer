@@ -41,7 +41,7 @@ function StabilityResult() {
   },[])
 
   const Res = () => (
-    <Result left={(((gpe * 1000) - 1)*45) + 66} bottom={(((gpi * 1000) - 1)*57) + 95}
+    <Result left={(((gpe * 10) - 1)*32) + 203} bottom={(((gpi * 10) - 1)*27) + 37}
         coI33={fileData?.sections?.column?.properties?.I33[0]}
         fI33={fileData?.sections?.floorBeams?.properties?.I33[0]}
         ceI33={fileData?.sections?.ceiligBeams?.properties?.I33[0]}
