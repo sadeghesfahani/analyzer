@@ -416,6 +416,34 @@ ipcMain.on('show-pdf', (event, name) => {
   createPdfWindow(name)
 })
 
+let aboutUs;
+
+function createAboutUsWindow(){
+  aboutUs = new BrowserWindow({
+    title: 'About us',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  aboutUs.removeMenu()
+  if (app.isPackaged) {
+    aboutUs.loadFile('./.next/server/pages/aboutus.html');
+  } else {
+    aboutUs.loadURL('http://localhost:3000/aboutus');
+  }
+}
+
+ipcMain.on('show-aboutus-window',()=>{
+  createAboutUsWindow()
+})
+
+ipcMain.on('close-aboutus-window',()=>{
+  aboutUs.close()
+})
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
