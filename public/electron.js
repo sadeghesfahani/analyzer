@@ -10,7 +10,7 @@ const {
   dialog
 } = require('electron');
 const fs = require('fs')
-const Calculator = require('../src/utils/calculator')
+const Calculator = require('../public/calculator')
 
 app.disableHardwareAcceleration()
 let win;
