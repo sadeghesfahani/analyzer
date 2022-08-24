@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 
 const Line = () => "-------------------------------------------------------";
 
@@ -37,7 +36,7 @@ function Result({
 }) {
   let ELFimg = "";
   let boundaryImg = "";
-  if (seismicResistingFramesType === "Braced Frame") {
+  if (seismicResistingFramesType === "Braced frame") {
     if (report === "rigid") {
       ELFimg = "Braced Frame/Rigid/ELF.png";
       boundaryImg = "Braced Frame/Rigid/Rigid Boundary.png";
@@ -81,24 +80,26 @@ function Result({
   }
   return (
     <div className="flex h-full">
-      <div className="flex-1 borderh-full flex flex-col">
+      <div className="flex-1 border h-full flex flex-col gap-8 overflow-y-auto p-1">
         {analyze1 && (
-          <div className="h-1/2">
-            <img src={ELFimg} alt="" className="w-full h-full object-contain" />
+          <div className="h-1/2 flex flex-col gap-1 items-center">
+            <span>Effective Length Factor</span>
+            <img src={ELFimg} alt="" className=" h-full object-contain border p-1" />
           </div>
         )}
-        <div className={`relative ${analyze1 ? "h-1/2" : "h-full"}`}>
+        <div className={`relative flex flex-col gap-1 items-center ${analyze1 ? "h-1/2" : "h-full"}`}>
+        <span className="text-center w-full">{report === "rigid" ? "Rigid" : "Semi-rigid Boundary"}</span>
           <img
             src={boundaryImg}
             alt=""
-            className="w-full h-full object-contain"
+            className=" h-full object-contain border"
           />
           <div
             style={{ bottom: bottom, left: left }}
             className={`text-blue-500 absolute text-3xl font-bold`}
           >
             *
-          </div>
+        </div>
         </div>
       </div>
       <div className="flex-1 border h-full text-xs overflow-y-auto px-1">
