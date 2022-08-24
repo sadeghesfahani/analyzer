@@ -6,7 +6,7 @@ function MaterialTable({children}) {
       <thead>
         <tr>
           <th>Material_Name</th>
-          <th>Modula of Elasticity E</th>
+          <th>Modules of Elasticity E</th>
         </tr>
       </thead>
       <tbody>
