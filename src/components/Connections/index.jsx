@@ -35,22 +35,34 @@ function Connections() {
         electron.ipcRenderer.send('save-file', {...fileData, connections})
         electron.ipcRenderer.send('close-connections-window')
   }
+  const tabStyles = "  text-sm w-1/2 py-1 px-4 tab-border";
+  const tabDeselected = " text-black hover:bg-gray-200 ";
+  const tabSelected = " text-white bg-gray-800 ";
   return (
     <div className="m-1 border p-4 flex flex-col gap-7 ">
 
-        <select
-            className="w-full py-2 px-4 bg-primary-600 hover:bg-primary-500 cursor-pointer rounded  text-white"
-          value={selectValue}
-          onChange={(e) => setSelectValue(e.target.value)}
-        >
-          <option value={"Inter modular connection"}>
-            Inter-modular-connection
-          </option>
-          <option value={"Intra modular connection"}>
-            Intra-modular-connection
-          </option>
-        </select>
-
+        {/*<select*/}
+        {/*    className="w-full py-2 px-4 bg-primary-600 hover:bg-primary-500 cursor-pointer rounded  text-white"*/}
+        {/*  value={selectValue}*/}
+        {/*  onChange={(e) => setSelectValue(e.target.value)}*/}
+        {/*>*/}
+        {/*  <option value={"Inter modular connection"}>*/}
+        {/*    Inter-modular-connection*/}
+        {/*  </option>*/}
+        {/*  <option value={"Intra modular connection"}>*/}
+        {/*    Intra-modular-connection*/}
+        {/*  </option>*/}
+        {/*</select>*/}
+      <div className="flex flex-row gap-0.5 mb-3">
+        <button className={selectValue === "Inter modular connection" ? tabSelected + tabStyles : tabDeselected + tabStyles}
+                disabled={selectValue === "Inter modular connection"}
+                onClick={() => setSelectValue("Inter modular connection")}>Inter-modular-connection
+        </button>
+        <button className={selectValue === "floor beams" ? tabSelected + tabStyles : tabDeselected + tabStyles}
+                disabled={selectValue === "floor beams"}
+                onClick={() => setSelectValue("floor beams")}>Intra-modular-connection
+        </button>
+      </div>
       <div className="flex gap-4 justify-between">
         <div className="border border-black relative">
           <SectionTitle title="Direction" className="text-sm" />
