@@ -21,7 +21,7 @@ function createWindow() {
   win = new BrowserWindow({
     minWidth: 800,
     minHeight: 600,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -49,7 +49,7 @@ function createMaterialWindow() {
     title: 'Materials',
     parent: win,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -90,7 +90,7 @@ function createMaterialModalWindow() {
     title: 'Material',
     parent: materialWindow,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -133,7 +133,7 @@ function createSectionsWindow() {
     title: 'Sections',
     parent: win,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -164,7 +164,7 @@ function createConnectionsWindow() {
     title: 'Connections',
     parent: win,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -199,7 +199,7 @@ function createSeismicResistingFramesTypeWindow() {
     title: 'Seismic resisting frames type',
     parent: win,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -233,7 +233,7 @@ function createStructuresPropertiesWindow() {
     title: "Structure's properties",
     parent: win,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -264,7 +264,7 @@ function createAnalyzeWindow() {
     title: "Analyze",
     parent: win,
     modal: true,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
@@ -303,7 +303,7 @@ function createStabilityResultWindow() {
     resizable: false,
     title: 'Stability result',
     parent: win,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -328,7 +328,7 @@ function createDesignForServiceabilityResult() {
     resizable: false,
     title: 'Serviceability result',
     parent: win,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -353,7 +353,7 @@ function createSeismicPerformanceFactors() {
     resizable: false,
     title: 'Seismic performance factors',
     parent: win,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -380,7 +380,7 @@ function createArticlesWindow() {
     resizable: true,
     title: 'Articles',
     parent: win,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -402,7 +402,7 @@ function createPdfWindow(name) {
   const pdfWindow = new BrowserWindow({
     title: 'PDF',
     parent: win,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
@@ -422,7 +422,7 @@ function createAboutUsWindow(){
   aboutUs = new BrowserWindow({
     title: 'About us',
     parent: win,
-    icon: __dirname + '/testbg.jfif',
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
