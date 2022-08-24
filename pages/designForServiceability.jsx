@@ -41,7 +41,7 @@ function DesginForServiceability() {
   },[])
 
   const Res = () => (
-    <Result left={(((gpe * 10) - 1)*59) + 102} bottom={(((gpi * 10) - 1)*52) + 113}
+    <Result left={((((gpe>1?1:gpe) * 10) - 1)*59) + 102} bottom={((((gpi>1?1:gpi) * 10) - 1)*52) + 113}
         coI33={fileData?.sections?.column?.properties?.I33[0]}
         fI33={fileData?.sections?.floorBeams?.properties?.I33[0]}
         ceI33={fileData?.sections?.ceiligBeams?.properties?.I33[0]}

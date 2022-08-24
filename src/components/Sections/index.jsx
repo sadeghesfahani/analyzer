@@ -157,7 +157,7 @@ function Sections() {
                         <thead>
                         <tr>
                             <th>Material Name</th>
-                            <th>Modula of Elasticty E</th>
+                            <th>Modules of Elasticty E</th>
                             <th>SECTION-NAME</th>
                             <th>B</th>
                             <th>H</th>

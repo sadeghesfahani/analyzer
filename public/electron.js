@@ -10,7 +10,7 @@ const {
   dialog
 } = require('electron');
 const fs = require('fs')
-const Calculator = require('../src/utils/calculator')
+const Calculator = require('../public/calculator')
 
 app.disableHardwareAcceleration()
 let win;
@@ -225,12 +225,11 @@ let structuresPropertiesWindow;
 
 function createStructuresPropertiesWindow() {
   structuresPropertiesWindow = new BrowserWindow({
-    width: 420,
-    height: 400,
+    width: 900,
+    height: 450,
     minWidth: 420,
     minHeight: 400,
-    maxWidth: 420,
-    maxHeight: 400,
+    resizable:false,
     title: "Structure's properties",
     parent: win,
     modal: true,
@@ -415,6 +414,34 @@ function createPdfWindow(name) {
 
 ipcMain.on('show-pdf', (event, name) => {
   createPdfWindow(name)
+})
+
+let aboutUs;
+
+function createAboutUsWindow(){
+  aboutUs = new BrowserWindow({
+    title: 'About us',
+    parent: win,
+    icon: __dirname + '/Western_Sydney_University_emblem.png',
+    webPreferences: {
+      nodeIntegration: true,
+      preload: __dirname + '/preload.js'
+    }
+  });
+  aboutUs.removeMenu()
+  if (app.isPackaged) {
+    aboutUs.loadFile('./.next/server/pages/aboutus.html');
+  } else {
+    aboutUs.loadURL('http://localhost:3000/aboutus');
+  }
+}
+
+ipcMain.on('show-aboutus-window',()=>{
+  createAboutUsWindow()
+})
+
+ipcMain.on('close-aboutus-window',()=>{
+  aboutUs.close()
 })
 
 app.on('window-all-closed', () => {

@@ -1,22 +1,24 @@
 {
-  "name": "Design of Inter-modular Connections",
+  "name": "design_of_inter_modular_connections",
   "version": "0.1.0",
   "private": true,
+  "author": "sama-it",
   "main": "./public/electron.js",
   "homepage": "./",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "electron-forge start",
     "lint": "next lint",
-    "electron": "electron ."
+    "electron": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
-  "build":{
-    "icon": "./.next/static/icon.png"
+  "build": {
+    "icon": "./.next/static/icon.jfif"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
-    "electron": "^19.0.10",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -28,10 +30,42 @@
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@electron-forge/maker-deb": "^6.0.0-beta.65",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
+    "@electron-forge/maker-zip": "^6.0.0-beta.65",
     "autoprefixer": "^10.4.8",
+    "electron": "^19.0.13",
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.3",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.7"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Design_of_Inter_modular_Connections"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
