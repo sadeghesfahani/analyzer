@@ -145,7 +145,7 @@ li a:hover, .dropdown:hover .dropbtn {
 }
 
 .bg-image {
-    background-image: url('../public/testbg.jfif');
+    background-image: url('../src/bg.png');
     background-repeat: no-repeat;
     background-position: center;
 }
