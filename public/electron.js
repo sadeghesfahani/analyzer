@@ -422,6 +422,7 @@ function createAboutUsWindow(){
   aboutUs = new BrowserWindow({
     title: 'About us',
     parent: win,
+    resizable: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
