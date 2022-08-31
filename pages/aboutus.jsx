@@ -23,6 +23,7 @@ function AboutUs() {
                 offer significant construction time and energy efficiency, lower life cycle costs, greater quality
                 control in a closely supervised environment, and reduced waste. Application of such efficient
                 construction methods can also address the existing gap between demand and supply for housing worldwide.
+                <br/><br/>
 
                 Our research program aims to remove major roadblocks preventing widespread application of modular
                 prefabricated systems in construction and transformation to advanced building manufacturing technologies
@@ -30,7 +31,7 @@ function AboutUs() {
                 prefab construction engineering technologies/systems, and provides advanced numerical, analytical and
                 experimental services. As well as being available for advanced research work, MPD-Lab is also available
                 for consulting and teaching activities and services relating to the area of modular prefab construction.
-
+                <br/><br/>
                 MPD-Lab works in collaboration with other partners in academia, industry and government. Please feel
                 free to get in touch, if you are interested in pursuing collaboration or consulting services.
             </p>
