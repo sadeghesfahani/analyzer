@@ -89,7 +89,7 @@ function Result({
                     </div>
                 )}
                 <div className={`relative flex flex-col border gap-1 items-center py-1 ${analyze1 ? "h-1/2" : "h-full"}`}>
-                    <SectionTitle className="text-sm" title={report === "rigid" ? "Rigid" : "Semi-rigid Boundary"}/>
+                    <SectionTitle className="text-sm" title={report === "rigid" ? "Rigid Boundary" : "Semi-rigid Boundary"}/>
                     {/*<span className="text-center w-full">{report === "rigid" ? "Rigid" : "Semi-rigid Boundary"}</span>*/}
                     <img
                         src={boundaryImg}
@@ -107,6 +107,9 @@ function Result({
             <div className="flex-1 border h-full text-xs overflow-y-auto px-1">
                 <Line/>
                 <p>Project_Name : untitled</p>
+                <Line/>
+                <Line/>
+                <p className="italic font-bold">{report === "rigid" ? "The inter-modular connection has a rigid behaviour" : "The inter-modular connection has a semi-rigid behaviour"}</p>
                 <Line/>
                 <p>
                     Gpi =(Material_Ecolumn*Section_I33column/Lcolumn) / (Material_Efloor

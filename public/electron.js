@@ -459,7 +459,7 @@ ipcMain.handle('get-properties', () => {
   const fileData = fs.readFileSync(__dirname + '/Ali.xml', 'utf8')
   let data;
   parser.parseString(fileData, function (err, result) {
-    data = [...result.PROPERTY_FILE.STEEL_BOX, ...result.PROPERTY_FILE.STEEL_CHANNEL, ...result.PROPERTY_FILE.STEEL_I_SECTION]
+    data = [...result.PROPERTY_FILE.STEEL_BOX, ...result.PROPERTY_FILE.STEEL_I_SECTION]
   });
 
   return data
@@ -528,10 +528,14 @@ ipcMain.on('close-file', (event) => {
 ipcMain.handle('get-result', async (event, arg) => {
   const fileData = fs.readFileSync(filePath, 'utf8')
   const data = JSON.parse(fileData)
-  const calculator = new Calculator(data.sections, {
+  const sections = {...data.sections}
+  sections.column.materials.e = eval(sections.column.materials.e)
+  sections.floorBeams.materials.e = eval(sections.floorBeams.materials.e)
+  sections.ceiligBeams.materials.e = eval(sections.ceiligBeams.materials.e)
+  const calculator = new Calculator(sections, {
     heightOfStorey: data.structuresProperty.heightOfStorey * 1000,
     lengthOfSpan: data.structuresProperty.lengthOfSpan * 1000
-  }, data.connections.intraModularConnection[5].value, data.connections.interModularConnection[5].value, data.seismicResistingFramesType)
+  }, eval(data.connections.intraModularConnection[5].value), eval(data.connections.interModularConnection[5].value), data.seismicResistingFramesType)
   const result = calculator.getResult()
   return result
 })

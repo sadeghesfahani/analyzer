@@ -15,7 +15,7 @@
     "make": "electron-forge make"
   },
   "build": {
-    "icon": "./.next/static/icon.jfif"
+    "icon": "./.next/static/icon.png"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
