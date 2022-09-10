@@ -19,13 +19,17 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
+    "cheerio": "^1.0.0-rc.12",
+    "electron-fetch": "^1.7.4",
     "next": "12.2.3",
+    "node-fetch": "^3.2.10",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
     "read-excel-file": "^5.4.4",
     "uuid": "^8.3.2",
+    "v8-compile-cache": "^2.3.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.10/xlsx-0.18.10.tgz",
     "xml2js": "^0.4.23"
   },
