@@ -1,4 +1,18 @@
-xml2js = require('xml2js');
+require("v8-compile-cache");
+const xml2js = require('xml2js');
+
+const fetch = require('electron-fetch').default;
+
+const cherio = require('cheerio');
+
+
+
+// async function tst(){
+//   const response = await fetch('https://github.com/');
+// const body = await response.text();
+
+// console.log(body);
+// }
 
 var parser = new xml2js.Parser();
 const data = require("../data")
@@ -49,12 +63,19 @@ function createMaterialWindow() {
     title: 'Materials',
     parent: win,
     modal: true,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  materialWindow.once('ready-to-show', () => {
+    materialWindow.show()
+  })
+  // materialWindow.webContents.once('did-finish-load', () => {
+  //   materialWindow.show()
+  // })
   materialWindow.removeMenu()
   materialWindow.on('app-command',()=>{
     const fileData = fs.readFileSync(filePath, 'utf8')
@@ -90,12 +111,16 @@ function createMaterialModalWindow() {
     title: 'Material',
     parent: materialWindow,
     modal: true,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  materialModalWindow.once('ready-to-show', () => {
+    materialModalWindow.show()
+  })
   materialModalWindow.on('closed',()=>{
     const fileData = fs.readFileSync(filePath, 'utf8')
     const data = JSON.parse(fileData)
@@ -132,6 +157,7 @@ function createSectionsWindow() {
     height: 750,
     title: 'Sections',
     parent: win,
+    show: false,
     modal: true,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
@@ -140,6 +166,9 @@ function createSectionsWindow() {
     }
   });
   sectionWindow.removeMenu()
+  sectionWindow.once('ready-to-show', () => {
+    sectionWindow.show()
+  })
   if (app.isPackaged) {
     sectionWindow.loadFile('./.next/server/pages/section.html');
   } else {
@@ -164,12 +193,16 @@ function createConnectionsWindow() {
     title: 'Connections',
     parent: win,
     modal: true,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  connectionWindow.once('ready-to-show', () => {
+    connectionWindow.show()
+  })
   connectionWindow.removeMenu()
   if (app.isPackaged) {
     connectionWindow.loadFile('./.next/server/pages/connection.html');
@@ -199,12 +232,17 @@ function createSeismicResistingFramesTypeWindow() {
     title: 'Seismic resisting frames type',
     parent: win,
     modal: true,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+
+  seismicResistingFramesTypeWindow.once('ready-to-show', () => {
+    seismicResistingFramesTypeWindow.show()
+  })
   seismicResistingFramesTypeWindow.removeMenu()
   if (app.isPackaged) {
     seismicResistingFramesTypeWindow.loadFile('./.next/server/pages/seismicResistingFramesType.html');
@@ -233,12 +271,16 @@ function createStructuresPropertiesWindow() {
     title: "Structure's properties",
     parent: win,
     modal: true,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  structuresPropertiesWindow.once('ready-to-show', () => {
+    structuresPropertiesWindow.show()
+  })
   structuresPropertiesWindow.removeMenu()
   if (app.isPackaged) {
     structuresPropertiesWindow.loadFile('./.next/server/pages/structuresProperties.html');
@@ -264,12 +306,16 @@ function createAnalyzeWindow() {
     title: "Analyze",
     parent: win,
     modal: true,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       preload: __dirname + '/preload.js',
       nodeIntegration: true,
     }
   });
+  analyzeWindow.once('ready-to-show', () => {
+    analyzeWindow.show()
+  })
   analyzeWindow.removeMenu()
   if (app.isPackaged) {
     analyzeWindow.loadFile('./.next/server/pages/analyze.html');
@@ -303,12 +349,16 @@ function createStabilityResultWindow() {
     resizable: false,
     title: 'Stability result',
     parent: win,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
     }
   });
+  stabilityWindow.once('ready-to-show', () => {
+    stabilityWindow.show()
+  })
   stabilityWindow.removeMenu()
   if (app.isPackaged) {
     stabilityWindow.loadFile('./.next/server/pages/stabilityResult.html');
@@ -328,12 +378,16 @@ function createDesignForServiceabilityResult() {
     resizable: false,
     title: 'Serviceability result',
     parent: win,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
     }
   });
+  designForServiceabilityResult.once('ready-to-show', () => {
+    designForServiceabilityResult.show()
+  })
   designForServiceabilityResult.removeMenu()
   if (app.isPackaged) {
     designForServiceabilityResult.loadFile('./.next/server/pages/designForServiceability.html');
@@ -353,12 +407,16 @@ function createSeismicPerformanceFactors() {
     resizable: false,
     title: 'Seismic performance factors',
     parent: win,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
     }
   });
+  seismicPerformanceFactors.once('ready-to-show', () => {
+    seismicPerformanceFactors.show()
+  })
   seismicPerformanceFactors.removeMenu()
   if (app.isPackaged) {
     seismicPerformanceFactors.loadFile('./.next/server/pages/seismicPerformanceFactors.html');
@@ -378,6 +436,7 @@ function createArticlesWindow() {
     minHeight: 600,
     minWidth: 400,
     resizable: true,
+    show:false,
     title: 'Articles',
     parent: win,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
@@ -386,6 +445,9 @@ function createArticlesWindow() {
       preload: __dirname + '/preload.js'
     }
   });
+  seismicPerformanceFactors.once('ready-to-show', () => {
+    materialWindow.show()
+  })
   seismicPerformanceFactors.removeMenu()
   if (app.isPackaged) {
     seismicPerformanceFactors.loadFile('./.next/server/pages/articles.html');
@@ -418,24 +480,58 @@ ipcMain.on('show-pdf', (event, name) => {
 
 let aboutUs;
 
+// let content = 1;
+
 function createAboutUsWindow(){
   aboutUs = new BrowserWindow({
     title: 'About us',
     parent: win,
     resizable: false,
+    show: false,
     icon: __dirname + '/Western_Sydney_University_emblem.png',
     webPreferences: {
       nodeIntegration: true,
       preload: __dirname + '/preload.js'
     }
   });
+  aboutUs.once('ready-to-show', () => {
+    aboutUs.show()
+  })
   aboutUs.removeMenu()
+  
+
+  // ipcMain.on('about-us', (event)=>{
+  //   let content;
+  //   fetch('https://www.westernsydney.edu.au/cie/mpd-lab')
+  //     .then(res => res.text())
+  //     .then(body => {
+  //     const $ = cherio.load(body);
+  //     content = $('.main-content');
+  //   })
+    // ipcMain.handle('about-us-content', (event) => {
+    //   return content;
+    // })
+  // aboutUs.loadURL('https://www.westernsydney.edu.au/cie/mpd-lab').then(r => console.log(r)).catch(e => console.log(e))
   if (app.isPackaged) {
-    aboutUs.loadFile('./.next/server/pages/aboutus.html');
-  } else {
-    aboutUs.loadURL('http://localhost:3000/aboutus');
+      aboutUs.loadFile('./.next/server/pages/aboutus.html');
+    } else {
+      aboutUs.loadURL('http://localhost:3000/aboutus');
   }
 }
+
+ipcMain.handle('about-us-content', async(event) => {
+  const res = await fetch('https://www.westernsydney.edu.au/cie/mpd-lab');
+  const body = await res.text();
+  const $ = cherio.load(body);
+  const content = $('.main-content').html();
+  return content;
+  // fetch('https://www.westernsydney.edu.au/cie/mpd-lab')
+  //     .then(res => res.text())
+  //     .then(body => {
+  //     const $ = cherio.load(body);
+  //     content = $('.main-content').html();
+  //   })
+})
 
 ipcMain.on('show-aboutus-window',()=>{
   createAboutUsWindow()
