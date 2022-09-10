@@ -148,8 +148,8 @@ li a:hover, .dropdown:hover .dropbtn {
 }
 
 .bg-image {
-    /* background-image: url('../src/bg.png'); */
-    background-image: url("../public/testbg.jfif");
+    background-image: url('../src/bg.png');
+    /* background-image: url("../public/testbg.jfif"); */
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -163,4 +163,28 @@ li a:hover, .dropdown:hover .dropbtn {
 
 .chronicle-font {
     font-family: 'Chronicle', serif;
+}
+
+.nav-pills{
+    display: none;
+}
+
+.container > h1 {
+    color:#9e2235; 
+    font-family: 'Chronicle', serif;
+    font-size: 1.875rem;
+}
+
+h3 > strong {
+    color: #9e2235;
+}
+
+p > strong {
+    color: #333;
+    font-size: 14px;  
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

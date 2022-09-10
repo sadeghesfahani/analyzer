@@ -108,9 +108,6 @@ function Result({
                 <Line/>
                 <p>Project_Name : untitled</p>
                 <Line/>
-                <Line/>
-                <p className="italic font-bold">{report === "rigid" ? "The inter-modular connection has a rigid behaviour" : "The inter-modular connection has a semi-rigid behaviour"}</p>
-                <Line/>
                 <p>
                     Gpi =(Material_Ecolumn*Section_I33column/Lcolumn) / (Material_Efloor
                     beam*Section_I33 floor beam/Lfloorbeam)
@@ -169,6 +166,8 @@ function Result({
                 <p>Structure__Length_of_span : {lengthOfSpan}</p>
                 <Line/>
                 <p>Seismic_resisting_frames_type : {seismicResistingFramesType}</p>
+                <Line/>
+                <p className="italic font-bold">{report === "rigid" ? "The inter-modular connection has a rigid behaviour" : "The inter-modular connection has a semi-rigid behaviour"}</p>
                 <Line/>
             </div>
             {/* <div className="flex-1 h-full relative border">
