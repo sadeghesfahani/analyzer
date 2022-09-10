@@ -1,9 +1,34 @@
-import React from 'react'
+import React, {useRef} from 'react'
+import Head from "next/head";
+import { useEffect } from 'react';
 
 function AboutUs() {
+    const element = useRef(null);
+    useEffect(()=>{
+        if(window){
+            electron.ipcRenderer.send('about-us')
+            electron.ipcRenderer.invoke("about-us-content").then(res=>{
+                element.current.innerHTML = res
+                element.current.children[0].remove()
+              }).catch(e=>console.log(e))
+        }
+        console.log(element)
+        // element.childNodes[1].remove()
+        // console.log(element.current.childNodes[1])
+        
+        // element.current.children[0].remove()
+    },[])
+
     return (
-        <div className='h-full flex flex-col py-10 px-6 gap-6'>
-            <h1 className="text-[#9e2235] chronicle-font text-3xl ">Modular Prefab Design Laboratory
+        <div ref={element} className='flex flex-col p-4 gap-6 bg-white'>
+            {/* <Head>
+                <link rel="import" href="https://www.westernsydney.edu.au/cie/mpd-lab"></link>
+            </Head> */}
+            {/* <iframe ref={element} src="https://stackoverflow.com/" width={200} height={200}>
+            Alternative text for browsers that do not understand IFrames.
+            </iframe> */}
+            {/* <webview ref={element} id="webview" src="https://stackoverflow.com/" nodeintegration="true" className='w-full h-full'></webview> */}
+            {/* <h1 className="text-[#9e2235] chronicle-font text-3xl ">Modular Prefab Design Laboratory
                 (MPD-Lab)</h1>
             <p>
                 <img className="float-right my-2 ml-2"
@@ -57,7 +82,7 @@ function AboutUs() {
                         structures, computer aided design and parametric design.
                     </p>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
